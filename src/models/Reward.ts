@@ -1,23 +1,68 @@
 import { getDatabase } from '../config/database';
 
 export interface Reward {
-  id?: number;
-  name: string;
-  description: string;
+  id: number;
+  userId: number;
   points: number;
-  image: string;
-  created_at?: string;
+  type: 'purchase' | 'referral' | 'bonus';
+  description: string;
+  status: 'pending' | 'approved' | 'rejected';
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 export class RewardModel {
-  // Crear una nueva recompensa
-  static async create(reward: Reward): Promise<Reward> {
-    const db = await getDatabase();
-    const result = await db.run(
-      'INSERT INTO rewards (name, description, points, image) VALUES (?, ?, ?, ?)',
-      [reward.name, reward.description, reward.points, reward.image]
-    );
-    return { ...reward, id: result.lastID };
+  private static rewards: Reward[] = [];
+
+  static async findByUserId(userId: number): Promise<Reward[]> {
+    return this.rewards.filter(reward => reward.userId === userId);
+  }
+
+  static async create(rewardData: Omit<Reward, 'id' | 'createdAt' | 'updatedAt'>): Promise<Reward> {
+    const newReward: Reward = {
+      id: this.rewards.length + 1,
+      ...rewardData,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    };
+    this.rewards.push(newReward);
+    return newReward;
+  }
+
+  static async updateStatus(id: number, status: Reward['status']): Promise<void> {
+    const index = this.rewards.findIndex(reward => reward.id === id);
+    if (index !== -1) {
+      this.rewards[index] = {
+        ...this.rewards[index],
+        status,
+        updatedAt: new Date()
+      };
+    }
+  }
+
+  static async getStats(): Promise<{
+    total: number;
+    byType: Record<Reward['type'], number>;
+    byStatus: Record<Reward['status'], number>;
+    totalPoints: number;
+  }> {
+    const total = this.rewards.length;
+    const byType = this.rewards.reduce((acc, reward) => {
+      acc[reward.type] = (acc[reward.type] || 0) + 1;
+      return acc;
+    }, {} as Record<Reward['type'], number>);
+    const byStatus = this.rewards.reduce((acc, reward) => {
+      acc[reward.status] = (acc[reward.status] || 0) + 1;
+      return acc;
+    }, {} as Record<Reward['status'], number>);
+    const totalPoints = this.rewards.reduce((sum, reward) => sum + reward.points, 0);
+
+    return {
+      total,
+      byType,
+      byStatus,
+      totalPoints
+    };
   }
 
   // Obtener todas las recompensas

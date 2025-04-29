@@ -7,47 +7,67 @@ export interface OrderItem {
 }
 
 export interface Order {
-  id?: number;
-  user_id: number;
+  id: number;
+  userId: number;
+  products: {
+    productId: number;
+    quantity: number;
+    price: number;
+  }[];
   total: number;
-  status: string;
-  created_at?: string;
-  items?: OrderItem[];
+  status: 'pending' | 'processing' | 'completed' | 'cancelled';
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 export class OrderModel {
-  // Crear un nuevo pedido
-  static async create(order: Order): Promise<Order> {
-    const db = await getDatabase();
-    
-    // Iniciar transacción
-    await db.run('BEGIN TRANSACTION');
+  private static orders: Order[] = [];
 
-    try {
-      // Crear el pedido
-      const result = await db.run(
-        'INSERT INTO orders (user_id, total, status) VALUES (?, ?, ?)',
-        [order.user_id, order.total, order.status]
-      );
+  static async findByUserId(userId: number): Promise<Order[]> {
+    return this.orders.filter(order => order.userId === userId);
+  }
 
-      const orderId = result.lastID;
+  static async create(orderData: Omit<Order, 'id' | 'createdAt' | 'updatedAt'>): Promise<Order> {
+    const newOrder: Order = {
+      id: this.orders.length + 1,
+      ...orderData,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    };
+    this.orders.push(newOrder);
+    return newOrder;
+  }
 
-      // Agregar los items del pedido
-      if (order.items) {
-        for (const item of order.items) {
-          await db.run(
-            'INSERT INTO order_items (order_id, product_id, quantity, price) VALUES (?, ?, ?, ?)',
-            [orderId, item.product_id, item.quantity, item.price]
-          );
-        }
-      }
-
-      await db.run('COMMIT');
-      return { ...order, id: orderId };
-    } catch (error) {
-      await db.run('ROLLBACK');
-      throw error;
+  static async updateStatus(id: number, status: Order['status']): Promise<void> {
+    const index = this.orders.findIndex(order => order.id === id);
+    if (index !== -1) {
+      this.orders[index] = {
+        ...this.orders[index],
+        status,
+        updatedAt: new Date()
+      };
     }
+  }
+
+  static async getStats(): Promise<{
+    total: number;
+    byStatus: Record<Order['status'], number>;
+    averageOrderValue: number;
+  }> {
+    const total = this.orders.length;
+    const byStatus = this.orders.reduce((acc, order) => {
+      acc[order.status] = (acc[order.status] || 0) + 1;
+      return acc;
+    }, {} as Record<Order['status'], number>);
+    const averageOrderValue = total > 0 
+      ? this.orders.reduce((sum, order) => sum + order.total, 0) / total 
+      : 0;
+
+    return {
+      total,
+      byStatus,
+      averageOrderValue
+    };
   }
 
   // Obtener pedido por ID
@@ -87,12 +107,6 @@ export class OrderModel {
     return orders;
   }
 
-  // Actualizar estado del pedido
-  static async updateStatus(id: number, status: string): Promise<void> {
-    const db = await getDatabase();
-    await db.run('UPDATE orders SET status = ? WHERE id = ?', [status, id]);
-  }
-
   // Obtener todos los pedidos (para administradores)
   static async findAll(): Promise<Order[]> {
     const db = await getDatabase();
@@ -110,19 +124,5 @@ export class OrderModel {
     }
 
     return orders;
-  }
-
-  // Obtener estadísticas de pedidos
-  static async getStats(): Promise<any> {
-    const db = await getDatabase();
-    const stats = await db.get(`
-      SELECT 
-        COUNT(*) as total_orders,
-        SUM(total) as total_revenue,
-        AVG(total) as average_order_value
-      FROM orders
-      WHERE status != 'cancelled'
-    `);
-    return stats;
   }
 } 

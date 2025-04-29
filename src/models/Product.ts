@@ -1,78 +1,67 @@
 import { getDatabase } from '../config/database';
 
 export interface Product {
-  id?: number;
+  id: number;
   name: string;
   description: string;
   price: number;
-  image: string;
   category: string;
-  points: number;
-  created_at?: string;
+  imageUrl: string;
+  stock: number;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 export class ProductModel {
-  // Crear un nuevo producto
-  static async create(product: Product): Promise<Product> {
-    const db = await getDatabase();
-    const result = await db.run(
-      'INSERT INTO products (name, description, price, image, category, points) VALUES (?, ?, ?, ?, ?, ?)',
-      [product.name, product.description, product.price, product.image, product.category, product.points]
-    );
-    return { ...product, id: result.lastID };
-  }
+  private static products: Product[] = [];
 
-  // Obtener todos los productos
   static async findAll(): Promise<Product[]> {
-    const db = await getDatabase();
-    return await db.all('SELECT * FROM products ORDER BY created_at DESC');
+    return this.products;
   }
 
-  // Obtener producto por ID
   static async findById(id: number): Promise<Product | null> {
-    const db = await getDatabase();
-    const product = await db.get('SELECT * FROM products WHERE id = ?', [id]);
-    return product || null;
+    return this.products.find(product => product.id === id) || null;
   }
 
-  // Obtener productos por categoría
   static async findByCategory(category: string): Promise<Product[]> {
-    const db = await getDatabase();
-    return await db.all('SELECT * FROM products WHERE category = ? ORDER BY created_at DESC', [category]);
+    return this.products.filter(product => product.category === category);
   }
 
-  // Buscar productos
   static async search(query: string): Promise<Product[]> {
-    const db = await getDatabase();
-    return await db.all(
-      'SELECT * FROM products WHERE name LIKE ? OR description LIKE ? ORDER BY created_at DESC',
-      [`%${query}%`, `%${query}%`]
+    const searchTerm = query.toLowerCase();
+    return this.products.filter(product => 
+      product.name.toLowerCase().includes(searchTerm) ||
+      product.description.toLowerCase().includes(searchTerm)
     );
   }
 
-  // Actualizar producto
-  static async update(id: number, product: Partial<Product>): Promise<void> {
-    const db = await getDatabase();
-    const updates = Object.entries(product)
-      .filter(([_, value]) => value !== undefined)
-      .map(([key]) => `${key} = ?`);
-    
-    if (updates.length === 0) return;
-
-    const values = Object.entries(product)
-      .filter(([_, value]) => value !== undefined)
-      .map(([_, value]) => value);
-
-    await db.run(
-      `UPDATE products SET ${updates.join(', ')} WHERE id = ?`,
-      [...values, id]
-    );
+  static async create(productData: Omit<Product, 'id' | 'createdAt' | 'updatedAt'>): Promise<Product> {
+    const newProduct: Product = {
+      id: this.products.length + 1,
+      ...productData,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    };
+    this.products.push(newProduct);
+    return newProduct;
   }
 
-  // Eliminar producto
+  static async update(id: number, productData: Partial<Product>): Promise<void> {
+    const index = this.products.findIndex(product => product.id === id);
+    if (index !== -1) {
+      this.products[index] = {
+        ...this.products[index],
+        ...productData,
+        updatedAt: new Date()
+      };
+    }
+  }
+
   static async delete(id: number): Promise<void> {
-    const db = await getDatabase();
-    await db.run('DELETE FROM products WHERE id = ?', [id]);
+    const index = this.products.findIndex(product => product.id === id);
+    if (index !== -1) {
+      this.products.splice(index, 1);
+    }
   }
 
   // Obtener productos relacionados
