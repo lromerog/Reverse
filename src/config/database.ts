@@ -3,7 +3,7 @@ import { open } from 'sqlite';
 
 // Configuración de la base de datos
 const dbConfig = {
-  filename: './nike.db',
+  filename: './reverse.db',
   driver: sqlite3.Database
 };
 

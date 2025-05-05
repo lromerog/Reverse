@@ -1,53 +1,41 @@
 import React from 'react';
-import { AppBar, Toolbar, Button, Box, IconButton } from '@mui/material';
-import { ShoppingBag, Favorite, Person } from '@mui/icons-material';
-import styled from 'styled-components';
+import { AppBar, Toolbar, Box, Button } from '@mui/material';
+import { styled } from '@mui/material/styles';
 import { Link } from 'react-router-dom';
 
-const StyledAppBar = styled(AppBar)`
-  background-color: transparent;
-  box-shadow: none;
-  position: absolute;
-`;
+const StyledAppBar = styled(AppBar)({
+  backgroundColor: '#232323',
+  boxShadow: 'none'
+});
 
-const Logo = styled(Box)`
-  font-size: 1.5rem;
-  font-weight: 700;
-  letter-spacing: 2px;
-  color: white;
-`;
-
-const NavButton = styled(Button)`
-  color: white;
-  text-transform: none;
-  font-size: 1rem;
-  margin: 0 1rem;
-  &:hover {
-    background-color: rgba(255, 255, 255, 0.1);
+const Logo = styled(Box)({
+  height: 40,
+  width: 'auto',
+  '& img': {
+    height: '100%',
+    width: 'auto'
   }
-`;
+});
+
+const NavButton = styled(Button)({
+  color: '#fff',
+  margin: '0 8px',
+  '&:hover': {
+    color: '#F5B301'
+  }
+});
 
 const Navigation: React.FC = () => {
   return (
     <StyledAppBar>
       <Toolbar>
-        <Logo>NIKE</Logo>
+        <Logo>
+          <img src="/logo.png" alt="Reverse Logo" />
+        </Logo>
         <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'center' }}>
           <NavButton component={Link} to="/">Home</NavButton>
-          <NavButton component={Link} to="/reverse-projects">Reverse</NavButton>
-          <NavButton>Shop</NavButton>
-          <NavButton>About</NavButton>
-        </Box>
-        <Box>
-          <IconButton color="inherit">
-            <ShoppingBag />
-          </IconButton>
-          <IconButton color="inherit">
-            <Favorite />
-          </IconButton>
-          <IconButton color="inherit">
-            <Person />
-          </IconButton>
+          <NavButton component={Link} to="/discover">Discover</NavButton>
+          <NavButton component={Link} to="/rewards">Rewards</NavButton>
         </Box>
       </Toolbar>
     </StyledAppBar>

@@ -1,50 +1,61 @@
 import { createTheme } from '@mui/material/styles';
 
-export const theme = createTheme({
+const theme = createTheme({
   palette: {
     primary: {
-      main: '#000000', // Nike black
-      light: '#333333',
-      dark: '#000000',
+      main: '#232323', // Reverse dark background
     },
     secondary: {
-      main: '#FF6B00', // Nike orange
-      light: '#FF8533',
-      dark: '#CC5500',
+      main: '#F5B301', // Reverse accent color
     },
     background: {
-      default: '#FFFFFF',
-      paper: '#F5F5F5',
+      default: '#232323',
+      paper: '#2A2A2A',
+    },
+    text: {
+      primary: '#FFFFFF',
+      secondary: 'rgba(255, 255, 255, 0.7)',
     },
   },
   typography: {
     fontFamily: '"Helvetica Neue", Arial, sans-serif',
     h1: {
-      fontSize: '2.5rem',
       fontWeight: 700,
     },
     h2: {
-      fontSize: '2rem',
       fontWeight: 600,
     },
     h3: {
-      fontSize: '1.75rem',
       fontWeight: 600,
     },
-    body1: {
-      fontSize: '1rem',
-      lineHeight: 1.5,
+    button: {
+      textTransform: 'none',
+      fontWeight: 600,
     },
   },
   components: {
     MuiButton: {
       styleOverrides: {
         root: {
-          borderRadius: 0,
-          textTransform: 'none',
-          fontWeight: 600,
+          borderRadius: 8,
+        },
+        contained: {
+          boxShadow: 'none',
+          '&:hover': {
+            boxShadow: 'none',
+          },
+        },
+      },
+    },
+    MuiAppBar: {
+      styleOverrides: {
+        root: {
+          backgroundColor: '#232323',
+          boxShadow: 'none',
         },
       },
     },
   },
-}); 
+});
+
+export default theme; 

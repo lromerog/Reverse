@@ -21,52 +21,39 @@ export interface Order {
 }
 
 export class OrderModel {
-  private static orders: Order[] = [];
-
-  static async findByUserId(userId: number): Promise<Order[]> {
-    return this.orders.filter(order => order.userId === userId);
-  }
-
+  // Crear un nuevo pedido
   static async create(orderData: Omit<Order, 'id' | 'createdAt' | 'updatedAt'>): Promise<Order> {
-    const newOrder: Order = {
-      id: this.orders.length + 1,
+    // Aquí puedes implementar la lógica para crear un pedido en la base de datos
+    // Por ahora, solo retorna un objeto simulado
+    return {
+      id: Date.now(),
       ...orderData,
       createdAt: new Date(),
       updatedAt: new Date()
     };
-    this.orders.push(newOrder);
-    return newOrder;
   }
 
+  // Actualizar estado del pedido
   static async updateStatus(id: number, status: Order['status']): Promise<void> {
-    const index = this.orders.findIndex(order => order.id === id);
-    if (index !== -1) {
-      this.orders[index] = {
-        ...this.orders[index],
-        status,
-        updatedAt: new Date()
-      };
-    }
+    // Implementa la lógica para actualizar el estado en la base de datos
   }
 
+  // Obtener estadísticas de pedidos
   static async getStats(): Promise<{
     total: number;
     byStatus: Record<Order['status'], number>;
     averageOrderValue: number;
   }> {
-    const total = this.orders.length;
-    const byStatus = this.orders.reduce((acc, order) => {
-      acc[order.status] = (acc[order.status] || 0) + 1;
-      return acc;
-    }, {} as Record<Order['status'], number>);
-    const averageOrderValue = total > 0 
-      ? this.orders.reduce((sum, order) => sum + order.total, 0) / total 
-      : 0;
-
+    // Implementa la lógica para obtener estadísticas de la base de datos
     return {
-      total,
-      byStatus,
-      averageOrderValue
+      total: 0,
+      byStatus: {
+        pending: 0,
+        processing: 0,
+        completed: 0,
+        cancelled: 0
+      },
+      averageOrderValue: 0
     };
   }
 
@@ -88,7 +75,7 @@ export class OrderModel {
     return { ...order, items };
   }
 
-  // Obtener pedidos de un usuario
+  // Obtener pedidos de un usuario (única implementación)
   static async findByUserId(userId: number): Promise<Order[]> {
     const db = await getDatabase();
     const orders = await db.all('SELECT * FROM orders WHERE user_id = ? ORDER BY created_at DESC', [userId]);
@@ -125,4 +112,4 @@ export class OrderModel {
 
     return orders;
   }
-} 
+}

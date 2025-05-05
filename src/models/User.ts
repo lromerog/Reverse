@@ -48,10 +48,11 @@ export class UserModel {
     const user = await this.findById(id);
     if (user) {
       let level = 'Principiante';
-      if (user.points >= 5000) level = 'Diamante';
-      else if (user.points >= 2000) level = 'Oro';
-      else if (user.points >= 1000) level = 'Plata';
-      else if (user.points >= 500) level = 'Bronce';
+      const points = user.points ?? 0;
+      if (points >= 5000) level = 'Diamante';
+      else if (points >= 2000) level = 'Oro';
+      else if (points >= 1000) level = 'Plata';
+      else if (points >= 500) level = 'Bronce';
       
       await db.run('UPDATE users SET level = ? WHERE id = ?', [level, id]);
     }

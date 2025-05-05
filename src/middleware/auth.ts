@@ -34,8 +34,8 @@ export const authMiddleware = async (req: AuthRequest, res: Response, next: Next
     
     // Verificar si el usuario existe
     const user = await UserModel.findById(decoded.id);
-    if (!user) {
-      return res.status(401).json({ error: 'Usuario no encontrado' });
+    if (!user || user.id === undefined) {
+      return res.status(401).json({ error: 'Invalid token' });
     }
 
     // Agregar información del usuario a la request

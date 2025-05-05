@@ -41,48 +41,48 @@ const rewards = [
     name: 'Nike Air Max 2024',
     image: process.env.PUBLIC_URL + '/assets/airmax-placeholder.png',
     points: 120,
-    description: 'Calzado deportivo de última generación.',
-    category: 'Calzado',
+    description: 'Next-generation sports shoes.',
+    category: 'Shoes',
   },
   {
     id: 2,
     name: 'Nike Dri-FIT Tee',
     image: process.env.PUBLIC_URL + '/assets/drifit-placeholder.png',
     points: 60,
-    description: 'Camiseta transpirable para máximo rendimiento.',
-    category: 'Ropa',
+    description: 'Breathable t-shirt for maximum performance.',
+    category: 'Apparel',
   },
   {
     id: 3,
     name: 'Nike Sportswear Club Fleece',
     image: process.env.PUBLIC_URL + '/assets/fleece-placeholder.png',
     points: 80,
-    description: 'Sudadera con capucha para máximo confort.',
-    category: 'Ropa',
+    description: 'Hoodie for maximum comfort.',
+    category: 'Apparel',
   },
   {
     id: 4,
     name: 'Nike Air Force 1',
     image: process.env.PUBLIC_URL + '/assets/airforce-placeholder.png',
     points: 100,
-    description: 'Zapatilla clásica de Nike.',
-    category: 'Calzado',
+    description: 'Classic Nike sneaker.',
+    category: 'Shoes',
   },
 ];
 
-const categories = ['Todos', 'Calzado', 'Ropa'];
+const categories = ['All', 'Shoes', 'Apparel'];
 
 const levels = [
-  { level: 1, points: 0, name: 'Principiante' },
-  { level: 2, points: 500, name: 'Bronce' },
-  { level: 3, points: 1000, name: 'Plata' },
-  { level: 4, points: 2000, name: 'Oro' },
-  { level: 5, points: 5000, name: 'Diamante' },
+  { level: 1, points: 0, name: 'Beginner' },
+  { level: 2, points: 500, name: 'Bronze' },
+  { level: 3, points: 1000, name: 'Silver' },
+  { level: 4, points: 2000, name: 'Gold' },
+  { level: 5, points: 5000, name: 'Diamond' },
 ];
 
 const Rewards: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('Todos');
+  const [selectedCategory, setSelectedCategory] = useState('All');
   const [showHistory, setShowHistory] = useState(false);
   const [showRedeemDialog, setShowRedeemDialog] = useState(false);
   const [selectedReward, setSelectedReward] = useState<any>(null);
@@ -94,7 +94,7 @@ const Rewards: React.FC = () => {
   const filteredRewards = rewards.filter(reward => {
     const matchesSearch = reward.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          reward.description.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesCategory = selectedCategory === 'Todos' || reward.category === selectedCategory;
+    const matchesCategory = selectedCategory === 'All' || reward.category === selectedCategory;
     return matchesSearch && matchesCategory;
   });
 
@@ -104,7 +104,7 @@ const Rewards: React.FC = () => {
   };
 
   const confirmRedeem = () => {
-    alert(`¡Felicidades! Has canjeado: ${selectedReward.name}`);
+    alert(`Congratulations! You have redeemed: ${selectedReward.name}`);
     setShowRedeemDialog(false);
   };
 
@@ -115,7 +115,7 @@ const Rewards: React.FC = () => {
         <Box
           component="img"
           src={process.env.PUBLIC_URL + '/assets/nike-swoosh.png'}
-          alt="Nike Logo"
+          alt="Reverse Logo"
           sx={{ width: 40, height: 40, mr: 2 }}
           onError={(e: any) => {
             e.target.onerror = null;
@@ -123,7 +123,7 @@ const Rewards: React.FC = () => {
           }}
         />
         <Typography variant="h6" fontWeight={700} color="text.primary">
-          Recompensas
+          Reverse
         </Typography>
         <Box flex={1} />
         <IconButton onClick={() => setShowHistory(true)}>
@@ -132,67 +132,63 @@ const Rewards: React.FC = () => {
       </Box>
 
       {/* Level Card */}
-      <Box sx={{ px: 3, mt: 2, mb: 4 }}>
-        <Card sx={{ borderRadius: 4, boxShadow: 3, bgcolor: '#111', color: '#fff', p: 2 }}>
-          <CardContent>
-            <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
-              <Avatar sx={{ bgcolor: '#fff', color: '#111', width: 56, height: 56, mr: 2 }}>
-                <EmojiEventsIcon sx={{ color: '#F5B301', fontSize: 36 }} />
-              </Avatar>
-              <Box>
-                <Typography variant="subtitle2" color="#F5B301" fontWeight={700}>
-                  Nivel {userLevel.level} - {userLevel.name}
-                </Typography>
-                <Typography variant="h4" fontWeight={700} color="#fff">
-                  {userPoints} puntos
-                </Typography>
-              </Box>
-            </Box>
-            <Box sx={{ mb: 1 }}>
-              <Typography variant="body2" color="#fff" gutterBottom>
-                Siguiente nivel: {nextLevel.name} ({nextLevel.points} puntos)
+      <Card sx={{ borderRadius: 4, boxShadow: 3, bgcolor: '#111', color: '#fff', p: 2 }}>
+        <CardContent>
+          <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+            <Avatar sx={{ bgcolor: '#fff', color: '#111', width: 56, height: 56, mr: 2 }}>
+              <EmojiEventsIcon sx={{ color: '#F5B301', fontSize: 36 }} />
+            </Avatar>
+            <Box>
+              <Typography variant="subtitle2" color="#F5B301" fontWeight={700}>
+                Level {userLevel.level} - {userLevel.name}
               </Typography>
-              <LinearProgress 
-                variant="determinate" 
-                value={progressToNextLevel} 
-                sx={{ 
-                  height: 8, 
-                  borderRadius: 4,
-                  bgcolor: '#333',
-                  '& .MuiLinearProgress-bar': {
-                    bgcolor: '#F5B301'
-                  }
-                }} 
-              />
+              <Typography variant="h4" fontWeight={700} color="#fff">
+                {userPoints} points
+              </Typography>
             </Box>
-          </CardContent>
-        </Card>
-      </Box>
-
-      {/* Banner Animado */}
-      <Box sx={{ px: 3, mb: 4, animation: `${fadeIn} 1s ease-in` }}>
-        <Card sx={{ 
-          borderRadius: 4, 
-          boxShadow: 3, 
-          bgcolor: '#F5B301', 
-          color: '#fff', 
-          p: 2,
-          animation: `${pulse} 2s infinite`
-        }}>
-          <CardContent>
-            <Typography variant="h6" fontWeight={700} align="center">
-              ¡Canjea tus puntos y lleva tu estilo al siguiente nivel!
+          </Box>
+          <Box sx={{ mb: 1 }}>
+            <Typography variant="body2" color="#fff" gutterBottom>
+              Next level: {nextLevel.name} ({nextLevel.points} points)
             </Typography>
-          </CardContent>
-        </Card>
-      </Box>
+            <LinearProgress 
+              variant="determinate" 
+              value={progressToNextLevel} 
+              sx={{ 
+                height: 8, 
+                borderRadius: 4,
+                bgcolor: '#333',
+                '& .MuiLinearProgress-bar': {
+                  bgcolor: '#F5B301'
+                }
+              }} 
+            />
+          </Box>
+        </CardContent>
+      </Card>
+
+      {/* Animated Banner */}
+      <Card sx={{ 
+        borderRadius: 4, 
+        boxShadow: 3, 
+        bgcolor: '#F5B301', 
+        color: '#fff', 
+        p: 2,
+        animation: `${pulse} 2s infinite`
+      }}>
+        <CardContent>
+          <Typography variant="h6" fontWeight={700} align="center">
+            Redeem your points and take your style to the next level!
+          </Typography>
+        </CardContent>
+      </Card>
 
       {/* Search and Filter */}
       <Box sx={{ px: 3, mb: 3 }}>
         <TextField
           fullWidth
           variant="outlined"
-          placeholder="Buscar recompensas..."
+          placeholder="Search rewards..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           InputProps={{
@@ -220,7 +216,7 @@ const Rewards: React.FC = () => {
       {/* Rewards List */}
       <Box sx={{ px: 3 }}>
         <Typography variant="h6" fontWeight={700} mb={2} color="text.primary">
-          Recompensas disponibles
+          Available Rewards
         </Typography>
         <Grid container spacing={2}>
           {filteredRewards.map((reward) => {
@@ -257,7 +253,7 @@ const Rewards: React.FC = () => {
                     </Typography>
                     <Box sx={{ mb: 1 }}>
                       <Typography variant="body2" color="text.secondary" gutterBottom>
-                        {reward.points} puntos
+                        {reward.points} points
                       </Typography>
                       <LinearProgress 
                         variant="determinate" 
@@ -272,7 +268,7 @@ const Rewards: React.FC = () => {
                         }} 
                       />
                     </Box>
-                    <Tooltip title={canRedeem ? "¡Puedes canjear esta recompensa!" : "Necesitas más puntos para canjear esta recompensa"}>
+                    <Tooltip title={canRedeem ? "You can redeem this reward!" : "You need more points to redeem this reward"}>
                       <Button
                         variant="contained"
                         color={canRedeem ? "success" : "primary"}
@@ -281,7 +277,7 @@ const Rewards: React.FC = () => {
                         onClick={() => canRedeem && handleRedeem(reward)}
                         disabled={!canRedeem}
                       >
-                        {canRedeem ? "Canjear" : "Puntos insuficientes"}
+                        {canRedeem ? "Redeem" : "Insufficient Points"}
                       </Button>
                     </Tooltip>
                   </CardContent>
@@ -295,7 +291,7 @@ const Rewards: React.FC = () => {
       {/* Redeem Dialog */}
       <Dialog open={showRedeemDialog} onClose={() => setShowRedeemDialog(false)}>
         <DialogTitle>
-          Confirmar Canje
+          Confirm Redeem
           <IconButton
             aria-label="close"
             onClick={() => setShowRedeemDialog(false)}
@@ -306,13 +302,13 @@ const Rewards: React.FC = () => {
         </DialogTitle>
         <DialogContent>
           <Typography>
-            ¿Estás seguro que deseas canjear {selectedReward?.name} por {selectedReward?.points} puntos?
+            Are you sure you want to redeem {selectedReward?.name} for {selectedReward?.points} points?
           </Typography>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setShowRedeemDialog(false)}>Cancelar</Button>
+          <Button onClick={() => setShowRedeemDialog(false)}>Cancel</Button>
           <Button onClick={confirmRedeem} variant="contained" color="success">
-            Confirmar
+            Confirm
           </Button>
         </DialogActions>
       </Dialog>
@@ -320,7 +316,7 @@ const Rewards: React.FC = () => {
       {/* History Dialog */}
       <Dialog open={showHistory} onClose={() => setShowHistory(false)} maxWidth="sm" fullWidth>
         <DialogTitle>
-          Historial de Recompensas
+          Redeem History
           <IconButton
             aria-label="close"
             onClick={() => setShowHistory(false)}
@@ -331,16 +327,16 @@ const Rewards: React.FC = () => {
         </DialogTitle>
         <DialogContent>
           <Typography variant="h6" gutterBottom>
-            Recompensas Canjeadas
+            Redeemed Rewards
           </Typography>
           <Box sx={{ mt: 2 }}>
             <Typography variant="body2" color="text.secondary">
-              No has canjeado ninguna recompensa aún.
+              You haven't redeemed any rewards yet.
             </Typography>
           </Box>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setShowHistory(false)}>Cerrar</Button>
+          <Button onClick={() => setShowHistory(false)}>Close</Button>
         </DialogActions>
       </Dialog>
     </Box>

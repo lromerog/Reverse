@@ -139,18 +139,18 @@ const Products: React.FC = () => {
           $199.99
         </Typography>
         <Box sx={{ display: 'flex', gap: 1, mb: 2 }}>
-          <Chip label="Nuevo" color="error" size="small" />
-          <Chip label="Envío gratis" color="success" size="small" />
+          <Chip label="New" color="error" size="small" />
+          <Chip label="Free Shipping" color="success" size="small" />
         </Box>
         <Typography variant="body1" color="text.secondary" paragraph>
-          El Nike Air Max 2024 combina la última tecnología de amortiguación con un diseño moderno y atrevido. Perfecto para corredores que buscan máximo confort y estilo.
+          The Nike Air Max 2024 combines the latest cushioning technology with a modern and bold design. Perfect for runners seeking maximum comfort and style.
         </Typography>
       </Box>
 
       {/* Size Selector */}
       <Box sx={{ px: 3, mt: 3 }}>
         <Typography variant="subtitle1" fontWeight={700} gutterBottom>
-          Selecciona tu talla
+          Select your size
         </Typography>
         <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
           {sizes.map((size) => (
@@ -176,39 +176,39 @@ const Products: React.FC = () => {
           disabled={!selectedSize}
           sx={{ borderRadius: 3, fontWeight: 700, py: 1.5 }}
         >
-          Agregar al carrito
+          Add to cart
         </Button>
       </Box>
 
       {/* Product Details Tabs */}
       <Box sx={{ px: 3, mt: 4 }}>
         <Tabs value={tabValue} onChange={handleTabChange} centered>
-          <Tab label="Detalles" />
-          <Tab label="Especificaciones" />
-          <Tab label="Reseñas" />
+          <Tab label="Details" />
+          <Tab label="Specifications" />
+          <Tab label="Reviews" />
         </Tabs>
         <Box sx={{ mt: 2 }}>
           {tabValue === 0 && (
             <Typography variant="body1" color="text.secondary">
-              • Amortiguación Air Max de última generación
-              • Material transpirable y ligero
-              • Diseño moderno y atrevido
-              • Suela de goma duradera
-              • Ideal para corredores de todos los niveles
+              • Latest generation Air Max cushioning
+              • Breathable and lightweight material
+              • Modern and bold design
+              • Durable rubber outsole
+              • Ideal for all levels of runners
             </Typography>
           )}
           {tabValue === 1 && (
             <Typography variant="body1" color="text.secondary">
-              • Peso: 280g
-              • Material: Malla transpirable
-              • Tecnología: Air Max
-              • Tipo: Running
-              • Cierre: Cordones
+              • Weight: 280g
+              • Material: Breathable mesh
+              • Technology: Air Max
+              • Type: Running
+              • Closure: Laces
             </Typography>
           )}
           {tabValue === 2 && (
             <Typography variant="body1" color="text.secondary">
-              No hay reseñas aún. ¡Sé el primero en opinar!
+              No reviews yet. Be the first to review!
             </Typography>
           )}
         </Box>
@@ -217,7 +217,7 @@ const Products: React.FC = () => {
       {/* Related Products */}
       <Box sx={{ px: 3, mt: 4 }}>
         <Typography variant="h6" fontWeight={700} mb={2}>
-          Productos Relacionados
+          Related Products
         </Typography>
         <Grid container spacing={2}>
           {relatedProducts.map((product) => (

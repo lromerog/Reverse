@@ -75,6 +75,51 @@ const Dashboard: React.FC = () => {
         </Card>
       </Box>
 
+      {/* Demo Card */}
+      <Box sx={{ px: 3, mt: 2, mb: 4 }}>
+        <Card 
+          sx={{ 
+            borderRadius: 4, 
+            boxShadow: 3, 
+            bgcolor: '#F5B301', 
+            color: '#fff', 
+            p: 2,
+            cursor: 'pointer',
+            transition: 'transform 0.2s',
+            '&:hover': {
+              transform: 'scale(1.02)'
+            }
+          }}
+          onClick={() => navigate('/demo')}
+        >
+          <CardContent sx={{ display: 'flex', alignItems: 'center' }}>
+            <Box sx={{ mr: 2 }}>
+              <Typography variant="h6" fontWeight={700} color="#fff">
+                Try Our Tablet Demo
+              </Typography>
+              <Typography variant="body2" color="rgba(255,255,255,0.9)">
+                Experience the Reverse app in our interactive tablet simulator
+              </Typography>
+            </Box>
+            <Box flex={1} />
+            <Button
+              variant="contained"
+              sx={{ 
+                bgcolor: '#fff', 
+                color: '#F5B301',
+                '&:hover': {
+                  bgcolor: 'rgba(255,255,255,0.9)'
+                },
+                borderRadius: 3, 
+                fontWeight: 700 
+              }}
+            >
+              Launch Demo
+            </Button>
+          </CardContent>
+        </Card>
+      </Box>
+
       {/* Featured Products */}
       <Box sx={{ px: 3 }}>
         <Typography variant="h6" fontWeight={700} mb={2} color="text.primary">

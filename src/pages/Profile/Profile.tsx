@@ -78,7 +78,7 @@ const Profile: React.FC = () => {
         zIndex: 1000,
       }}>
         <Typography variant="h6" fontWeight={700} color="text.primary">
-          Perfil
+          Profile
         </Typography>
         <Box flex={1} />
         <IconButton>
@@ -117,7 +117,7 @@ const Profile: React.FC = () => {
             <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 2 }}>
               <Box>
                 <Typography variant="subtitle2" color="text.secondary">
-                  Nivel
+                  Level
                 </Typography>
                 <Typography variant="h6" fontWeight={700}>
                   {userInfo.level}
@@ -125,7 +125,7 @@ const Profile: React.FC = () => {
               </Box>
               <Box>
                 <Typography variant="subtitle2" color="text.secondary">
-                  Puntos
+                  Points
                 </Typography>
                 <Typography variant="h6" fontWeight={700}>
                   {userInfo.points}
@@ -133,7 +133,7 @@ const Profile: React.FC = () => {
               </Box>
               <Box>
                 <Typography variant="subtitle2" color="text.secondary">
-                  Miembro desde
+                  Member since
                 </Typography>
                 <Typography variant="h6" fontWeight={700}>
                   {userInfo.memberSince}
@@ -147,9 +147,9 @@ const Profile: React.FC = () => {
       {/* Tabs */}
       <Box sx={{ px: 3, mt: 3 }}>
         <Tabs value={tabValue} onChange={handleTabChange} centered>
-          <Tab label="Mis Pedidos" />
-          <Tab label="Favoritos" />
-          <Tab label="Configuración" />
+          <Tab label="My Orders" />
+          <Tab label="Favorites" />
+          <Tab label="Settings" />
         </Tabs>
       </Box>
 
@@ -162,7 +162,7 @@ const Profile: React.FC = () => {
                 <CardContent>
                   <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
                     <Typography variant="subtitle1" fontWeight={700}>
-                      Pedido #{order.id}
+                      Order #{order.id}
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
                       {order.date}
@@ -176,7 +176,7 @@ const Profile: React.FC = () => {
                       {order.total}
                     </Typography>
                     <Chip 
-                      label={order.status} 
+                      label={order.status === 'Entregado' ? 'Delivered' : (order.status === 'En tránsito' ? 'In transit' : order.status)} 
                       color={order.status === 'Entregado' ? 'success' : 'primary'}
                       size="small"
                     />
@@ -190,7 +190,7 @@ const Profile: React.FC = () => {
         {tabValue === 1 && (
           <Box>
             <Typography variant="body1" color="text.secondary" align="center" sx={{ py: 4 }}>
-              No tienes productos favoritos aún
+              You don't have favorite products yet
             </Typography>
           </Box>
         )}
@@ -203,8 +203,8 @@ const Profile: React.FC = () => {
                   <ShoppingBagIcon />
                 </ListItemIcon>
                 <ListItemText 
-                  primary="Historial de compras" 
-                  secondary="Ver todos tus pedidos anteriores"
+                  primary="Order History" 
+                  secondary="View all your previous orders"
                 />
               </ListItem>
               <Divider />
@@ -213,8 +213,8 @@ const Profile: React.FC = () => {
                   <StarIcon />
                 </ListItemIcon>
                 <ListItemText 
-                  primary="Mis recompensas" 
-                  secondary="Gestiona tus puntos y recompensas"
+                  primary="My Rewards" 
+                  secondary="Manage your points and rewards"
                 />
               </ListItem>
               <Divider />
@@ -223,15 +223,15 @@ const Profile: React.FC = () => {
                   <FavoriteIcon />
                 </ListItemIcon>
                 <ListItemText 
-                  primary="Favoritos" 
-                  secondary="Productos guardados"
+                  primary="Favorites" 
+                  secondary="Saved products"
                 />
               </ListItem>
               <Divider />
               <ListItem>
                 <ListItemText 
-                  primary="Notificaciones" 
-                  secondary="Recibe actualizaciones sobre tus pedidos"
+                  primary="Notifications" 
+                  secondary="Receive updates about your orders"
                 />
                 <Switch 
                   checked={notifications}
@@ -242,7 +242,7 @@ const Profile: React.FC = () => {
               <ListItem>
                 <ListItemText 
                   primary="Marketing" 
-                  secondary="Recibe ofertas y promociones"
+                  secondary="Receive offers and promotions"
                 />
                 <Switch 
                   checked={marketing}
@@ -255,7 +255,7 @@ const Profile: React.FC = () => {
                   <ExitToAppIcon />
                 </ListItemIcon>
                 <ListItemText 
-                  primary="Cerrar sesión" 
+                  primary="Log out" 
                   primaryTypographyProps={{ color: 'error' }}
                 />
               </ListItem>
@@ -266,11 +266,11 @@ const Profile: React.FC = () => {
 
       {/* Edit Profile Dialog */}
       <Dialog open={showEditDialog} onClose={() => setShowEditDialog(false)}>
-        <DialogTitle>Editar Perfil</DialogTitle>
+        <DialogTitle>Edit Profile</DialogTitle>
         <DialogContent>
           <TextField
             fullWidth
-            label="Nombre"
+            label="Name"
             defaultValue={userInfo.name}
             margin="normal"
           />
@@ -282,9 +282,9 @@ const Profile: React.FC = () => {
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setShowEditDialog(false)}>Cancelar</Button>
+          <Button onClick={() => setShowEditDialog(false)}>Cancel</Button>
           <Button variant="contained" onClick={() => setShowEditDialog(false)}>
-            Guardar
+            Save
           </Button>
         </DialogActions>
       </Dialog>

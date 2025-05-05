@@ -26,19 +26,19 @@ const slideUp = keyframes`
 const categories = [
   {
     id: 1,
-    name: 'Calzado',
+    name: 'Shoes',
     image: process.env.PUBLIC_URL + '/assets/shoes-category.png',
     color: '#FF6B6B',
   },
   {
     id: 2,
-    name: 'Ropa',
+    name: 'Apparel',
     image: process.env.PUBLIC_URL + '/assets/clothing-category.png',
     color: '#4ECDC4',
   },
   {
     id: 3,
-    name: 'Accesorios',
+    name: 'Accessories',
     image: process.env.PUBLIC_URL + '/assets/accessories-category.png',
     color: '#FFD93D',
   },
@@ -50,7 +50,7 @@ const featuredProducts = [
     name: 'Nike Air Max 2024',
     image: process.env.PUBLIC_URL + '/assets/airmax-placeholder.png',
     price: '$199.99',
-    category: 'Calzado',
+    category: 'Shoes',
     isNew: true,
   },
   {
@@ -58,7 +58,7 @@ const featuredProducts = [
     name: 'Nike Dri-FIT Tee',
     image: process.env.PUBLIC_URL + '/assets/drifit-placeholder.png',
     price: '$49.99',
-    category: 'Ropa',
+    category: 'Apparel',
     isNew: false,
   },
   {
@@ -66,7 +66,7 @@ const featuredProducts = [
     name: 'Nike Sportswear Club Fleece',
     image: process.env.PUBLIC_URL + '/assets/fleece-placeholder.png',
     price: '$89.99',
-    category: 'Ropa',
+    category: 'Apparel',
     isNew: true,
   },
   {
@@ -74,7 +74,7 @@ const featuredProducts = [
     name: 'Nike Air Force 1',
     image: process.env.PUBLIC_URL + '/assets/airforce-placeholder.png',
     price: '$129.99',
-    category: 'Calzado',
+    category: 'Shoes',
     isNew: false,
   },
 ];
@@ -115,7 +115,7 @@ const Discover: React.FC = () => {
           }}
         />
         <Typography variant="h6" fontWeight={700} color="text.primary">
-          Descubrir
+          Discover
         </Typography>
         <Box flex={1} />
         <IconButton>
@@ -139,10 +139,10 @@ const Discover: React.FC = () => {
         }}>
           <Box sx={{ p: 4, position: 'relative', zIndex: 1 }}>
             <Typography variant="h4" fontWeight={700} gutterBottom>
-              Nueva Colección
+              New Collection
             </Typography>
             <Typography variant="body1" sx={{ mb: 3, opacity: 0.8 }}>
-              Descubre lo último en innovación y estilo
+              Discover the latest in innovation and style
             </Typography>
             <Button 
               variant="contained" 
@@ -153,7 +153,7 @@ const Discover: React.FC = () => {
                 px: 4,
               }}
             >
-              Explorar
+              Explore
             </Button>
           </Box>
           <Box
@@ -180,7 +180,7 @@ const Discover: React.FC = () => {
       {/* Categories */}
       <Box sx={{ px: 3, mb: 4 }}>
         <Typography variant="h6" fontWeight={700} mb={2} color="text.primary">
-          Categorías
+          Categories
         </Typography>
         <Grid container spacing={2}>
           {categories.map((category) => (
@@ -214,7 +214,7 @@ const Discover: React.FC = () => {
       {/* Featured Products */}
       <Box sx={{ px: 3 }}>
         <Typography variant="h6" fontWeight={700} mb={2} color="text.primary">
-          Productos Destacados
+          Featured Products
         </Typography>
         <Grid container spacing={2}>
           {featuredProducts.map((product) => (
@@ -251,7 +251,7 @@ const Discover: React.FC = () => {
                         fontWeight: 700,
                       }}
                     >
-                      NUEVO
+                      NEW
                     </Box>
                   )}
                   <IconButton

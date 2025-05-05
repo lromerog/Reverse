@@ -58,11 +58,11 @@ const BottomNav: React.FC = () => {
         }}
         showLabels
       >
-        <BottomNavigationAction label="Inicio" icon={<HomeIcon />} />
-        <BottomNavigationAction label="Descubrir" icon={<ExploreIcon />} />
-        <BottomNavigationAction label="Productos" icon={<ShoppingBagIcon />} />
-        <BottomNavigationAction label="Perfil" icon={<PersonIcon />} />
-        <BottomNavigationAction label="Recompensas" icon={<StarIcon />} />
+        <BottomNavigationAction label="Home" icon={<HomeIcon />} />
+        <BottomNavigationAction label="Discover" icon={<ExploreIcon />} />
+        <BottomNavigationAction label="Products" icon={<ShoppingBagIcon />} />
+        <BottomNavigationAction label="Profile" icon={<PersonIcon />} />
+        <BottomNavigationAction label="Rewards" icon={<StarIcon />} />
       </BottomNavigation>
     </Paper>
   );

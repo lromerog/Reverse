@@ -1,7 +1,22 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
+import { keyframes } from '@mui/system';
+
+const fadeInScale = keyframes`
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+`;
 
 const Splash: React.FC = () => {
   const navigate = useNavigate();
@@ -21,21 +36,19 @@ const Splash: React.FC = () => {
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        bgcolor: '#fff',
+        bgcolor: '#232323',
       }}
     >
-      {/* Logo Nike (placeholder si no hay imagen) */}
       <Box
         component="img"
-        src={process.env.PUBLIC_URL + '/assets/nike-swoosh.png'}
-        alt="Nike Logo"
-        sx={{ width: 120, height: 120, mb: 3 }}
-        onError={(e: any) => {
-          e.target.onerror = null;
-          e.target.src = 'https://upload.wikimedia.org/wikipedia/commons/a/a6/Logo_NIKE.svg';
+        src="/logo.png"
+        alt="Reverse Logo"
+        sx={{
+          width: 200,
+          height: 'auto',
+          animation: `${fadeInScale} 1.5s ease-out forwards`,
         }}
       />
-      {/* Puedes agregar animación aquí si tu Figma la tiene */}
     </Box>
   );
 };

@@ -25,17 +25,17 @@ router.delete('/products/:id', authMiddleware, adminMiddleware, ProductControlle
 
 // Rutas de pedidos
 router.get('/orders', authMiddleware, OrderController.getUserOrders);
-router.get('/orders/:id', authMiddleware, OrderController.getOrderById);
+// router.get('/orders/:id', authMiddleware, OrderController.getOrderById);
 router.post('/orders', authMiddleware, OrderController.create);
 router.put('/orders/:id/status', authMiddleware, adminMiddleware, OrderController.updateStatus);
 router.get('/orders/stats', authMiddleware, adminMiddleware, OrderController.getStats);
 
 // Rutas de recompensas
-router.get('/rewards', authMiddleware, RewardController.getAvailableRewards);
-router.get('/rewards/redeemed', authMiddleware, RewardController.getRedeemedRewards);
-router.post('/rewards/:id/redeem', authMiddleware, RewardController.redeem);
-router.post('/rewards', authMiddleware, adminMiddleware, RewardController.create);
-router.put('/rewards/:id', authMiddleware, adminMiddleware, RewardController.update);
-router.delete('/rewards/:id', authMiddleware, adminMiddleware, RewardController.delete);
+// router.get('/rewards', authMiddleware, RewardController.getAvailableRewards);
+// router.get('/rewards/redeemed', authMiddleware, RewardController.getRedeemedRewards);
+// router.post('/rewards/:id/redeem', authMiddleware, RewardController.redeem);
+// router.post('/rewards', authMiddleware, adminMiddleware, RewardController.create);
+// router.put('/rewards/:id', authMiddleware, adminMiddleware, RewardController.update);
+// router.delete('/rewards/:id', authMiddleware, adminMiddleware, RewardController.delete);
 
 export default router; 
