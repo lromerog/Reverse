@@ -834,26 +834,35 @@ const Demo: React.FC = () => {
           <button 
             className={`nav-item ${activeTab === 'home' ? 'active' : ''}`}
             onClick={() => handleTabChange('home')}
+            aria-label="Home"
           >
-            <span>{activeTab === 'home' ? '🏠' : '🏡'}</span>
+            <span>
+              {/* Home Icon SVG */}
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke={activeTab === 'home' ? '#000' : '#636e72'} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1v-4H9v4a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5z"/></svg>
+            </span>
             <span>Home</span>
           </button>
           <button 
             className={`nav-item ${activeTab === 'discover' ? 'active' : ''}`}
             onClick={() => handleTabChange('discover')}
+            aria-label="Discover"
           >
-            <span>{activeTab === 'discover' ? '🔍' : '🔎'}</span>
+            <span>
+              {/* Discover/Explore Icon SVG */}
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke={activeTab === 'discover' ? '#000' : '#636e72'} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="10 10 16 8 14 14 8 16 10 10"/></svg>
+            </span>
             <span>Discover</span>
           </button>
           <button 
             className={`nav-item ${activeTab === 'reverse' ? 'active' : ''}`}
             onClick={() => handleTabChange('reverse')}
+            aria-label="Reverse"
           >
             <img 
               src="/logo.png" 
               alt="Reverse" 
               style={{ 
-                height: '24px', 
+                height: '32px', 
                 width: 'auto',
                 filter: activeTab === 'reverse' ? 'drop-shadow(0 2px 4px rgba(245, 179, 1, 0.3))' : 'none'
               }} 
@@ -863,15 +872,23 @@ const Demo: React.FC = () => {
           <button 
             className={`nav-item ${activeTab === 'rewards' ? 'active' : ''}`}
             onClick={() => handleTabChange('rewards')}
+            aria-label="Rewards"
           >
-            <span>{activeTab === 'rewards' ? '⭐' : '✨'}</span>
+            <span>
+              {/* Rewards/Trophy Icon SVG */}
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke={activeTab === 'rewards' ? '#000' : '#636e72'} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M8 21h8M12 17v4M17 5V3H7v2M17 5a5 5 0 0 1-10 0"/><rect x="2" y="5" width="20" height="7" rx="2"/></svg>
+            </span>
             <span>Rewards</span>
           </button>
           <button 
             className={`nav-item ${activeTab === 'map' ? 'active' : ''}`}
             onClick={() => handleTabChange('map')}
+            aria-label="Map"
           >
-            <span>{activeTab === 'map' ? '🗺️' : '📍'}</span>
+            <span>
+              {/* Map Icon SVG */}
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke={activeTab === 'map' ? '#000' : '#636e72'} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/></svg>
+            </span>
             <span>Map</span>
           </button>
         </div>
