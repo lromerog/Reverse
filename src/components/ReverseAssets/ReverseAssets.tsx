@@ -15,8 +15,8 @@ const ReverseAssets: React.FC = () => (
       Reverse brand assets
     </Typography>
     <Box sx={{ my: 2, display: 'flex', gap: 2 }}>
-      <img src="/assets/reverse-logo-white.png" alt="Reverse Logo White" style={{ height: 60, background: '#181818', borderRadius: 8 }} />
-      <img src="/assets/reverse-logo-black.png" alt="Reverse Logo Black" style={{ height: 60, background: '#fff', borderRadius: 8 }} />
+      <img src="/assets/images/logos/reverse-logo-white.png" alt="Reverse Logo White" style={{ height: 60, background: '#181818', borderRadius: 8 }} />
+      <img src="/assets/images/logos/reverse-logo-black.png" alt="Reverse Logo Black" style={{ height: 60, background: '#fff', borderRadius: 8 }} />
     </Box>
     <Grid container spacing={2} sx={{ mt: 2 }}>
       {reverseColors.map((c) => (

@@ -106,12 +106,12 @@ const Discover: React.FC = () => {
       }}>
         <Box
           component="img"
-          src={process.env.PUBLIC_URL + '/assets/nike-swoosh.png'}
+          src={process.env.PUBLIC_URL + '/assets/images/nike-swoosh.png'}
           alt="Nike Logo"
           sx={{ width: 40, height: 40, mr: 2 }}
           onError={(e: any) => {
             e.target.onerror = null;
-            e.target.src = 'https://upload.wikimedia.org/wikipedia/commons/a/a6/Logo_NIKE.svg';
+            e.target.src = '/assets/images/nike-swoosh.png';
           }}
         />
         <Typography variant="h6" fontWeight={700} color="text.primary">

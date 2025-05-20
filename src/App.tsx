@@ -1,91 +1,88 @@
-import React from 'react';
+import { Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
-import Splash from './pages/Splash/Splash';
-import Welcome from './pages/Welcome/Welcome';
-import Signup from './pages/Signup/Signup';
-import VerifyEmail from './pages/VerifyEmail/VerifyEmail';
-import Dashboard from './pages/Dashboard/Dashboard';
-import Rewards from './pages/Rewards/Rewards';
-import Discover from './pages/Discover/Discover';
-import EditProfile from './pages/EditProfile/EditProfile';
-import Settings from './pages/Settings/Settings';
-import Home from './pages/Home/Home';
-import Reverse from './pages/Reverse/Reverse';
-import Products from './pages/Products/Products';
-import ProductDetail from './pages/ProductDetail/ProductDetail';
-import Cart from './pages/Cart/Cart';
-import Profile from './pages/Profile/Profile';
-import Login from './pages/Login/Login';
-import QRScanner from './pages/QRScanner/QRScanner';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
+import { CircularProgress, Box } from '@mui/material';
+import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary';
 import BottomNav from './components/BottomNav/BottomNav';
-import Demo from './pages/Demo';
 import './App.css';
 
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: '#000000',
-    },
-    secondary: {
-      main: '#F5B301',
-    },
-    background: {
-      default: '#F7F7F7',
-    },
-  },
-  typography: {
-    fontFamily: '"Helvetica Neue", Arial, sans-serif',
-  },
-  components: {
-    MuiButton: {
-      styleOverrides: {
-        root: {
-          textTransform: 'none',
-        },
-      },
-    },
-  },
-});
+// Lazy load components for better performance
+const Splash = lazy(() => import('./pages/Splash/Splash'));
+const Welcome = lazy(() => import('./pages/Welcome/Welcome'));
+const Signup = lazy(() => import('./pages/Signup/Signup'));
+const VerifyEmail = lazy(() => import('./pages/VerifyEmail/VerifyEmail'));
+const Dashboard = lazy(() => import('./pages/Dashboard/Dashboard'));
+const Rewards = lazy(() => import('./pages/Rewards/Rewards'));
+const Discover = lazy(() => import('./pages/Discover/Discover'));
+const EditProfile = lazy(() => import('./pages/EditProfile/EditProfile'));
+const Settings = lazy(() => import('./pages/Settings/Settings'));
+const Home = lazy(() => import('./pages/Home/Home'));
+const Reverse = lazy(() => import('./pages/Reverse/Reverse'));
+const Products = lazy(() => import('./pages/Products/Products'));
+const ProductDetail = lazy(() => import('./pages/ProductDetail/ProductDetail'));
+const Cart = lazy(() => import('./pages/Cart/Cart'));
+const Profile = lazy(() => import('./pages/Profile/Profile'));
+const Login = lazy(() => import('./pages/Login/Login'));
+const QRScanner = lazy(() => import('./pages/QRScanner/QRScanner'));
+const Demo = lazy(() => import('./pages/Demo'));
+
+// Loading component
+const LoadingFallback = () => (
+  <Box 
+    display="flex" 
+    justifyContent="center" 
+    alignItems="center" 
+    minHeight="100vh"
+    bgcolor="background.default"
+  >
+    <CircularProgress color="secondary" />
+  </Box>
+);
+
+// Route configuration
+const ROUTES = [
+  { path: '/', element: <Splash /> },
+  { path: '/welcome', element: <Welcome /> },
+  { path: '/signup', element: <Signup /> },
+  { path: '/verify-email', element: <VerifyEmail /> },
+  { path: '/dashboard', element: <Dashboard /> },
+  { path: '/rewards', element: <Rewards /> },
+  { path: '/discover', element: <Discover /> },
+  { path: '/edit-profile', element: <EditProfile /> },
+  { path: '/settings', element: <Settings /> },
+  { path: '/home', element: <Home /> },
+  { path: '/reverse', element: <Reverse /> },
+  { path: '/products', element: <Products /> },
+  { path: '/products/:id', element: <ProductDetail /> },
+  { path: '/cart', element: <Cart /> },
+  { path: '/profile', element: <Profile /> },
+  { path: '/login', element: <Login /> },
+  { path: '/qr', element: <QRScanner /> },
+  { path: '/demo', element: <Demo /> }
+];
 
 const AppRoutes: React.FC = () => {
   const location = useLocation();
+  const showBottomNav = location.pathname !== '/demo';
+
   return (
-    <>
-      <Routes>
-        <Route path="/" element={<Splash />} />
-        <Route path="/welcome" element={<Welcome />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/verify-email" element={<VerifyEmail />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/rewards" element={<Rewards />} />
-        <Route path="/discover" element={<Discover />} />
-        <Route path="/edit-profile" element={<EditProfile />} />
-        <Route path="/settings" element={<Settings />} />
-        <Route path="/home" element={<Home />} />
-        <Route path="/reverse" element={<Reverse />} />
-        <Route path="/products" element={<Products />} />
-        <Route path="/products/:id" element={<ProductDetail />} />
-        <Route path="/cart" element={<Cart />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/qr" element={<QRScanner />} />
-        <Route path="/demo" element={<Demo />} />
-      </Routes>
-      {location.pathname !== '/demo' && <BottomNav />}
-    </>
+    <ErrorBoundary>
+      <Suspense fallback={<LoadingFallback />}>
+        <Routes>
+          {ROUTES.map(({ path, element }) => (
+            <Route key={path} path={path} element={element} />
+          ))}
+        </Routes>
+        {showBottomNav && <BottomNav />}
+      </Suspense>
+    </ErrorBoundary>
   );
 };
 
 const App: React.FC = () => {
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <Router>
-        <AppRoutes />
-      </Router>
-    </ThemeProvider>
+    <Router>
+      <AppRoutes />
+    </Router>
   );
 };
 

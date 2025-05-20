@@ -8,14 +8,14 @@ const cartItems = [
     id: '1',
     name: 'Camiseta justRecycle',
     price: 25,
-    image: '/assets/tshirt1.png',
+    image: '/assets/images/products/tshirt1.png',
     quantity: 2,
   },
   {
     id: '2',
     name: 'Camiseta Reverse',
     price: 30,
-    image: '/assets/tshirt2.png',
+    image: '/assets/images/products/tshirt2.png',
     quantity: 1,
   },
 ];

@@ -4,15 +4,23 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { ProductProvider } from './context/ProductContext';
+import { ThemeProvider } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
+import theme from './styles/theme';
+import './i18n';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
+
 root.render(
   <React.StrictMode>
-    <ProductProvider>
-      <App />
-    </ProductProvider>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <ProductProvider>
+        <App />
+      </ProductProvider>
+    </ThemeProvider>
   </React.StrictMode>
 );
 

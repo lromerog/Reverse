@@ -1,6 +1,13 @@
 import React, { useState } from 'react';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
+import {
+  Box,
+  Typography,
+  IconButton,
+  Tabs,
+  Tab,
+  Paper,
+  useTheme
+} from '@mui/material';
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import Card from '@mui/material/Card';
@@ -19,10 +26,12 @@ import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
-import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import HistoryIcon from '@mui/icons-material/History';
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
+import { useTranslation } from 'react-i18next';
+import RewardVoucher from '../../components/RewardVoucher/RewardVoucher';
+import { useGeolocation } from '../../hooks/useGeolocation';
 
 const fadeIn = keyframes`
   from { opacity: 0; }
@@ -81,6 +90,8 @@ const levels = [
 ];
 
 const Rewards: React.FC = () => {
+  const { t } = useTranslation();
+  const theme = useTheme();
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [showHistory, setShowHistory] = useState(false);
@@ -90,6 +101,12 @@ const Rewards: React.FC = () => {
   const userLevel = levels.find(level => userPoints >= level.points) || levels[0];
   const nextLevel = levels.find(level => level.points > userPoints) || levels[levels.length - 1];
   const progressToNextLevel = ((userPoints - userLevel.points) / (nextLevel.points - userLevel.points)) * 100;
+  const [activeTab, setActiveTab] = useState(0);
+  const { latitude, longitude, error: locationError } = useGeolocation();
+
+  const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
+    setActiveTab(newValue);
+  };
 
   const filteredRewards = rewards.filter(reward => {
     const matchesSearch = reward.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -111,10 +128,18 @@ const Rewards: React.FC = () => {
   return (
     <Box sx={{ bgcolor: '#F7F7F7', minHeight: '100vh', pb: 4 }}>
       {/* Header */}
-      <Box sx={{ display: 'flex', alignItems: 'center', px: 3, pt: 3, pb: 1 }}>
+      <Box sx={{ 
+        display: 'flex', 
+        alignItems: 'center', 
+        px: 3, 
+        pt: 3, 
+        pb: 1,
+        background: 'linear-gradient(135deg, #232323 0%, #1a1a1a 100%)',
+        color: '#fff'
+      }}>
         <Box
           component="img"
-          src={process.env.PUBLIC_URL + '/assets/nike-swoosh.png'}
+          src="/assets/images/nike-swoosh.png"
           alt="Reverse Logo"
           sx={{ width: 40, height: 40, mr: 2 }}
           onError={(e: any) => {
@@ -122,14 +147,23 @@ const Rewards: React.FC = () => {
             e.target.src = 'https://upload.wikimedia.org/wikipedia/commons/a/a6/Logo_NIKE.svg';
           }}
         />
-        <Typography variant="h6" fontWeight={700} color="text.primary">
-          Reverse
+        <Typography variant="h6" fontWeight={700}>
+          {t('rewards.title')}
         </Typography>
         <Box flex={1} />
-        <IconButton onClick={() => setShowHistory(true)}>
+        <IconButton onClick={() => setShowHistory(true)} sx={{ color: '#fff' }}>
           <HistoryIcon />
         </IconButton>
       </Box>
+
+      {/* Location Status */}
+      {locationError && (
+        <Paper sx={{ m: 2, p: 2, bgcolor: '#fff3f3', color: '#d32f2f' }}>
+          <Typography variant="body2">
+            {locationError}
+          </Typography>
+        </Paper>
+      )}
 
       {/* Level Card */}
       <Card sx={{ borderRadius: 4, boxShadow: 3, bgcolor: '#111', color: '#fff', p: 2 }}>
@@ -211,6 +245,39 @@ const Rewards: React.FC = () => {
             />
           ))}
         </Box>
+      </Box>
+
+      {/* Main Content */}
+      <Box sx={{ p: 3 }}>
+        <Tabs
+          value={activeTab}
+          onChange={handleTabChange}
+          sx={{
+            mb: 3,
+            '& .MuiTab-root': {
+              textTransform: 'none',
+              fontWeight: 600,
+              fontSize: '1rem'
+            }
+          }}
+        >
+          <Tab label={t('rewards.activeVouchers')} />
+          <Tab label={t('rewards.expiredVouchers')} />
+        </Tabs>
+
+        {activeTab === 0 && (
+          <Box>
+            <RewardVoucher />
+          </Box>
+        )}
+
+        {activeTab === 1 && (
+          <Box sx={{ textAlign: 'center', py: 4 }}>
+            <Typography variant="body1" color="text.secondary">
+              {t('rewards.noExpiredVouchers')}
+            </Typography>
+          </Box>
+        )}
       </Box>
 
       {/* Rewards List */}

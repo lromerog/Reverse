@@ -37,12 +37,12 @@ const VerifyEmail: React.FC = () => {
         {/* Logo Nike en la parte superior */}
         <Box
           component="img"
-          src={process.env.PUBLIC_URL + '/assets/nike-swoosh.png'}
+          src={process.env.PUBLIC_URL + '/assets/images/nike-swoosh.png'}
           alt="Nike Logo"
           sx={{ width: 60, height: 60, mb: 2 }}
           onError={(e: any) => {
             e.target.onerror = null;
-            e.target.src = 'https://upload.wikimedia.org/wikipedia/commons/a/a6/Logo_NIKE.svg';
+            e.target.src = '/assets/images/nike-swoosh.png';
           }}
         />
         <MarkEmailReadRoundedIcon sx={{ fontSize: 56, color: 'primary.main', mb: 2 }} />

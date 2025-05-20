@@ -1,0 +1,42 @@
+{
+  "common": {
+    "welcome": "Welcome to Nike Tablet App",
+    "login": "Login",
+    "logout": "Logout",
+    "search": "Search",
+    "cart": "Cart",
+    "profile": "Profile",
+    "copy": "Copy",
+    "download": "Download",
+    "cancel": "Cancel",
+    "generate": "Generate"
+  },
+  "products": {
+    "title": "Products",
+    "addToCart": "Add to Cart",
+    "price": "Price",
+    "size": "Size",
+    "color": "Color"
+  },
+  "rewards": {
+    "title": "Rewards",
+    "generateVoucher": "Generate Voucher",
+    "createVoucher": "Create Voucher",
+    "voucherTitle": "Your Reward Voucher",
+    "defaultDescription": "Enjoy your exclusive discount on your next purchase",
+    "validUntil": "Valid until",
+    "description": "Description",
+    "discountAmount": "Discount Amount",
+    "discountType": "Discount Type",
+    "percentage": "Percentage",
+    "fixedAmount": "Fixed Amount",
+    "history": "Voucher History",
+    "activeVouchers": "Active Vouchers",
+    "expiredVouchers": "Expired Vouchers"
+  },
+  "errors": {
+    "general": "Something went wrong",
+    "notFound": "Page not found",
+    "unauthorized": "Please login to continue"
+  }
+} 
