@@ -1,0 +1,667 @@
+/* Base styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f5f5f5;
+    color: #333;
+    line-height: 1.5;
+    height: 1000px;
+  }
+  
+  .mobile-container {
+    max-width: 480px;
+    margin: 0 auto;
+    background-color: white;
+    min-height: 100vh;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Header */
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px;
+    border-bottom: 1px solid #eee;
+    background-color: white;
+  }
+  
+  .logo {
+    font-weight: bold;
+    font-size: 24px;
+  }
+  
+  .logo-text {
+    font-weight: bold;
+    font-size: 24px;
+  }
+  
+  .logo-text.green {
+    color: #22c55e;
+  }
+  
+  .menu-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+  
+  }
+  
+  /* Main content */
+.main-content {
+  flex: 1;
+  overflow-y: auto;
+  padding-bottom: 64px; /* Space for bottom nav */
+}
+
+/* Video container */
+.video-container {
+  width: 100%;
+  position: relative;
+}
+
+.feature-video {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+  
+  /* Hero image */
+  .hero-image {
+    height: 200px;
+    width: 100%;
+    position: relative;
+    background-image: url('assets/Component 1.png') !important;
+    background-size: cover;
+    background-position: center;
+    z-index: 1;
+  }
+  
+  .hero-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    padding: 16px;
+  }
+  
+  .hero-title {
+    color: white;
+    font-size: 32px;
+    font-weight: bold;
+  }
+  
+  /* Action section */
+  .action-section {
+    padding: 16px;
+  }
+  
+  .recycle-button {
+    width: 100%;
+    padding: 16px;
+    background-color: #22c55e;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
+  .merch-text {
+    text-align: center;
+    margin-top: 16px;
+  }
+  
+  .brand-text {
+    font-weight: bold;
+  }
+  
+  .green-text {
+    color: #22c55e;
+  }
+  
+  /* Merchandise section */
+  .merchandise-section {
+    padding: px;
+    background-color: #f5f5f5;
+    display: flex;
+    flex-direction: column;
+    gap: px;
+  }
+  
+  .merch-item {
+    background-color: #1f2937;
+    color: white;
+    border-radius: px;
+    padding: 16px;
+  }
+  
+  .merch-image {
+    height: 150px;
+    background-color: #4b5563;
+    margin-bottom: 8px;
+    background-image: url('assets/Untitled design (1) 2.png');
+    background-size: cover;
+    background-position: center;
+  }
+
+  .merch-image2 {
+    height: 150px;
+    background-color: #4b5563;
+    margin-bottom: 8px;
+    background-image: url('assets/Untitled design (2) 2.png');
+    background-size: cover;
+    background-position: center;
+  }
+
+  .merch-image3 {
+    height: 150px;
+    background-color: #4b5563;
+    margin-bottom: 8px;
+    background-image: url('assets/Untitled design (5) 2.png');
+    background-size: cover;
+    background-position: center;
+  }
+
+  .merch-image4 {
+    height: 150px;
+    background-color: #4b5563;
+    margin-bottom: 8px;
+    background-image: url('assets/Untitled design (6) 2.png');
+    background-size: cover;
+    background-position: center;
+  }
+  
+  .merch-details {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .view-button {
+    background: none;
+    border: none;
+    color: #9ca3af;
+    font-size: 14px;
+    cursor: pointer;
+  }
+  
+  /* Bottom navigation */
+  .bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    max-width: 480px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-around;
+    background-color: #111111;
+    border-top: 1px solid #111111;
+    padding: 8px 0;
+    padding-top: 16px;
+    padding-bottom: 16px;
+  }
+  
+  .nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #6b7280;
+    text-decoration: none;
+    font-size: 12px;
+  }
+  
+  .nav-item.active {
+    color: #22c55e;
+  }
+  
+  .nav-item svg {
+    margin-bottom: 4px;
+  }
+  
+  /* Auth pages */
+  .auth-content {
+    padding: 24px;
+    background-color: #f5f5f5;
+  }
+  
+  .auth-title {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 24px;
+  }
+  
+  .auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+  
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .form-group label {
+    font-size: 18px;
+    font-weight: 500;
+  }
+  
+  .form-input {
+    height: 48px;
+    border-radius: 24px;
+    border: 2px solid #d1d5db;
+    padding: 0 16px;
+    font-size: 16px;
+  }
+  
+  .checkbox-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .checkbox {
+    width: 18px;
+    height: 18px;
+  }
+  
+  .checkbox-label {
+    font-size: 14px;
+    color: #6b7280;
+  }
+  
+  .auth-button {
+    height: 48px;
+    border-radius: 24px;
+    background-color: black;
+    color: white;
+    border: none;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+  }
+  
+  .auth-link {
+    text-align: center;
+    font-size: 14px;
+  }
+  
+  .auth-link a {
+    color: #6b7280;
+    text-decoration: none;
+  }
+  
+  .mt-4 {
+    margin-top: 16px;
+  }
+  
+  .divider {
+    display: flex;
+    justify-content: center;
+    margin-top: 32px;
+  }
+  
+  .divider-line {
+    width: 64px;
+    height: 4px;
+    background-color: black;
+    border-radius: 2px;
+  }
+  
+  /* Profile page */
+  .profile-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px;
+    border-bottom: 1px solid #eee;
+    background-color: white;
+  }
+  
+  .spacer {
+    width: 24px;
+  }
+  
+  .profile-content {
+    background-color: #f5f5f5;
+  }
+  
+  .profile-header-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 24px 16px 16px;
+    background-color: white;
+  }
+  
+  .profile-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background-color: #1f2937;
+    margin-bottom: 8px;
+    background-image: url('assets/profile-image.png');
+    background-size: cover;
+    background-position: center;
+  }
+  
+  .profile-name {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 4px;
+  }
+  
+  .profile-email {
+    color: #6b7280;
+    margin-bottom: 16px;
+  }
+  
+  .profile-actions {
+    display: flex;
+    gap: 8px;
+    width: 100%;
+  }
+  
+  .profile-button {
+    flex: 1;
+    padding: 8px 16px;
+    border-radius: 24px;
+    border: 2px solid #141618c2;
+    background-color: white;
+    font-size: 14px;
+    cursor: pointer;
+  }
+  
+  .settings-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+  }
+  
+  .rewards-card {
+    background-color: black;
+    background-image: url('assets/reward card.png');
+    background-size: cover;
+    color: white;
+    margin: 16px;
+    padding: 16px;
+    border-radius: 8px;
+  }
+  
+  .rewards-user {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  
+  .rewards-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #374151;
+    background-image: url('assets/Avatar.svg');
+    background-size: cover;
+    background-position: center;
+  }
+  
+  .rewards-user-name {
+    font-weight: bold;
+  }
+  
+  .rewards-user-email {
+    font-size: 14px;
+    color: #9ca3af;
+  }
+  
+  .rewards-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 16px;
+  }
+  
+  .rewards-label {
+    font-size: 14px;
+    color: #d1d5db;
+  }
+  
+  .rewards-amount {
+    font-size: 32px;
+    font-weight: bold;
+  }
+  
+  .rewards-badge {
+    background-color: #f9741600;
+   background-image: url('assets/£40 voucher.svg');
+  height: 54px;
+  width: 101px;
+    padding: 4px 12px;
+    border-radius: 4px;
+  }
+  
+  .rewards-history-button {
+    background: none;
+    border: none;
+    color: #9ca3af;
+    font-size: 14px;
+    text-decoration: underline;
+    margin-top: 8px;
+    cursor: pointer;
+    text-align: left;
+  }
+  
+  .profile-links {
+    margin: 24px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  
+  .profile-link {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px;
+    background-color: white;
+    border-radius: 8px;
+    text-decoration: none;
+    color: #333;
+    font-size: 20px;
+    font-weight: bold;
+  }
+
+
+
+
+
+
+
+
+
+
+  /* Tabs */
+.tabs {
+  display: flex;
+  border-bottom: 1px solid #eee;
+  background-color: white;
+}
+
+.tab {
+  flex: 1;
+  text-align: center;
+  padding: 16px;
+  text-decoration: none;
+  color: #6b7280;
+  font-weight: 500;
+  position: relative;
+}
+
+.tab.active {
+  color: #000;
+  font-weight: 600;
+}
+
+.tab.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background-color: #000;
+}
+
+/* Camera page */
+.camera-container {
+  position: relative;
+  width: 100%;
+  height: 60vh;
+  background-color: #000;
+  overflow: hidden;
+}
+
+#camera-feed {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.camera-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.scan-area {
+  width: 250px;
+  height: 250px;
+}
+
+.scan-instructions {
+  text-align: center;
+  padding: 16px;
+  color: #6b7280;
+}
+
+.scan-button {
+  display: block;
+  width: 80%;
+  margin: 0 auto;
+  padding: 16px;
+  background-color: #22c55e;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.scan-alternative {
+  text-align: center;
+  margin-top: 16px;
+}
+
+.alt-link {
+  color: #6b7280;
+  text-decoration: underline;
+  font-size: 14px;
+}
+
+/* Manual entry page */
+.manual-content {
+  padding: 16px;
+  background-color: #f5f5f5;
+}
+
+.form-section {
+  margin-bottom: 24px;
+}
+
+.section-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 12px;
+}
+
+.section-title-small {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 12px;
+}
+
+.form-select {
+  width: 100%;
+  height: 56px;
+  border-radius: 28px;
+  border: 1px solid #d1d5db;
+  padding: 0 16px;
+  font-size: 16px;
+  appearance: none;
+  background-color: white;
+}
+
+.select-wrapper {
+  position: relative;
+}
+
+.select-arrow {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.pairs-input {
+  width: 100%;
+  height: 56px;
+  border-radius: 28px;
+  border: 1px solid #d1d5db;
+  padding: 0 16px;
+  font-size: 16px;
+  background-color: white;
+}
+
+.form-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  margin-top: 32px;
+}
+
+.proceed-link {
+  color: #000;
+  text-decoration: underline;
+  font-size: 14px;
+}
+
+.generate-button {
+  width: 100%;
+  padding: 16px;
+  background-color: #000;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
