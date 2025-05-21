@@ -12,16 +12,16 @@ const HeaderContainer = styled(Box)(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   padding: theme.spacing(2, 3),
-  background: '#fff',
-  borderBottom: '1px solid rgba(0, 0, 0, 0.08)',
+  background: theme.palette.background.default,
+  borderBottom: `1px solid ${theme.palette.divider}`,
   position: 'sticky',
   top: 0,
   zIndex: 1100,
   backdropFilter: 'blur(8px)',
-  backgroundColor: 'rgba(255, 255, 255, 0.9)',
+  backgroundColor: theme.palette.background.paper,
   transition: 'all 0.3s ease',
   '&:hover': {
-    backgroundColor: 'rgba(255, 255, 255, 1)',
+    backgroundColor: theme.palette.background.paper,
     boxShadow: '0 2px 8px rgba(0, 0, 0, 0.05)'
   }
 }));
@@ -36,14 +36,14 @@ const LogoImage = styled('img')({
 });
 
 const HeaderTitle = styled(Typography)(({ theme }) => ({
-  color: '#00C37A',
+  color: theme.palette.primary.main,
   fontWeight: 700,
   flex: 1,
   fontSize: '1.5rem',
   [theme.breakpoints.down('sm')]: {
     fontSize: '1.25rem'
   },
-  background: 'linear-gradient(45deg, #00C37A 30%, #00E676 90%)',
+  background: `linear-gradient(45deg, ${theme.palette.primary.main} 30%, #00E676 90%)`,
   WebkitBackgroundClip: 'text',
   WebkitTextFillColor: 'transparent'
 }));

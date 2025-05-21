@@ -7,9 +7,9 @@ import Brightness7Icon from '@mui/icons-material/Brightness7';
 import { useThemeMode } from '../../context/ThemeContext';
 
 const StyledAppBar = styled(AppBar)(({ theme }) => ({
-  backgroundColor: '#232323',
+  backgroundColor: theme.palette.background.default,
   boxShadow: 'none',
-  borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
+  borderBottom: `1px solid ${theme.palette.divider}`,
   [theme.breakpoints.up('md')]: {
     padding: '0 24px'
   }
@@ -30,7 +30,7 @@ const Logo = styled(Box)({
 
 const NavLink = styled(Link)(({ theme }) => ({
   textDecoration: 'none',
-  color: '#fff',
+  color: theme.palette.text.primary,
   margin: '0 12px',
   padding: '8px 16px',
   borderRadius: '8px',
@@ -39,13 +39,13 @@ const NavLink = styled(Link)(({ theme }) => ({
   transition: 'all 0.2s ease',
   display: 'inline-block',
   '&:hover': {
-    color: '#F5B301',
-    backgroundColor: 'rgba(245, 179, 1, 0.1)',
+    color: theme.palette.secondary.main,
+    backgroundColor: theme.palette.secondary.light || 'rgba(255, 60, 10, 0.1)',
     transform: 'translateY(-1px)'
   },
   '&.active': {
-    color: '#F5B301',
-    backgroundColor: 'rgba(245, 179, 1, 0.1)'
+    color: theme.palette.secondary.main,
+    backgroundColor: theme.palette.secondary.light || 'rgba(255, 60, 10, 0.1)'
   }
 }));
 

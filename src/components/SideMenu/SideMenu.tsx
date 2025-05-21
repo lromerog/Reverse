@@ -10,8 +10,8 @@ const StyledDrawer = styled(Drawer)(({ theme }) => ({
   '& .MuiDrawer-paper': {
     width: 280,
     boxSizing: 'border-box',
-    backgroundColor: '#232323',
-    borderRight: '1px solid rgba(255, 255, 255, 0.1)',
+    backgroundColor: theme.palette.background.default,
+    borderRight: `1px solid ${theme.palette.divider}`,
     [theme.breakpoints.down('sm')]: {
       width: 240
     }
@@ -35,24 +35,24 @@ const Logo = styled(Box)(({ theme }) => ({
 const MenuItem = styled(ListItemButton)(({ theme }) => ({
   margin: theme.spacing(0.5, 2),
   borderRadius: theme.spacing(1),
-  color: 'rgba(255, 255, 255, 0.7)',
+  color: theme.palette.text.secondary,
   transition: 'all 0.2s ease',
   '&:hover': {
-    backgroundColor: 'rgba(255, 255, 255, 0.1)',
-    color: '#fff',
+    backgroundColor: theme.palette.grey[100],
+    color: theme.palette.text.primary,
     transform: 'translateX(4px)',
     '& .MuiListItemIcon-root': {
-      color: '#F5B301'
+      color: theme.palette.secondary.main
     }
   },
   '&.Mui-selected': {
-    backgroundColor: 'rgba(245, 179, 1, 0.1)',
-    color: '#F5B301',
+    backgroundColor: theme.palette.secondary.light || 'rgba(255, 60, 10, 0.1)',
+    color: theme.palette.secondary.main,
     '& .MuiListItemIcon-root': {
-      color: '#F5B301'
+      color: theme.palette.secondary.main
     },
     '&:hover': {
-      backgroundColor: 'rgba(245, 179, 1, 0.15)'
+      backgroundColor: theme.palette.secondary.light || 'rgba(255, 60, 10, 0.15)'
     }
   }
 }));
