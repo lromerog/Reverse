@@ -15,7 +15,8 @@ import {
   Grid,
   Paper,
   IconButton,
-  Tooltip
+  Tooltip,
+  Card
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { QRCodeSVG } from 'qrcode.react';
@@ -23,7 +24,7 @@ import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import DownloadIcon from '@mui/icons-material/Download';
 import { useTranslation } from 'react-i18next';
 
-const VoucherPaper = styled(Paper)(({ theme }) => ({
+const VoucherCard = styled(Card)(({ theme }) => ({
   padding: theme.spacing(3),
   background: 'linear-gradient(135deg, #F5B301 0%, #FFD700 100%)',
   color: '#232323',
@@ -116,7 +117,7 @@ const RewardVoucher: React.FC = () => {
       </Button>
 
       {generatedVoucher && (
-        <VoucherPaper elevation={3}>
+        <VoucherCard variant="outlined" animation="scale">
           <Grid container spacing={3}>
             <Grid item xs={12} md={8}>
               <Typography variant="h5" gutterBottom>
@@ -160,7 +161,7 @@ const RewardVoucher: React.FC = () => {
               </Button>
             </Grid>
           </Grid>
-        </VoucherPaper>
+        </VoucherCard>
       )}
 
       <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth>
