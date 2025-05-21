@@ -4,9 +4,8 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { ProductProvider } from './context/ProductContext';
-import { ThemeProvider } from '@mui/material/styles';
+import { ThemeProvider } from './context/ThemeContext';
 import CssBaseline from '@mui/material/CssBaseline';
-import theme from './styles/theme';
 import './i18n';
 
 const root = ReactDOM.createRoot(
@@ -15,7 +14,7 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <ThemeProvider theme={theme}>
+    <ThemeProvider>
       <CssBaseline />
       <ProductProvider>
         <App />
