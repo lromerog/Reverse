@@ -10,14 +10,15 @@ import {
   Grid,
   Paper,
 } from '@mui/material';
-import styled from 'styled-components';
+import { styled } from '@mui/material/styles';
+import { Card } from '../index';
 import { useAppContext } from '../../context/AppContext';
 
 const CheckoutContainer = styled(Box)`
   padding: 2rem;
 `;
 
-const FormSection = styled(Paper)`
+const FormSection = styled(Card)`
   padding: 2rem;
   margin-bottom: 2rem;
 `;
@@ -74,7 +75,7 @@ const Checkout: React.FC<CheckoutProps> = ({ onClose }) => {
     switch (step) {
       case 0:
         return (
-          <FormSection>
+          <FormSection variant="outlined" animation="fade">
             <Typography variant="h6" gutterBottom>
               Shipping Information
             </Typography>
@@ -144,7 +145,7 @@ const Checkout: React.FC<CheckoutProps> = ({ onClose }) => {
         );
       case 1:
         return (
-          <FormSection>
+          <FormSection variant="outlined" animation="fade">
             <Typography variant="h6" gutterBottom>
               Payment Information
             </Typography>
@@ -195,7 +196,7 @@ const Checkout: React.FC<CheckoutProps> = ({ onClose }) => {
         );
       case 2:
         return (
-          <FormSection>
+          <FormSection variant="outlined" animation="fade">
             <Typography variant="h6" gutterBottom>
               Order Summary
             </Typography>
