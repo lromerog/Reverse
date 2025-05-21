@@ -1,8 +1,9 @@
 import React from 'react';
-import { Box, Typography, Grid, Paper, useTheme } from '@mui/material';
+import { Box, Typography, Grid, useTheme } from '@mui/material';
 import { styled } from '@mui/material/styles';
+import { Card } from '../index';
 
-const BrandContainer = styled(Paper)(({ theme }) => ({
+const BrandContainer = styled(Card)(({ theme }) => ({
   background: '#232323',
   color: 'white',
   padding: theme.spacing(4),
@@ -62,7 +63,7 @@ const BrandAssets: React.FC = () => {
   const theme = useTheme();
 
   return (
-    <BrandContainer elevation={3}>
+    <BrandContainer variant="outlined" animation="fade">
       <Typography 
         variant="h3" 
         sx={{ 
