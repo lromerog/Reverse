@@ -2,13 +2,15 @@ import { render, screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material/styles';
 import { ProductProvider } from './context/ProductContext';
-import theme from './styles/theme';
+import { getTheme } from './styles/theme';
 import App from './App';
 
 // Mock del contexto de productos
 jest.mock('./context/ProductContext', () => ({
   ProductProvider: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
 }));
+
+const theme = getTheme('light');
 
 const renderWithProviders = (component: React.ReactNode) => {
   return render(
