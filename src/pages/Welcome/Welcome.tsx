@@ -1,9 +1,9 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
+import { Typography } from '@mui/material';
 import { keyframes } from '@mui/system';
+import { QuickActionButton } from '../../components';
 
 const fadeInScale = keyframes`
   0% {
@@ -68,10 +68,10 @@ const Welcome: React.FC = () => {
           <Typography variant="h5" sx={{ color: '#636e72', mb: 4, fontWeight: 400 }}>
             Recycle your old Nike sneakers and get exclusive rewards. Join the movement for a more sustainable future.
           </Typography>
-          <Button
-            variant="contained"
-            color="primary"
+          <QuickActionButton
+            variant="primary"
             size="large"
+            icon={<img src="/logo.png" alt="Reverse Logo" style={{ height: 32, width: 'auto' }} />}
             onClick={() => navigate('/demo')}
             sx={{
               bgcolor: '#F5B301',
@@ -87,10 +87,9 @@ const Welcome: React.FC = () => {
               alignItems: 'center',
               gap: 2
             }}
-            startIcon={<img src="/logo.png" alt="Reverse Logo" style={{ height: 32, width: 'auto' }} />}
           >
             Enter Reverse
-          </Button>
+          </QuickActionButton>
         </Box>
         <Box sx={{ flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
           <img src="/assets-reverse/assets/Untitled design (1) 2.png" alt="Hero Sneaker" style={{ width: '100%', maxWidth: 420, borderRadius: 18, boxShadow: '0 8px 32px rgba(0,0,0,0.10)' }} />
@@ -138,10 +137,10 @@ const Welcome: React.FC = () => {
           <Typography variant="h6" sx={{ color: '#fff', mb: 3 }}>
             Recycle your sneakers, earn rewards, and track your impact. Join Reverse now!
           </Typography>
-          <Button
-            variant="contained"
-            color="primary"
+          <QuickActionButton
+            variant="primary"
             size="large"
+            icon={<img src="/logo.png" alt="Reverse Logo" style={{ height: 32, width: 'auto' }} />}
             onClick={() => navigate('/demo')}
             sx={{
               bgcolor: '#F5B301',
@@ -158,10 +157,9 @@ const Welcome: React.FC = () => {
               gap: 2,
               mx: 'auto'
             }}
-            startIcon={<img src="/logo.png" alt="Reverse Logo" style={{ height: 32, width: 'auto' }} />}
           >
             Enter Reverse
-          </Button>
+          </QuickActionButton>
         </Box>
       </Box>
 
@@ -173,11 +171,11 @@ const Welcome: React.FC = () => {
             <Typography variant="h6" sx={{ fontWeight: 700, letterSpacing: 2, color: '#fff' }}>NIKE</Typography>
           </Box>
           <Box sx={{ display: 'flex', gap: 4, flexWrap: 'wrap' }}>
-            <Button sx={{ color: '#fff', textTransform: 'none' }}>About</Button>
-            <Button sx={{ color: '#fff', textTransform: 'none' }}>Contact</Button>
-            <Button sx={{ color: '#fff', textTransform: 'none' }}>Sustainability</Button>
-            <Button sx={{ color: '#fff', textTransform: 'none' }}>Terms</Button>
-            <Button sx={{ color: '#fff', textTransform: 'none' }}>Privacy</Button>
+            <QuickActionButton variant="outline" sx={{ color: '#fff', borderColor: '#fff', textTransform: 'none' }}>About</QuickActionButton>
+            <QuickActionButton variant="outline" sx={{ color: '#fff', borderColor: '#fff', textTransform: 'none' }}>Contact</QuickActionButton>
+            <QuickActionButton variant="outline" sx={{ color: '#fff', borderColor: '#fff', textTransform: 'none' }}>Sustainability</QuickActionButton>
+            <QuickActionButton variant="outline" sx={{ color: '#fff', borderColor: '#fff', textTransform: 'none' }}>Terms</QuickActionButton>
+            <QuickActionButton variant="outline" sx={{ color: '#fff', borderColor: '#fff', textTransform: 'none' }}>Privacy</QuickActionButton>
           </Box>
         </Box>
         <Typography variant="body2" sx={{ color: '#bbb', mt: 2, textAlign: 'center' }}>
