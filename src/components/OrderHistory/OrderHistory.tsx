@@ -7,13 +7,13 @@ import {
   ListItemText,
   ListItemSecondaryAction,
   IconButton,
-  Paper,
   Divider,
 } from '@mui/material';
 import { Visibility } from '@mui/icons-material';
-import styled from 'styled-components';
+import { styled } from '@mui/material/styles';
+import { Card } from '../index';
 
-const OrderContainer = styled(Paper)`
+const OrderContainer = styled(Card)`
   padding: 2rem;
   margin-bottom: 2rem;
 `;
@@ -66,7 +66,7 @@ const OrderHistory: React.FC<OrderHistoryProps> = ({ orders, onViewOrder }) => {
         Order History
       </Typography>
       {orders.map((order) => (
-        <OrderContainer key={order.id}>
+        <OrderContainer variant="outlined" animation="fade" key={order.id}>
           <OrderHeader>
             <Box>
               <Typography variant="subtitle1">
