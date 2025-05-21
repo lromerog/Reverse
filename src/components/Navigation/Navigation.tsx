@@ -1,7 +1,10 @@
 import React from 'react';
-import { AppBar, Toolbar, Box, Container } from '@mui/material';
+import { AppBar, Toolbar, Box, Container, IconButton, Tooltip } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { Link, useLocation } from 'react-router-dom';
+import Brightness4Icon from '@mui/icons-material/Brightness4';
+import Brightness7Icon from '@mui/icons-material/Brightness7';
+import { useThemeMode } from '../../context/ThemeContext';
 
 const StyledAppBar = styled(AppBar)(({ theme }) => ({
   backgroundColor: '#232323',
@@ -48,6 +51,7 @@ const NavLink = styled(Link)(({ theme }) => ({
 
 const Navigation: React.FC = () => {
   const location = useLocation();
+  const { isDarkMode, toggleTheme } = useThemeMode();
 
   return (
     <StyledAppBar position="sticky">
@@ -79,6 +83,11 @@ const Navigation: React.FC = () => {
             >
               Rewards
             </NavLink>
+            <Tooltip title={isDarkMode ? 'Switch to light mode' : 'Switch to dark mode'}>
+              <IconButton onClick={toggleTheme} color="inherit" aria-label="toggle dark mode" sx={{ ml: 2 }}>
+                {isDarkMode ? <Brightness7Icon /> : <Brightness4Icon />}
+              </IconButton>
+            </Tooltip>
           </Box>
         </Toolbar>
       </Container>
