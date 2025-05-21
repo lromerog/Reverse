@@ -2,9 +2,9 @@
   height: 100%;
   display: flex;
   flex-direction: column;
-  background: linear-gradient(180deg, #f8f9fa 0%, #e9ecef 100%);
-  color: #2d3436;
-  font-family: 'Helvetica Neue', Arial, sans-serif;
+  background: #fff;
+  color: #111111;
+  font-family: 'Poppins', 'Oswald', Arial, Helvetica, Roboto, sans-serif;
   position: relative;
 }
 
@@ -13,13 +13,13 @@
   display: flex;
   justify-content: space-between;
   padding: 12px 20px;
-  background: rgba(255, 255, 255, 0.95);
+  background: #fff;
   backdrop-filter: blur(10px);
   font-size: 14px;
   font-weight: 500;
   letter-spacing: 0.5px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-  color: #2d3436;
+  border-bottom: 1px solid #E5E5E5;
+  color: #111111;
   height: 24px;
   align-items: center;
 }
@@ -45,7 +45,7 @@
 .status-bar .battery-level {
   width: 24px;
   height: 12px;
-  border: 1px solid #2d3436;
+  border: 1px solid #111111;
   border-radius: 3px;
   padding: 1px;
   position: relative;
@@ -59,23 +59,23 @@
   transform: translateY(-50%);
   width: 2px;
   height: 6px;
-  background: #2d3436;
+  background: #111111;
   border-radius: 0 1px 1px 0;
 }
 
 .status-bar .battery-level .level {
   height: 100%;
   width: 80%;
-  background: #2d3436;
+  background: #111111;
   border-radius: 1px;
 }
 
 /* Navigation */
 .nav-bar {
   padding: 20px;
-  background: rgba(255, 255, 255, 0.95);
+  background: #fff;
   backdrop-filter: blur(10px);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid #E5E5E5;
   position: absolute;
   top: 24px;
   left: 0;
@@ -117,13 +117,13 @@
 
 /* Cards and lists */
 .card {
-  background: rgba(255, 255, 255, 0.95);
+  background: #fff;
   backdrop-filter: blur(10px);
   border-radius: 16px;
   padding: 24px;
   margin-bottom: 20px;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-  border: 1px solid rgba(0, 0, 0, 0.1);
+  border: 1px solid #E5E5E5;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -134,7 +134,7 @@
 
 .card h2 {
   margin: 0 0 16px 0;
-  color: #2d3436;
+  color: #111111;
   font-size: 24px;
   font-weight: 700;
   letter-spacing: -0.5px;
@@ -142,7 +142,7 @@
 
 .card h3 {
   margin: 0 0 16px 0;
-  color: #2d3436;
+  color: #111111;
   font-size: 20px;
   font-weight: 600;
   letter-spacing: -0.5px;
@@ -150,7 +150,7 @@
 
 .card h4 {
   margin: 0 0 8px 0;
-  color: #2d3436;
+  color: #111111;
   font-size: 18px;
   font-weight: 600;
 }
@@ -177,7 +177,7 @@
 
 .card li:before {
   content: "•";
-  color: #F5B301;
+  color: #FF3C0A;
   font-size: 20px;
   position: absolute;
   left: 0;
@@ -186,8 +186,8 @@
 
 /* Buttons */
 .button {
-  background: linear-gradient(45deg, #F5B301, #FFD700);
-  color: #000;
+  background: #22C37A;
+  color: #fff;
   border: none;
   padding: 12px 24px;
   border-radius: 12px;
@@ -195,13 +195,13 @@
   font-size: 15px;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(245, 179, 1, 0.3);
+  box-shadow: 0 4px 15px rgba(34, 195, 122, 0.15);
 }
 
 .button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(245, 179, 1, 0.4);
-  background: linear-gradient(45deg, #FFD700, #F5B301);
+  box-shadow: 0 6px 20px rgba(255, 60, 10, 0.18);
+  background: #FF3C0A;
 }
 
 /* Bottom navigation */
@@ -210,7 +210,7 @@
   bottom: 24px;
   left: 50%;
   transform: translateX(-50%);
-  background: rgba(255, 255, 255, 0.98);
+  background: #fff;
   backdrop-filter: blur(20px);
   padding: 16px 24px;
   border-radius: 24px;
@@ -257,9 +257,9 @@
 }
 
 .nav-item.active {
-  color: #000;
+  color: #22C37A;
   font-weight: 500;
-  background: rgba(245, 179, 1, 0.1);
+  background: rgba(34, 195, 122, 0.1);
 }
 
 .nav-item span:first-child {
@@ -311,7 +311,7 @@
 }
 
 .nav-item.active span:last-child {
-  color: #000;
+  color: #22C37A;
   transform: translateY(-1px);
 }
 
@@ -351,10 +351,10 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(245, 179, 1, 0.3);
+  background: #22C37A;
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(245, 179, 1, 0.5);
+  background: #FF3C0A;
 } 

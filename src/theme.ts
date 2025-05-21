@@ -66,7 +66,8 @@ const theme = createTheme({
         contained: {
           boxShadow: 'none',
           '&:hover': {
-            boxShadow: 'none',
+            boxShadow: '0 4px 8px rgba(34,195,122,0.10)',
+            backgroundColor: '#FF3C0A',
           },
         },
       },
@@ -75,6 +76,7 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+          backgroundColor: '#E5E5E5',
         },
       },
     },

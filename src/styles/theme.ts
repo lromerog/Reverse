@@ -13,7 +13,7 @@ export const getTheme = (mode: 'light' | 'dark' = 'light') => createTheme({
     },
     background: {
       default: mode === 'dark' ? '#111111' : '#fff',
-      paper: mode === 'dark' ? '#232323' : '#E5E5E5',
+      paper: mode === 'dark' ? '#111111' : '#E5E5E5',
     },
     text: {
       primary: mode === 'dark' ? '#fff' : '#111111',
@@ -37,19 +37,19 @@ export const getTheme = (mode: 'light' | 'dark' = 'light') => createTheme({
         root: { borderRadius: 8, textTransform: 'none', fontWeight: 600, padding: '0.5rem 1.5rem', transition: 'all 0.2s ease' },
         contained: {
           boxShadow: 'none',
-          '&:hover': { boxShadow: '0 4px 8px rgba(0,0,0,0.1)' },
-          '&:focus': { outline: '2px solid #F5B301', outlineOffset: 2 },
+          '&:hover': { boxShadow: '0 4px 8px rgba(34,195,122,0.10)' },
+          '&:focus': { outline: '2px solid #22C37A', outlineOffset: 2 },
           '&.Mui-disabled': { bgcolor: mode === 'dark' ? 'rgba(255, 255, 255, 0.12)' : 'rgba(0, 0, 0, 0.12)', color: mode === 'dark' ? 'rgba(255, 255, 255, 0.3)' : 'rgba(0, 0, 0, 0.26)' }
         },
         outlined: {
           borderWidth: 1.5,
-          '&:hover': { borderWidth: 1.5, bgcolor: mode === 'dark' ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.04)' },
-          '&:focus': { outline: '2px solid #F5B301', outlineOffset: 2 },
+          '&:hover': { borderWidth: 1.5, bgcolor: mode === 'dark' ? 'rgba(255, 255, 255, 0.08)' : 'rgba(34,195,122,0.04)' },
+          '&:focus': { outline: '2px solid #22C37A', outlineOffset: 2 },
           '&.Mui-disabled': { borderColor: mode === 'dark' ? 'rgba(255, 255, 255, 0.3)' : 'rgba(0, 0, 0, 0.26)' }
         },
         text: {
-          '&:hover': { bgcolor: mode === 'dark' ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.04)' },
-          '&:focus': { outline: '2px solid #F5B301', outlineOffset: 2 },
+          '&:hover': { bgcolor: mode === 'dark' ? 'rgba(255, 255, 255, 0.08)' : 'rgba(34,195,122,0.04)' },
+          '&:focus': { outline: '2px solid #22C37A', outlineOffset: 2 },
           '&.Mui-disabled': { color: mode === 'dark' ? 'rgba(255, 255, 255, 0.3)' : 'rgba(0, 0, 0, 0.26)' }
         }
       }
@@ -57,8 +57,8 @@ export const getTheme = (mode: 'light' | 'dark' = 'light') => createTheme({
     MuiAppBar: {
       styleOverrides: {
         root: {
-          backgroundColor: mode === 'dark' ? '#232323' : '#fff',
-          color: mode === 'dark' ? '#fff' : '#232323',
+          backgroundColor: mode === 'dark' ? '#111111' : '#fff',
+          color: mode === 'dark' ? '#fff' : '#111111',
           boxShadow: 'none',
         },
       },

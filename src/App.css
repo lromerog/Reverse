@@ -14,14 +14,8 @@
 }
 
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  background-color: #fff;
+  color: #111111;
 }
 
 .App-link {
@@ -59,4 +53,14 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: #fff;
+  color: #111111;
+}
+
+.btn-nike {
+  background-color: #22C37A;
+  color: #fff;
+}
+
+.btn-nike:hover {
+  background-color: #FF3C0A;
 }
