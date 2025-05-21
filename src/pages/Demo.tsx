@@ -12,6 +12,7 @@ import { GiHomeGarage, GiSoccerKick, GiRecycle } from 'react-icons/gi';
 import { MdMap, MdQrCode } from 'react-icons/md';
 import { RiUser3Fill } from 'react-icons/ri';
 import { IoHomeOutline, IoPersonOutline, IoRefreshOutline, IoStarOutline, IoMapOutline } from 'react-icons/io5';
+import { Button } from '@mui/material';
 
 const fadeInScale = keyframes`
   0% {
@@ -163,7 +164,7 @@ const RewardsScreen = () => {
     {
       id: 1,
       name: '10% Off Your Next Purchase',
-      image: '/assets-reverse/assets/£40 voucher.svg',
+      // image: '/assets/images/40-voucher.svg', // Archivo no encontrado, comentar
       points: 120,
       description: 'Get 10% off when you recycle your old sneakers.',
       category: 'Discounts',
@@ -172,7 +173,7 @@ const RewardsScreen = () => {
     {
       id: 2,
       name: 'Exclusive Recycled Tote Bag',
-      image: '/assets-reverse/assets/Rectangle-2.png',
+      // image: '/assets/images/Rectangle-2.png', // Archivo no encontrado, comentar
       points: 200,
       description: 'A stylish tote bag made from recycled materials.',
       category: 'Merchandise',
@@ -181,7 +182,7 @@ const RewardsScreen = () => {
     {
       id: 3,
       name: 'Limited Edition Recycled Sneakers',
-      image: '/assets-reverse/assets/Rectangle-3.png',
+      // image: '/assets/images/Rectangle-3.png', // Archivo no encontrado, comentar
       points: 800,
       description: 'Sneakers made from recycled shoes, only for top recyclers.',
       category: 'Sneakers',
@@ -190,7 +191,7 @@ const RewardsScreen = () => {
     {
       id: 4,
       name: '5% Off Recycled Collection',
-      image: '/assets-reverse/assets/Rectangle.png',
+      // image: '/assets/images/Rectangle.png', // Archivo no encontrado, comentar
       points: 60,
       description: 'Discount on any product from the recycled collection.',
       category: 'Discounts',
@@ -441,14 +442,11 @@ const MapScreen = () => {
             </div>
           ) : (
             <MapContainer
-              center={toLatLngArray(currentLocation || DEFAULT_CENTER)}
-              zoom={13}
+              options={{ center: toLatLngArray(currentLocation || DEFAULT_CENTER), zoom: 13, scrollWheelZoom: false, attributionControl: false }}
               style={{ width: '100%', height: '400px', borderRadius: '12px' }}
-              scrollWheelZoom={false}
             >
               {/* @ts-ignore */}
               <TileLayer
-                attribution="© OpenStreetMap contributors"
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
               />
               {currentLocation && (
@@ -519,7 +517,7 @@ const ProfileScreen = () => (
   <div className="content profile-content">
     {/* User Card */}
     <div className="card fade-in" style={{ display: 'flex', alignItems: 'center', gap: 24, padding: 32, marginBottom: 24 }}>
-      <img src="/assets-reverse/assets/avatar-placeholder.png" alt="User Avatar" style={{ width: 90, height: 90, borderRadius: '50%', border: '4px solid #F5B301', objectFit: 'cover' }} />
+      {/* <img src="/assets/images/avatar-placeholder.png" alt="User Avatar" style={{ width: 90, height: 90, borderRadius: '50%', border: '4px solid #F5B301', objectFit: 'cover' }} /> */}
       <div>
         <h2 style={{ margin: 0 }}>John Doe</h2>
         <p style={{ color: '#F5B301', fontWeight: 600, margin: '4px 0' }}>Level 3 - Sustainability Star</p>
@@ -794,102 +792,60 @@ const Demo: React.FC = () => {
 
         {/* Bottom Navigation */}
         <div className="bottom-nav">
-          <button 
-            className={`nav-item ${activeTab === 'home' ? 'active' : ''}`}
+          <Button
+            variant="text"
             onClick={() => handleTabChange('home')}
             aria-label="Home"
+            startIcon={<IoHomeOutline size={32} style={{ color: activeTab === 'home' ? '#F5B301' : '#636e72', filter: activeTab === 'home' ? 'drop-shadow(0 2px 4px rgba(245, 179, 1, 0.3))' : 'none' }} />}
+            sx={{ color: activeTab === 'home' ? 'primary.main' : 'text.secondary', fontWeight: activeTab === 'home' ? 500 : 400, borderRadius: 16, minWidth: 64, py: 1, px: 2, '&:hover': { bgcolor: 'rgba(0,0,0,0.04)' } }}
           >
-            <span>
-              <IoHomeOutline 
-                size={32} 
-                style={{ 
-                  color: activeTab === 'home' ? '#F5B301' : '#636e72',
-                  filter: activeTab === 'home' ? 'drop-shadow(0 2px 4px rgba(245, 179, 1, 0.3))' : 'none'
-                }} 
-              />
-            </span>
-            <span>Home</span>
-          </button>
-          <button 
-            className={`nav-item ${activeTab === 'profile' ? 'active' : ''}`}
+            Home
+          </Button>
+          <Button
+            variant="text"
             onClick={() => handleTabChange('profile')}
             aria-label="Profile"
+            startIcon={<IoPersonOutline size={32} style={{ color: activeTab === 'profile' ? '#4CAF50' : '#636e72', filter: activeTab === 'profile' ? 'drop-shadow(0 2px 4px rgba(76, 175, 80, 0.3))' : 'none' }} />}
+            sx={{ color: activeTab === 'profile' ? 'primary.main' : 'text.secondary', fontWeight: activeTab === 'profile' ? 500 : 400, borderRadius: 16, minWidth: 64, py: 1, px: 2, '&:hover': { bgcolor: 'rgba(0,0,0,0.04)' } }}
           >
-            <span>
-              <IoPersonOutline 
-                size={32} 
-                style={{ 
-                  color: activeTab === 'profile' ? '#4CAF50' : '#636e72',
-                  filter: activeTab === 'profile' ? 'drop-shadow(0 2px 4px rgba(76, 175, 80, 0.3))' : 'none'
-                }} 
-              />
-            </span>
-            <span>Profile</span>
-          </button>
-          <button 
-            className={`nav-item ${activeTab === 'recycle' ? 'active' : ''}`}
+            Profile
+          </Button>
+          <Button
+            variant="text"
             onClick={() => handleTabChange('recycle')}
             aria-label="Recycle"
+            startIcon={<GiRecycle size={32} style={{ color: activeTab === 'recycle' ? '#4CAF50' : '#636e72', filter: activeTab === 'recycle' ? 'drop-shadow(0 2px 4px rgba(76, 175, 80, 0.3))' : 'none' }} />}
+            sx={{ color: activeTab === 'recycle' ? 'primary.main' : 'text.secondary', fontWeight: activeTab === 'recycle' ? 500 : 400, borderRadius: 16, minWidth: 64, py: 1, px: 2, '&:hover': { bgcolor: 'rgba(0,0,0,0.04)' } }}
           >
-            <span>
-              <GiRecycle 
-                size={32} 
-                style={{ 
-                  color: activeTab === 'recycle' ? '#4CAF50' : '#636e72',
-                  filter: activeTab === 'recycle' ? 'drop-shadow(0 2px 4px rgba(76, 175, 80, 0.3))' : 'none'
-                }} 
-              />
-            </span>
-            <span>Recycle</span>
-          </button>
-          <button 
-            className={`nav-item ${activeTab === 'reverse' ? 'active' : ''}`}
+            Recycle
+          </Button>
+          <Button
+            variant="text"
             onClick={() => handleTabChange('reverse')}
             aria-label="Reverse"
+            startIcon={<img src="/logo.png" alt="Reverse" style={{ height: '32px', width: 'auto', filter: activeTab === 'reverse' ? 'drop-shadow(0 2px 4px rgba(245, 179, 1, 0.3))' : 'none' }} />}
+            sx={{ color: activeTab === 'reverse' ? 'primary.main' : 'text.secondary', fontWeight: activeTab === 'reverse' ? 500 : 400, borderRadius: 16, minWidth: 64, py: 1, px: 2, '&:hover': { bgcolor: 'rgba(0,0,0,0.04)' } }}
           >
-            <img 
-              src="/logo.png" 
-              alt="Reverse" 
-              style={{ 
-                height: '32px', 
-                width: 'auto',
-                filter: activeTab === 'reverse' ? 'drop-shadow(0 2px 4px rgba(245, 179, 1, 0.3))' : 'none'
-              }} 
-            />
-            <span>Reverse</span>
-          </button>
-          <button 
-            className={`nav-item ${activeTab === 'rewards' ? 'active' : ''}`}
+            Reverse
+          </Button>
+          <Button
+            variant="text"
             onClick={() => handleTabChange('rewards')}
             aria-label="Rewards"
+            startIcon={<IoStarOutline size={32} style={{ color: activeTab === 'rewards' ? '#F5B301' : '#636e72', filter: activeTab === 'rewards' ? 'drop-shadow(0 2px 4px rgba(245, 179, 1, 0.3))' : 'none' }} />}
+            sx={{ color: activeTab === 'rewards' ? 'primary.main' : 'text.secondary', fontWeight: activeTab === 'rewards' ? 500 : 400, borderRadius: 16, minWidth: 64, py: 1, px: 2, '&:hover': { bgcolor: 'rgba(0,0,0,0.04)' } }}
           >
-            <span>
-              <IoStarOutline 
-                size={32} 
-                style={{ 
-                  color: activeTab === 'rewards' ? '#F5B301' : '#636e72',
-                  filter: activeTab === 'rewards' ? 'drop-shadow(0 2px 4px rgba(245, 179, 1, 0.3))' : 'none'
-                }} 
-              />
-            </span>
-            <span>Rewards</span>
-          </button>
-          <button 
-            className={`nav-item ${activeTab === 'map' ? 'active' : ''}`}
+            Rewards
+          </Button>
+          <Button
+            variant="text"
             onClick={() => handleTabChange('map')}
             aria-label="Map"
+            startIcon={<IoMapOutline size={32} style={{ color: activeTab === 'map' ? '#4CAF50' : '#636e72', filter: activeTab === 'map' ? 'drop-shadow(0 2px 4px rgba(76, 175, 80, 0.3))' : 'none' }} />}
+            sx={{ color: activeTab === 'map' ? 'primary.main' : 'text.secondary', fontWeight: activeTab === 'map' ? 500 : 400, borderRadius: 16, minWidth: 64, py: 1, px: 2, '&:hover': { bgcolor: 'rgba(0,0,0,0.04)' } }}
           >
-            <span>
-              <IoMapOutline 
-                size={32} 
-                style={{ 
-                  color: activeTab === 'map' ? '#4CAF50' : '#636e72',
-                  filter: activeTab === 'map' ? 'drop-shadow(0 2px 4px rgba(76, 175, 80, 0.3))' : 'none'
-                }} 
-              />
-            </span>
-            <span>Map</span>
-          </button>
+            Map
+          </Button>
           <button 
             className={`nav-item ${activeTab === 'qr' ? 'active' : ''}`}
             onClick={() => { setActiveTab('qr'); setShowQRModal(true); }}

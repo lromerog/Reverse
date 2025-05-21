@@ -4,8 +4,8 @@ import { styled } from '@mui/material/styles';
 import { Card } from '../index';
 
 const BrandContainer = styled(Card)(({ theme }) => ({
-  background: '#232323',
-  color: 'white',
+  background: theme.palette.background.paper,
+  color: theme.palette.text.primary,
   padding: theme.spacing(4),
   borderRadius: theme.spacing(2),
   boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)',
@@ -19,7 +19,7 @@ const BrandContainer = styled(Card)(({ theme }) => ({
 const LogoContainer = styled(Box)(({ theme }) => ({
   margin: theme.spacing(3, 0),
   padding: theme.spacing(3),
-  backgroundColor: 'rgba(255, 255, 255, 0.05)',
+  backgroundColor: theme.palette.grey[100],
   borderRadius: theme.spacing(2),
   display: 'flex',
   justifyContent: 'center',
@@ -27,7 +27,7 @@ const LogoContainer = styled(Box)(({ theme }) => ({
   transition: 'transform 0.2s ease',
   '&:hover': {
     transform: 'scale(1.02)',
-    backgroundColor: 'rgba(255, 255, 255, 0.08)'
+    backgroundColor: theme.palette.grey[100]
   },
   '& img': {
     height: 60,
@@ -53,10 +53,10 @@ const ColorBox = styled(Box)(({ theme }) => ({
 
 const colors = [
   { name: 'Light Grey', hex: '#E5E5E5' },
-  { name: 'Black', hex: '#181818' },
-  { name: 'Orange', hex: '#FF4C1E' },
+  { name: 'Black', hex: '#111111' },
+  { name: 'Orange', hex: '#FF3C0A' },
   { name: 'White', hex: '#FFFFFF' },
-  { name: 'Green', hex: '#00C37A' },
+  { name: 'Green', hex: '#22C37A' },
 ];
 
 const BrandAssets: React.FC = () => {
@@ -68,13 +68,14 @@ const BrandAssets: React.FC = () => {
         variant="h3" 
         sx={{ 
           fontWeight: 700,
-          background: 'linear-gradient(45deg, #fff 30%, #00C37A 90%)',
+          fontFamily: theme.typography.h3.fontFamily,
+          background: `linear-gradient(45deg, #fff 30%, ${theme.palette.primary.main} 90%)`,
           WebkitBackgroundClip: 'text',
           WebkitTextFillColor: 'transparent',
           mb: 2
         }}
       >
-        just<span style={{ color: '#00C37A' }}>Recycle</span> brand assets
+        just<span style={{ color: theme.palette.primary.main }}>Recycle</span> brand assets
       </Typography>
 
       <LogoContainer>
@@ -87,7 +88,7 @@ const BrandAssets: React.FC = () => {
           mt: 4, 
           mb: 3,
           fontWeight: 600,
-          color: 'rgba(255, 255, 255, 0.9)'
+          color: theme.palette.text.primary
         }}
       >
         Brand Colors
@@ -99,13 +100,13 @@ const BrandAssets: React.FC = () => {
             <ColorBox 
               sx={{ 
                 background: color.hex,
-                border: color.hex === '#FFFFFF' ? '1px solid rgba(255, 255, 255, 0.1)' : 'none'
+                border: color.hex === '#FFFFFF' ? `1px solid ${theme.palette.divider}` : 'none'
               }}
             />
             <Typography 
               variant="body2" 
               sx={{ 
-                color: 'rgba(255, 255, 255, 0.7)',
+                color: theme.palette.text.secondary,
                 fontWeight: 500
               }}
             >
@@ -114,7 +115,7 @@ const BrandAssets: React.FC = () => {
             <Typography 
               variant="caption" 
               sx={{ 
-                color: 'rgba(255, 255, 255, 0.5)',
+                color: theme.palette.text.secondary,
                 display: 'block',
                 mt: 0.5
               }}
@@ -135,17 +136,17 @@ const BrandAssets: React.FC = () => {
         }}
       >
         <span style={{ 
-          fontFamily: 'Futura, Poppins, Arial, Helvetica, sans-serif', 
+          fontFamily: theme.typography.h1.fontFamily, 
           fontWeight: 700,
-          color: '#00C37A'
+          color: theme.palette.primary.main
         }}>
-          Futura
+          Oswald
         </span>
         {' / '}
         <span style={{ 
           fontFamily: 'Poppins', 
           fontWeight: 600,
-          color: '#fff'
+          color: theme.palette.text.primary
         }}>
           Poppins
         </span>

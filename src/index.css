@@ -5,10 +5,10 @@
 }
 
 body {
-  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-family: 'Poppins', 'Oswald', Arial, Helvetica, Roboto, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #F7F7F7;
+  background-color: #fff;
 }
 
 /* Scrollbar personalizado */

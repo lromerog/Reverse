@@ -1,6 +1,5 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 import { ThemeProvider as MuiThemeProvider } from '@mui/material/styles';
-import { ThemeProvider as StyledThemeProvider } from 'styled-components';
 import { getTheme } from '../styles/theme';
 
 interface ThemeContextType {
@@ -19,7 +18,7 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) =
   return (
     <ThemeContext.Provider value={{ isDarkMode, toggleTheme }}>
       <MuiThemeProvider theme={theme}>
-        <StyledThemeProvider theme={theme}>{children}</StyledThemeProvider>
+        {children}
       </MuiThemeProvider>
     </ThemeContext.Provider>
   );

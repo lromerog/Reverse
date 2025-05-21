@@ -31,14 +31,15 @@ const menuItems = [
 ];
 
 const sneakerImages = [
-  '/assets-reverse/assets/Untitled design (1) 2.png',
-  '/assets-reverse/assets/Untitled design (2) 2.png',
-  '/assets-reverse/assets/Untitled design (5) 2.png',
-  '/assets-reverse/assets/Untitled design (6) 2.png',
-  '/assets-reverse/assets/Rectangle-1.png',
-  '/assets-reverse/assets/Rectangle-2.png',
-  '/assets-reverse/assets/Rectangle-3.png',
-  '/assets-reverse/assets/Rectangle.png',
+  '/assets/images/Untitled-design-1-2.png',
+  '/assets/images/Untitled-design-2-2.png',
+  // Eliminar o comentar las imágenes que no existan en assets/images
+  // '/assets/images/Untitled-design-5-2.png',
+  // '/assets/images/Untitled-design-6-2.png',
+  // '/assets/images/Rectangle-1.png',
+  // '/assets/images/Rectangle-2.png',
+  // '/assets/images/Rectangle-3.png',
+  // '/assets/images/Rectangle.png',
 ];
 
 const Welcome: React.FC = () => {
