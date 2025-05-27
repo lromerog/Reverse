@@ -1,0 +1,88 @@
+.tablet-simulator {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f0f0f0;
+  padding: 2rem;
+  overflow: hidden;
+}
+
+.tablet-frame {
+  width: 1024px;
+  height: 768px;
+  background: linear-gradient(135deg, #232526 0%, #414345 100%);
+  border-radius: 48px;
+  padding: 20px;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.25), 0 1.5px 8px rgba(0,0,0,0.10);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /* Escalado responsivo */
+  transform: scale(var(--tablet-scale, 1));
+  transform-origin: center center;
+}
+
+.tablet-screen {
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+  border-radius: 32px;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 2px 24px rgba(0,0,0,0.08) inset;
+}
+
+.tablet-content {
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Tablet camera */
+.tablet-frame::before {
+  content: '';
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 8px;
+  height: 8px;
+  background-color: #333;
+  border-radius: 50%;
+}
+
+/* Tablet buttons */
+.tablet-frame::after {
+  content: '';
+  position: absolute;
+  right: -5px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 5px;
+  height: 60px;
+  background-color: #333;
+  border-radius: 0 3px 3px 0;
+}
+
+/* Responsive design: scale tablet to fit viewport */
+@media (max-width: 1100px), (max-height: 850px) {
+  .tablet-frame {
+    width: 90vw;
+    height: 67.5vw;
+    max-width: 1024px;
+    max-height: 768px;
+    /* Escalado automático */
+    transform: scale(calc(min(100vw / 1100, 100vh / 850)));
+  }
+}
+
+/* Touch interactions */
+.tablet-content {
+  touch-action: pan-x pan-y;
+  user-select: none;
+  -webkit-user-select: none;
+} 

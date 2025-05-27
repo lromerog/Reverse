@@ -68,3 +68,9 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+---
+
+# Reverse - Your rewards and discovery platform
+
+Este proyecto también contiene la plataforma Reverse original. Para más detalles, revisa la carpeta `old/` y la documentación específica de esa versión.

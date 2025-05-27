@@ -1,0 +1,133 @@
+/* ===== Base Reset ===== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #f5f5f5;
+  color: #111;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* ===== Scrollbar (Minimal + Sharp) ===== */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #e0e0e0;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #111;
+  border-radius: 10px;
+  transition: background 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #e50914; /* Nike Red */
+}
+
+/* ===== Animations ===== */
+@keyframes swooshIn {
+  from {
+    transform: translateX(-40px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes bounceUp {
+  0% {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  60% {
+    transform: translateY(-10px);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes popFade {
+  0% {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* ===== Utility Classes ===== */
+.swoosh-in {
+  animation: swooshIn 0.5s ease-out both;
+}
+
+.bounce-up {
+  animation: bounceUp 0.6s ease-in-out both;
+}
+
+.pop-fade {
+  animation: popFade 0.4s ease-out both;
+}
+
+/* ===== Nike-Style Button ===== */
+.btn-nike {
+  background-color: #111;
+  color: #fff;
+  border: none;
+  border-radius: 999px;
+  padding: 14px 28px;
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 1px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  cursor: pointer;
+}
+
+.btn-nike:hover {
+  background-color: #e50914;
+  transform: translateY(-2px);
+}
+
+.btn-nike:active {
+  transform: scale(0.98);
+}
+
+/* ===== Container Fade on Load ===== */
+.container-nike {
+  animation: fadeIn 0.4s ease-in both;
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* ===== Mobile Responsive ===== */
+@media (max-width: 600px) {
+  .MuiContainer-root,
+  .container-nike {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .btn-nike {
+    width: 100%;
+    padding: 16px 0;
+  }
+}
+
