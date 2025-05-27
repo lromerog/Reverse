@@ -76,3 +76,7 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 Este proyecto también contiene la plataforma Reverse original. Para más detalles, revisa la carpeta `old/` y la documentación específica de esa versión.
 
 # Deploy trigger: forzar redeploy en Vercel
+
+# Nike Landing
+
+Trigger redeploy for Vercel.
