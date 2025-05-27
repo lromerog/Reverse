@@ -74,3 +74,5 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 # Reverse - Your rewards and discovery platform
 
 Este proyecto también contiene la plataforma Reverse original. Para más detalles, revisa la carpeta `old/` y la documentación específica de esa versión.
+
+# Deploy trigger: forzar redeploy en Vercel
