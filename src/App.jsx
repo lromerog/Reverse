@@ -95,7 +95,7 @@ function App() {
       <header className="nike-header">
         <div className="header-content">
           <a href="/" className="logo">
-            <img src="/Nuevo/Nike. Just Do It. Nike BE_files/nike-just-do-it.png" alt="Nike Logo" />
+            <img src="/assets/images/nike-swoosh.png" alt="Nike Swoosh Logo" />
           </a>
           <nav className="main-nav">
             <ul>
