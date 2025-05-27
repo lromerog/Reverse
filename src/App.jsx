@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './App.css'
 import './index.css'
 import { Swiper, SwiperSlide } from 'swiper/react'
@@ -80,6 +80,8 @@ const trendingCollections = [
 ]
 
 function App() {
+  const [showReverse, setShowReverse] = useState(false)
+
   return (
     <div className="App">
       {/* Top Bar */}
@@ -99,7 +101,7 @@ function App() {
           </a>
           <nav className="main-nav">
             <ul>
-              <li><a href="#">New & Featured</a></li>
+              <li><a href="#" onClick={() => setShowReverse(true)}>Reverse</a></li>
               <li><a href="#">Men</a></li>
               <li><a href="#">Women</a></li>
               <li><a href="#">Kids</a></li>
@@ -219,6 +221,23 @@ function App() {
           <span>© {new Date().getFullYear()} Nike, Inc. All rights reserved.</span>
         </div>
       </footer>
+
+      {showReverse && (
+        <div className="reverse-modal">
+          <div className="reverse-content">
+            <img src="/assets/images/logo.png" alt="Reverse Logo" className="reverse-logo" />
+            <video src="/assets/videos/videoad.mp4" controls className="reverse-video" />
+            <h2>Welcome to Reverse</h2>
+            <p>Discover the new way to recycle, earn rewards, and be part of the change. Join Reverse now!</p>
+            <form className="reverse-login">
+              <input type="text" placeholder="Username" required />
+              <input type="password" placeholder="Password" required />
+              <button type="submit">Login</button>
+            </form>
+            <button className="close-btn" onClick={() => setShowReverse(false)}>Close</button>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
