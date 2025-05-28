@@ -80,3 +80,5 @@ Este proyecto también contiene la plataforma Reverse original. Para más detall
 # Nike Landing
 
 Trigger redeploy for Vercel.
+
+<!-- Trigger redeploy for Vercel - test commit -->
