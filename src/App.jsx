@@ -17,8 +17,8 @@ const heroSlides = [
     link: '#',
   },
   {
-    type: 'image',
-    src: '/Nuevo/Nike. Just Do It. Nike BE_files/nike-just-do-it(4).jpg',
+    type: 'video',
+    src: '/assets/videos/videoad.mp4',
     headline: 'New Arrivals',
     subtext: 'Discover the latest Nike collections.',
     cta: 'Explore',
