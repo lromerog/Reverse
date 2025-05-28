@@ -10,7 +10,7 @@ import 'swiper/css/navigation'
 const heroSlides = [
   {
     type: 'video',
-    src: '/assets/images/products/video.mp4',
+    src: '/assets/images/video.mp4',
     headline: 'Just Do It.',
     subtext: 'Inspiring the world\'s athletes with innovation and style.',
     cta: 'Shop Now',
@@ -18,7 +18,7 @@ const heroSlides = [
   },
   {
     type: 'video',
-    src: '/assets/videos/videoad.mp4',
+    src: '/assets/images/videoad.mp4',
     headline: 'New Arrivals',
     subtext: 'Discover the latest Nike collections.',
     cta: 'Explore',
@@ -26,7 +26,7 @@ const heroSlides = [
   },
   {
     type: 'image',
-    src: '/Nuevo/Nike. Just Do It. Nike BE_files/nike-just-do-it(9).png',
+    src: '/assets/images/hero-bg.jpg',
     headline: 'Best Sellers',
     subtext: 'Shop the most popular Nike products.',
     cta: 'Shop Bestsellers',
@@ -231,7 +231,7 @@ function App() {
         <div className="reverse-modal">
           <div className="reverse-content">
             <img src="/assets/images/logo.png" alt="Reverse Logo" className="reverse-logo" />
-            <video src="/assets/videos/videoad.mp4" controls className="reverse-video" />
+            <video src="/assets/images/videoad.mp4" controls className="reverse-video" />
             <h2>Welcome to Reverse</h2>
             <p>Discover the new way to recycle, earn rewards, and be part of the change. Join Reverse now!</p>
             <img src="/assets/images/logo.png" alt="Reverse Logo" className="reverse-logo" style={{marginBottom:'1rem'}} />
