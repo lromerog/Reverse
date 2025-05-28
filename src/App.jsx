@@ -103,7 +103,7 @@ function App() {
             <ul>
               <li>
                 <a href="#" onClick={() => setShowReverse(true)} style={{display:'flex',alignItems:'center',gap:'0.5rem'}}>
-                  <img src="assets/images/logo.png" alt="Reverse Logo" style={{height:'22px',verticalAlign:'middle'}} />
+                  <img src="/assets/images/logo.png" alt="Reverse Logo" style={{height:'22px',verticalAlign:'middle'}} />
                   Reverse
                 </a>
               </li>
@@ -230,11 +230,11 @@ function App() {
       {showReverse && (
         <div className="reverse-modal">
           <div className="reverse-content">
-            <img src="assets/images/logo.png" alt="Reverse Logo" className="reverse-logo" />
+            <img src="/assets/images/logo.png" alt="Reverse Logo" className="reverse-logo" />
             <video src="/assets/videos/videoad.mp4" controls className="reverse-video" />
             <h2>Welcome to Reverse</h2>
             <p>Discover the new way to recycle, earn rewards, and be part of the change. Join Reverse now!</p>
-            <img src="assets/images/logo.png" alt="Reverse Logo" className="reverse-logo" style={{marginBottom:'1rem'}} />
+            <img src="/assets/images/logo.png" alt="Reverse Logo" className="reverse-logo" style={{marginBottom:'1rem'}} />
             <form className="reverse-login">
               <input type="text" placeholder="Username" required />
               <input type="password" placeholder="Password" required />
