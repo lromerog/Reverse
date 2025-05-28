@@ -143,6 +143,15 @@ function App() {
                     loop
                     muted
                     playsInline
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'cover',
+                      position: 'absolute',
+                      top: 0,
+                      left: 0
+                    }}
+                    poster="/assets/images/hero-bg.jpg"
                   />
                 ) : (
                   <img src={slide.src} className="hero-media" alt={slide.headline} />
