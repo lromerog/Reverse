@@ -1096,10 +1096,16 @@ body, html, .App {
 
 .product-card.large-card img.reverse-featured-logo {
   display: block;
-  margin: 0 auto 1.2rem auto;
-  max-width: 80px;
-  max-height: 80px;
+  margin: 0 auto 1rem auto;
+  max-width: 160px;
+  max-height: 160px;
   width: auto;
   height: auto;
   object-fit: contain;
+}
+.product-card.large-card.reverse-card-balance {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 } 

@@ -9,7 +9,7 @@ import 'swiper/css/navigation'
 import mapboxgl from 'mapbox-gl'
 import 'mapbox-gl/dist/mapbox-gl.css'
 import { QRCodeSVG } from 'qrcode.react'
-import { QrReader } from 'react-qr-reader'
+import QrScanner from 'react-qr-scanner'
 import html2canvas from 'html2canvas'
 
 const heroSlides = [
@@ -549,10 +549,20 @@ function App() {
                 {showScanner && (
                   <div style={{ marginTop: '2rem', background: '#232323', borderRadius: 12, padding: 20 }}>
                     <h3>Scan QR Code</h3>
-                    <QrReader
-                      constraints={{ facingMode: 'environment' }}
-                      onResult={handleScanQR}
+                    <QrScanner
+                      delay={300}
+                      onError={(error) => {
+                        console.error(error);
+                      }}
+                      onScan={(result) => {
+                        if (result) {
+                          handleScanQR({ text: result.text });
+                        }
+                      }}
                       style={{ width: '100%' }}
+                      constraints={{
+                        video: { facingMode: 'environment' }
+                      }}
                     />
                     <button className="shop-btn" style={{ marginTop: 16 }} onClick={() => setShowScanner(false)}>Close Scanner</button>
                   </div>
