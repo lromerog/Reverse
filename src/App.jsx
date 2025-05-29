@@ -31,7 +31,7 @@ const heroSlides = [
   },
   {
     type: 'image',
-    src: '/assets/images/hero-bg.jpg',
+    src: '/assets/images/Component 1.png',
     headline: 'Best Sellers',
     subtext: 'Shop the most popular Nike products.',
     cta: 'Shop Bestsellers',
@@ -735,13 +735,13 @@ function App() {
         <div className="products-grid large-images">
           {featuredProducts.map((product, idx) => (
             <div
-              className="product-card large-card"
+              className={`product-card large-card${product.isReverse ? ' reverse-card-balance' : ''}`}
               key={idx}
               onClick={product.isReverse ? () => setShowReverse(true) : undefined}
               style={product.isReverse ? { cursor: 'pointer', border: '2px solid #00C37A' } : {}}
             >
               {product.isReverse ? (
-                <img src="/assets/images/logo.png" alt={product.name} />
+                <img src="/assets/images/logo.png" alt={product.name} className="reverse-featured-logo" />
               ) : (
                 <img src={product.img} alt={product.name} />
               )}
