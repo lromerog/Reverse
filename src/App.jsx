@@ -48,26 +48,26 @@ const featuredProducts = [
     isReverse: true
   },
   {
-    name: 'Nike Air Max',
-    img: '/assets/images/Untitled design (5) 2.png',
+    name: 'Nike Air Force 1',
+    img: '/assets/images/air-force-1.jpg',
     desc: 'Legendary comfort and style.',
     link: '#',
   },
   {
-    name: 'Nike Air Force 1',
-    img: '/assets/images/Untitled design (6) 2.png',
+    name: 'Nike Just Do It',
+    img: '/assets/images/nike-just-do-it(1).jpg',
     desc: 'The icon lives on.',
     link: '#',
   },
   {
-    name: 'Nike React',
-    img: '/assets/images/Untitled design (2) 2.png',
+    name: 'Nike Just Do It',
+    img: '/assets/images/nike-just-do-it(5).png',
     desc: 'Innovation for every day.',
     link: '#',
   },
   {
-    name: 'Nike Pegasus',
-    img: '/assets/images/Untitled design (1) 2.png',
+    name: 'Nike Just Do It',
+    img: '/assets/images/nike-just-do-it(9).png',
     desc: 'Run farther. Run faster.',
     link: '#',
   },
@@ -75,18 +75,18 @@ const featuredProducts = [
 
 const trendingCollections = [
   {
-    name: 'Jordan Collection',
-    img: '/Nuevo/Nike. Just Do It. Nike BE_files/nike-just-do-it(5).png',
+    name: 'Just Do It Collection',
+    img: '/assets/images/nike-just-do-it(2).jpg',
     link: '#',
   },
   {
-    name: 'Running Essentials',
-    img: '/Nuevo/Nike. Just Do It. Nike BE_files/nike-just-do-it(6).png',
+    name: 'Just Do It Style',
+    img: '/assets/images/nike-just-do-it(3).jpg',
     link: '#',
   },
   {
-    name: 'Lifestyle',
-    img: '/Nuevo/Nike. Just Do It. Nike BE_files/nike-just-do-it(7).png',
+    name: 'Just Do It Street',
+    img: '/assets/images/nike-just-do-it(4).jpg',
     link: '#',
   },
 ]
@@ -474,22 +474,22 @@ function App() {
               <video src="/assets/images/videoad.mp4" controls autoPlay loop muted style={{ width: '100%', borderRadius: '12px', marginBottom: '2rem', background: '#232323' }} poster="/assets/images/logo.png" />
               <div className="recycle-steps">
                 <div className="recycle-step">
-                  <img src="/assets/images/recyclee.svg" alt="Collect" className="recycle-step-icon" />
+                  <img src="/assets/images/Untitled design (1) 2.png" alt="Collect" className="recycle-step-icon" />
                   <h3>1. Collect</h3>
                   <p>Gather your recyclable products and make sure they are clean.</p>
                 </div>
                 <div className="recycle-step">
-                  <img src="/assets/images/Vector.svg" alt="Scan" className="recycle-step-icon" />
+                  <img src="/assets/images/Untitled design (2) 2.png" alt="Scan" className="recycle-step-icon" />
                   <h3>2. Scan</h3>
                   <p>Scan the QR code at the Reverse recycling point using your phone.</p>
                 </div>
                 <div className="recycle-step">
-                  <img src="/assets/images/recyclenav.svg" alt="Drop" className="recycle-step-icon" />
+                  <img src="/assets/images/Untitled design (5) 2.png" alt="Drop" className="recycle-step-icon" />
                   <h3>3. Drop</h3>
                   <p>Drop your products in the Reverse container.</p>
                 </div>
                 <div className="recycle-step">
-                  <img src="/assets/images/reward card.png" alt="Earn" className="recycle-step-icon" />
+                  <img src="/assets/images/Untitled design (6) 2.png" alt="Earn" className="recycle-step-icon" />
                   <h3>4. Earn</h3>
                   <p>Earn points and rewards for every item you recycle.</p>
                 </div>
