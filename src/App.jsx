@@ -24,17 +24,17 @@ const heroSlides = [
   {
     type: 'video',
     src: '/assets/images/videoad.mp4',
-    headline: 'New Arrivals',
-    subtext: 'Discover the latest Nike collections.',
-    cta: 'Explore',
+    headline: 'Join Reverse',
+    subtext: 'Recycle, earn rewards, and be part of the Reverse movement.',
+    cta: 'Discover Reverse',
     link: '#',
   },
   {
     type: 'image',
     src: '/assets/images/Component 1.png',
-    headline: 'Best Sellers',
-    subtext: 'Shop the most popular Nike products.',
-    cta: 'Shop Bestsellers',
+    headline: 'Recycle with Nike',
+    subtext: 'Give your sneakers a second life and help the planet with Reverse.',
+    cta: 'Start Recycling',
     link: '#',
   },
 ]
