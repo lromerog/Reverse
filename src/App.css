@@ -1092,4 +1092,14 @@ body, html, .App {
 
 #sidebar, .reverse-page .store-item, .reverse-page h3, .reverse-page h4, .reverse-page span, .reverse-page div, .reverse-page strong {
   color: #232323 !important;
+}
+
+.product-card.large-card img.reverse-featured-logo {
+  display: block;
+  margin: 0 auto 1.2rem auto;
+  max-width: 80px;
+  max-height: 80px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
 } 

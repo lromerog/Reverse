@@ -41,6 +41,13 @@ const heroSlides = [
 
 const featuredProducts = [
   {
+    name: 'Discover Reverse',
+    img: '/assets/images/logo.png',
+    desc: 'Recycle, earn rewards, and make a difference with Reverse.',
+    link: '#',
+    isReverse: true
+  },
+  {
     name: 'Nike Air Max',
     img: '/assets/images/Untitled design (5) 2.png',
     desc: 'Legendary comfort and style.',
@@ -63,13 +70,6 @@ const featuredProducts = [
     img: '/assets/images/Untitled design (1) 2.png',
     desc: 'Run farther. Run faster.',
     link: '#',
-  },
-  {
-    name: 'Discover Reverse',
-    img: '/assets/images/logo.png',
-    desc: 'Recycle, earn rewards, and make a difference with Reverse.',
-    link: '#',
-    isReverse: true
   },
 ]
 
@@ -369,11 +369,17 @@ function App() {
     }
   }
 
-  // Update handleScanQR to get location name
+  // Update handleScanQR to prevent duplicate vouchers
   async function handleScanQR(result) {
     if (result && result.text) {
       try {
         const data = JSON.parse(result.text);
+        // Check if voucher already exists
+        if (voucherHistory.some(v => v.code === data.id)) {
+          alert('This QR code has already been redeemed.');
+          setShowScanner(false);
+          return;
+        }
         const value = getRandomVoucherValue();
         let locationName = '';
         if (data.lat && data.lng) {
@@ -664,16 +670,13 @@ function App() {
               <li><a href="#">Women</a></li>
               <li><a href="#">Kids</a></li>
               <li><a href="#">Jordan</a></li>
-              <li>
-                <a href="#" onClick={() => setShowReverse(true)} className="reverse-link">
-                  <img src="/assets/images/logo.png" alt="Reverse Logo" className="reverse-nav-logo" />
-                  Reverse
-                </a>
-              </li>
             </ul>
           </nav>
           <div className="header-icons">
-            <span role="img" aria-label="search">🔍</span>
+            <span role="button" aria-label="reverse" onClick={() => setShowReverse(true)} className="reverse-link" style={{ display: 'flex', alignItems: 'center', gap: 6, cursor: 'pointer' }}>
+              <img src="/assets/images/logo.png" alt="Reverse Logo" className="reverse-nav-logo" />
+              <span style={{ fontWeight: 600, fontSize: 16 }}>Reverse</span>
+            </span>
             <span role="img" aria-label="favorites">❤️</span>
             <span role="img" aria-label="cart">🛒</span>
           </div>
