@@ -1,84 +1,75 @@
-# Getting Started with Create React App
+# Reverse x Nike – Interactive Landing & Rewards Platform
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Project Overview
+Reverse x Nike is an innovative web platform that combines the power of recycling with digital rewards, gamification, and the Nike brand experience. Users can recycle their sneakers, earn points, generate and redeem digital vouchers, and track their impact—all in a modern, responsive, and interactive web app.
 
-## Available Scripts
+## Features
+- **Nike Landing Page:** Modern, responsive landing with product highlights, hero carousel, and Reverse integration.
+- **Reverse Dashboard:** Dedicated dashboard with four main sections:
+  - **Recycle:** Step-by-step guide with video and visuals on how to recycle with Reverse.
+  - **Reverse:** Explains the Reverse system, benefits, and how to use it.
+  - **Rewards:** Digital rewards catalog, user points, and voucher redemption.
+  - **Maps:** Interactive map to find recycling points and track voucher locations.
+- **QR Code System:** Generate and scan QR codes to receive unique, downloadable discount vouchers.
+- **Voucher System:** Vouchers include value, code, date, and human-readable location; can be downloaded as images.
+- **Fully Responsive:** Optimized for desktop and mobile devices.
+- **Modern Tech Stack:** Built with React, Mapbox, Swiper, and more.
 
-In the project directory, you can run:
+## Technologies Used
+- React 18+
+- Mapbox GL JS
+- Swiper.js
+- qrcode.react
+- html2canvas
+- react-qr-reader
+- CSS (custom, responsive)
+- Git & GitHub for version control
 
-### `npm start`
+## How to Run Locally
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/lromerog/Reverse.git
+   cd Reverse
+   ```
+2. **Install dependencies:**
+   ```bash
+   npm install
+   ```
+3. **Start the development server:**
+   ```bash
+   npm start
+   ```
+4. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Online Demo
+The project is deployed at:
+[https://reverse-weld.vercel.app/](https://reverse-weld.vercel.app/)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Team & Credits
 
-### `npm test`
+### Group Members
+- Zornitsa Bakardzhieva
+- Sylvanna Oyewole
+- Luis Guillermo Romero Guajardo
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Teachers & TAs
+- Christianne Rademakers
+- Philip De Wulf
+- Nicolas Deslé
+- Pieter Nijs
+- Robby Vanelderen
+- Lauren Tamboryn
+- Tom Anthoni
+- Cara Van der Auwera
 
-### `npm run build`
+- **Design & Documentation:** Managed in Notion
+- **Special thanks:** Nike, academic mentors, and all contributors
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Contact
+For questions or feedback, please contact:
+- [Your Name] – [your.email@example.com]
+- [GitHub Issues](https://github.com/lromerog/Reverse/issues)
 
 ---
 
-# Reverse - Your rewards and discovery platform
-
-Este proyecto también contiene la plataforma Reverse original. Para más detalles, revisa la carpeta `old/` y la documentación específica de esa versión.
-
-# Deploy trigger: forzar redeploy en Vercel
-
-# Nike Landing
-
-Trigger redeploy for Vercel.
-
-<!-- Trigger redeploy for Vercel - test commit -->
+> This project was developed as part of an academic assignment, following the latest best practices in interactive web development, user experience, and project management.
