@@ -1,0 +1,22 @@
+-- Create database (if not exists)
+CREATE DATABASE IF NOT EXISTS reverse;
+USE reverse;
+
+-- Create users table
+CREATE TABLE IF NOT EXISTS users (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  username VARCHAR(50) NOT NULL UNIQUE,
+  password VARCHAR(255) NOT NULL,
+  email VARCHAR(100) NOT NULL UNIQUE,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB;
+
+-- Create vouchers table
+CREATE TABLE IF NOT EXISTS vouchers (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  user VARCHAR(50) NOT NULL,
+  voucher_code VARCHAR(50) NOT NULL UNIQUE,
+  redeemed BOOLEAN DEFAULT FALSE,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (user) REFERENCES users(username) ON DELETE CASCADE
+) ENGINE=InnoDB; 

@@ -1,75 +1,149 @@
-# Reverse x Nike – Interactive Landing & Rewards Platform
+# Reverse Landing Page
 
-## Project Overview
-Reverse x Nike is an innovative web platform that combines the power of recycling with digital rewards, gamification, and the Nike brand experience. Users can recycle their sneakers, earn points, generate and redeem digital vouchers, and track their impact—all in a modern, responsive, and interactive web app.
+A modern landing page built with React and PHP, featuring user authentication, voucher management, and a responsive design.
+
+## Project Structure
+
+```
+reverse-landing/
+├── src/                    # Frontend React application
+│   ├── components/        # React components
+│   ├── styles/           # CSS and styling files
+│   └── App.tsx           # Main React application
+│
+└── backend/               # PHP Backend API
+    ├── api/              # API endpoints
+    │   ├── auth.php     # Authentication (login/register)
+    │   ├── users.php    # User management
+    │   └── vouchers.php # Voucher management
+    ├── config/          # Configuration files
+    │   └── config.php   # Database configuration
+    └── db/              # Database files
+        └── database.sql # Database schema
+```
 
 ## Features
-- **Nike Landing Page:** Modern, responsive landing with product highlights, hero carousel, and Reverse integration.
-- **Reverse Dashboard:** Dedicated dashboard with four main sections:
-  - **Recycle:** Step-by-step guide with video and visuals on how to recycle with Reverse.
-  - **Reverse:** Explains the Reverse system, benefits, and how to use it.
-  - **Rewards:** Digital rewards catalog, user points, and voucher redemption.
-  - **Maps:** Interactive map to find recycling points and track voucher locations.
-- **QR Code System:** Generate and scan QR codes to receive unique, downloadable discount vouchers.
-- **Voucher System:** Vouchers include value, code, date, and human-readable location; can be downloaded as images.
-- **Fully Responsive:** Optimized for desktop and mobile devices.
-- **Modern Tech Stack:** Built with React, Mapbox, Swiper, and more.
 
-## Technologies Used
-- React 18+
-- Mapbox GL JS
-- Swiper.js
-- qrcode.react
-- html2canvas
-- react-qr-reader
-- CSS (custom, responsive)
-- Git & GitHub for version control
+### Frontend (React)
+- Modern, responsive design
+- User authentication (login/register)
+- Voucher management system
+- Protected routes
+- Form validation
+- Error handling
+- Loading states
 
-## How to Run Locally
-1. **Clone the repository:**
+### Backend (PHP)
+- RESTful API endpoints
+- User authentication
+- Database integration (MySQL)
+- CORS support for development
+- Secure password hashing
+- Input sanitization
+
+## Prerequisites
+
+- Node.js (v14 or higher)
+- PHP (v7.4 or higher)
+- MySQL (v5.7 or higher)
+- XAMPP (or similar local server)
+
+## Installation
+
+### Frontend Setup
+1. Navigate to the project root:
    ```bash
-   git clone https://github.com/lromerog/Reverse.git
-   cd Reverse
+   cd reverse-landing
    ```
-2. **Install dependencies:**
+
+2. Install dependencies:
    ```bash
    npm install
    ```
-3. **Start the development server:**
+
+3. Start the development server:
    ```bash
    npm start
    ```
-4. Open [http://localhost:3000](http://localhost:3000) in your browser.
+   The application will be available at `http://localhost:3000`
 
-## Online Demo
-The project is deployed at:
-[https://reverse-weld.vercel.app/](https://reverse-weld.vercel.app/)
+### Backend Setup
+1. Install XAMPP (or your preferred local server)
+2. Copy the `backend` folder to your XAMPP's `htdocs` directory
+3. Create a new MySQL database named `reverse`
+4. Import the database schema:
+   - Open phpMyAdmin
+   - Select the `reverse` database
+   - Import `backend/db/database.sql`
 
-## Team & Credits
+5. Configure the database connection:
+   - Open `backend/config/config.php`
+   - Update the database credentials if needed:
+     ```php
+     $host = 'localhost';
+     $dbname = 'reverse';
+     $username = 'your_username';
+     $password = 'your_password';
+     ```
 
-### Group Members
-- Zornitsa Bakardzhieva
-- Sylvanna Oyewole
-- Luis Guillermo Romero Guajardo
+## API Endpoints
 
-### Teachers & TAs
-- Christianne Rademakers
-- Philip De Wulf
-- Nicolas Deslé
-- Pieter Nijs
-- Robby Vanelderen
-- Lauren Tamboryn
-- Tom Anthoni
-- Cara Van der Auwera
+### Authentication
+- `POST /api/auth.php`
+  - Login: `{ "action": "login", "username": "...", "password": "..." }`
+  - Register: `{ "action": "register", "username": "...", "password": "...", "email": "..." }`
 
-- **Design & Documentation:** Managed in Notion
-- **Special thanks:** Nike, academic mentors, and all contributors
+### Users
+- `GET /api/users.php?user=username`
+  - Returns user information
 
-## Contact
-For questions or feedback, please contact:
-- [Your Name] – [your.email@example.com]
-- [GitHub Issues](https://github.com/lromerog/Reverse/issues)
+### Vouchers
+- `GET /api/vouchers.php?user=username`
+  - Returns user's vouchers
+- `POST /api/vouchers.php`
+  - Create voucher: `{ "user": "username", "voucher_code": "..." }`
 
----
+## Development
 
-> This project was developed as part of an academic assignment, following the latest best practices in interactive web development, user experience, and project management.
+### Frontend Development
+- The React application runs on port 3000 by default
+- Hot reloading is enabled
+- ESLint and Prettier are configured for code quality
+
+### Backend Development
+- The PHP API runs on Apache (XAMPP)
+- CORS is configured for development (ports 3000-3010)
+- Database queries are logged for debugging
+
+## Security Considerations
+
+- Passwords are hashed using PHP's `password_hash()`
+- Input is sanitized using `mysqli_real_escape_string()`
+- CORS is configured for specific origins
+- Database credentials are stored in a separate config file
+
+## Production Deployment
+
+### Frontend
+1. Build the React application:
+   ```bash
+   npm run build
+   ```
+2. Deploy the `build` folder to your web server
+
+### Backend
+1. Update CORS headers in PHP files to allow only your production domain
+2. Ensure proper database credentials in `config.php`
+3. Deploy the `backend` folder to your PHP server
+
+## Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.

@@ -829,7 +829,7 @@ body, html, .App {
 }
 .reverse-lead {
   font-size: 1.15rem;
-  color: #fff;
+  color: #232323;
   text-align: center;
   margin-bottom: 2.5rem;
 }
@@ -1108,4 +1108,11 @@ body, html, .App {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+video, .hero-media[type="video"] {
+  display: block !important;
+  opacity: 1 !important;
+  z-index: 2 !important;
+  background: #000 !important;
 } 

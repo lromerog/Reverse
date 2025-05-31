@@ -15,7 +15,7 @@ import html2canvas from 'html2canvas'
 const heroSlides = [
   {
     type: 'video',
-    src: '/assets/images/video.mp4',
+    src: '/assets/videos/video.mp4',
     headline: 'Just Do It.',
     subtext: 'Inspiring the world\'s athletes with innovation and style.',
     cta: 'Shop Now',
@@ -23,7 +23,7 @@ const heroSlides = [
   },
   {
     type: 'video',
-    src: '/assets/images/videoad.mp4',
+    src: '/assets/videos/videoad.mp4',
     headline: 'Join Reverse',
     subtext: 'Recycle, earn rewards, and be part of the Reverse movement.',
     cta: 'Discover Reverse',
@@ -295,25 +295,55 @@ function App() {
     setAuthMode(mode)
   }
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault()
     const formData = new FormData(e.target)
-    const email = formData.get('email')
+    const username = formData.get('email')
     const password = formData.get('password')
 
-    if (email === 'admin@reverse.com' && password === 'reverse') {
-      setIsAuthenticated(true)
-      setShowReverse(false)
-    } else {
-      alert('Incorrect credentials')
+    try {
+      const response = await fetch("http://localhost/backend/api/auth.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password, action: "login" })
+      });
+      const data = await response.json();
+      if (data.status === "ok") {
+        localStorage.setItem("user", data.user);
+        alert("Login successful. Welcome, " + data.user + "!");
+        setIsAuthenticated(true);
+        setShowReverse(false);
+      } else {
+        alert(data.message);
+      }
+    } catch (error) {
+      alert("Error connecting to backend. Please verify that the PHP server is running.");
     }
   }
 
-  const handleRegister = (e) => {
-    e.preventDefault()
-    // For now, just simulate registration
-    alert('Registration successful. Please log in.')
-    setAuthMode('login')
+  const handleRegister = async (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const username = formData.get("username");
+    const password = formData.get("password");
+    const email = formData.get("email");
+
+    try {
+      const response = await fetch("http://localhost/backend/api/auth.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password, email, action: "register" })
+      });
+      const data = await response.json();
+      if (data.status === "ok") {
+        alert("Registration successful. Please log in.");
+        setAuthMode("login");
+      } else {
+        alert(data.message);
+      }
+    } catch (error) {
+      alert("Error connecting to backend. Please verify that the PHP server is running.");
+    }
   }
 
   const handleLogout = () => {
@@ -471,7 +501,7 @@ function App() {
           {currentReversePage === 'recycle' && (
             <div className="reverse-page recycle-guide">
               <h2>How to Recycle with Reverse</h2>
-              <video src="/assets/images/videoad.mp4" controls autoPlay loop muted style={{ width: '100%', borderRadius: '12px', marginBottom: '2rem', background: '#232323' }} poster="/assets/images/logo.png" />
+              <video src="/assets/videos/videoad.mp4" controls autoPlay loop muted style={{ width: '100%', borderRadius: '12px', marginBottom: '2rem', background: '#232323' }} poster="/assets/images/logo.png" />
               <div className="recycle-steps">
                 <div className="recycle-step">
                   <img src="/assets/images/Untitled design (1) 2.png" alt="Collect" className="recycle-step-icon" />
@@ -533,7 +563,7 @@ function App() {
               </div>
               <div className="reverse-video-demo">
                 <h3>See Reverse in action</h3>
-                <video src="/assets/images/videoad.mp4" controls style={{ width: '100%', borderRadius: '12px', background: '#232323' }} poster="/assets/images/logo.png" />
+                <video src="/assets/videos/videoad.mp4" controls style={{ width: '100%', borderRadius: '12px', background: '#232323' }} poster="/assets/images/logo.png" />
               </div>
               <div style={{ margin: '2.5rem 0', textAlign: 'center' }}>
                 <button className="shop-btn" style={{ background: '#00C37A', color: '#232323', fontWeight: 700 }} onClick={handleGenerateQR}>Generate QR</button>
@@ -826,7 +856,7 @@ function App() {
         <div className="reverse-modal">
           <div className="reverse-content">
             <img src="/assets/images/logo.png" alt="Reverse Logo" className="reverse-logo" />
-            <video src="/assets/images/videoad.mp4" controls className="reverse-video" />
+            <video src="/assets/videos/videoad.mp4" controls className="reverse-video" />
             <h2>Welcome to Reverse</h2>
             <p>Discover the new way to recycle, earn rewards, and be part of the change. Join Reverse now!</p>
             <div className="reverse-auth-tabs">
@@ -844,15 +874,15 @@ function App() {
               </button>
             </div>
             <form className="reverse-login" style={{display: authMode === 'login' ? 'flex' : 'none'}} onSubmit={handleLogin}>
-              <input type="email" name="email" placeholder="Email" required />
+              <input type="text" name="email" placeholder="Username o Email" required />
               <input type="password" name="password" placeholder="Password" required />
               <button type="submit" className="auth-btn">Login</button>
             </form>
             <form className="reverse-register" style={{display: authMode === 'register' ? 'flex' : 'none'}} onSubmit={handleRegister}>
-              <input type="text" placeholder="Full Name" required />
-              <input type="email" placeholder="Email" required />
-              <input type="password" placeholder="Password" required />
-              <input type="password" placeholder="Confirm Password" required />
+              <input type="text" name="username" placeholder="Full Name" required />
+              <input type="email" name="email" placeholder="Email" required />
+              <input type="password" name="password" placeholder="Password" required />
+              <input type="password" name="confirmPassword" placeholder="Confirm Password" required />
               <button type="submit" className="auth-btn">Register</button>
             </form>
             <button className="close-btn" onClick={() => setShowReverse(false)}>Close</button>
