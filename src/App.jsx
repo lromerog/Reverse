@@ -20,6 +20,7 @@ const heroSlides = [
     subtext: 'Inspiring the world\'s athletes with innovation and style.',
     cta: 'Shop Now',
     link: '#',
+    poster: '/assets/images/hero-bg.jpg'
   },
   {
     type: 'video',
@@ -28,6 +29,7 @@ const heroSlides = [
     subtext: 'Recycle, earn rewards, and be part of the Reverse movement.',
     cta: 'Discover Reverse',
     link: '#',
+    poster: '/assets/images/logo.png'
   },
   {
     type: 'image',
@@ -90,6 +92,8 @@ const trendingCollections = [
     link: '#',
   },
 ]
+
+const API_URL = process.env.REACT_APP_API_URL || 'http://localhost/backend/api';
 
 function ReverseMap({ voucherHistory, onDownloadVoucher }) {
   const mapContainerRef = useRef(null);
@@ -296,55 +300,80 @@ function App() {
   }
 
   const handleLogin = async (e) => {
-    e.preventDefault()
-    const formData = new FormData(e.target)
-    const username = formData.get('email')
-    const password = formData.get('password')
-
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const data = {
+      email: formData.get('email'),
+      password: formData.get('password'),
+      action: 'login'
+    };
+    
     try {
-      const response = await fetch("http://localhost/backend/api/auth.php", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password, action: "login" })
+      const response = await fetch(`${API_URL}/auth.php`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+        body: JSON.stringify(data)
       });
-      const data = await response.json();
-      if (data.status === "ok") {
-        localStorage.setItem("user", data.user);
-        alert("Login successful. Welcome, " + data.user + "!");
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
+      const responseData = await response.json();
+      if (responseData.status === "ok") {
+        localStorage.setItem("user", responseData.user);
+        alert("Login successful. Welcome, " + responseData.user + "!");
         setIsAuthenticated(true);
         setShowReverse(false);
       } else {
-        alert(data.message);
+        alert(responseData.message || "Login failed");
       }
     } catch (error) {
-      alert("Error connecting to backend. Please verify that the PHP server is running.");
+      console.error('Login error:', error);
+      alert("Error connecting to backend. Please try again later.");
     }
-  }
+  };
 
   const handleRegister = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
-    const username = formData.get("username");
-    const password = formData.get("password");
-    const email = formData.get("email");
-
+    const data = {
+      username: formData.get('username'),
+      email: formData.get('email'),
+      password: formData.get('password'),
+      confirmPassword: formData.get('confirmPassword'),
+      action: 'register'
+    };
+    
     try {
-      const response = await fetch("http://localhost/backend/api/auth.php", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password, email, action: "register" })
+      const response = await fetch(`${API_URL}/auth.php`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+        body: JSON.stringify(data)
       });
-      const data = await response.json();
-      if (data.status === "ok") {
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
+      const responseData = await response.json();
+      if (responseData.status === "ok") {
         alert("Registration successful. Please log in.");
         setAuthMode("login");
       } else {
-        alert(data.message);
+        alert(responseData.message || "Registration failed");
       }
     } catch (error) {
-      alert("Error connecting to backend. Please verify that the PHP server is running.");
+      console.error('Registration error:', error);
+      alert("Error connecting to backend. Please try again later.");
     }
-  }
+  };
 
   const handleLogout = () => {
     setIsAuthenticated(false)
@@ -365,26 +394,17 @@ function App() {
   function handleGenerateQR() {
     const id = generateUUID();
     const now = new Date();
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(pos => {
-        const qrData = JSON.stringify({
-          id,
-          date: now.toISOString(),
-          lat: pos.coords.latitude,
-          lng: pos.coords.longitude
-        });
-        setQRValue(qrData);
-        setShowQR(true);
-      }, () => {
-        const qrData = JSON.stringify({ id, date: now.toISOString() });
-        setQRValue(qrData);
-        setShowQR(true);
-      });
-    } else {
-      const qrData = JSON.stringify({ id, date: now.toISOString() });
-      setQRValue(qrData);
-      setShowQR(true);
-    }
+    // Crear objeto con toda la información del voucher
+    const voucherData = {
+      id,
+      date: now.toISOString(),
+      type: 'recycle',
+      status: 'pending'
+    };
+    // Generar URL de canje con los datos codificados
+    const redeemUrl = `https://reverse-weld.vercel.app/redeem?voucher=${encodeURIComponent(JSON.stringify(voucherData))}`;
+    setQRValue(redeemUrl);
+    setShowQR(true);
   }
 
   // Add reverse geocoding function
@@ -527,106 +547,111 @@ function App() {
             </div>
           )}
           {currentReversePage === 'reverse' && (
-            <div className="reverse-page reverse-info">
-              <h2>What is Reverse?</h2>
-              <p className="reverse-lead">Reverse is an innovative recycling platform that rewards you for making a positive impact on the environment. Join the movement and turn your recycling actions into real benefits!</p>
-              <div className="reverse-cards">
-                <div className="reverse-card">
-                  <img src="/assets/images/logo.png" alt="Reverse Logo" className="reverse-card-icon" />
-                  <h3>How does it work?</h3>
-                  <ul>
-                    <li>Find a Reverse recycling point near you.</li>
-                    <li>Scan the QR code with your phone.</li>
-                    <li>Drop your recyclable products.</li>
-                    <li>Earn points and unlock exclusive rewards.</li>
-                  </ul>
-                </div>
-                <div className="reverse-card">
-                  <img src="/assets/images/reward card.png" alt="Rewards" className="reverse-card-icon" />
-                  <h3>Why use Reverse?</h3>
-                  <ul>
-                    <li>Get rewarded for every item you recycle.</li>
-                    <li>Track your impact and progress.</li>
-                    <li>Access exclusive offers and products.</li>
-                    <li>Be part of a sustainable community.</li>
-                  </ul>
-                </div>
-                <div className="reverse-card">
-                  <img src="/assets/images/recyclee.svg" alt="Sustainability" className="reverse-card-icon" />
-                  <h3>Our Mission</h3>
-                  <ul>
-                    <li>Promote responsible recycling habits.</li>
-                    <li>Reduce waste and carbon footprint.</li>
-                    <li>Empower users to make a difference.</li>
-                  </ul>
-                </div>
-              </div>
-              <div className="reverse-video-demo">
-                <h3>See Reverse in action</h3>
-                <video src="/assets/videos/videoad.mp4" controls style={{ width: '100%', borderRadius: '12px', background: '#232323' }} poster="/assets/images/logo.png" />
-              </div>
-              <div style={{ margin: '2.5rem 0', textAlign: 'center' }}>
-                <button className="shop-btn" style={{ background: '#00C37A', color: '#232323', fontWeight: 700 }} onClick={handleGenerateQR}>Generate QR</button>
-                {showQR && (
-                  <div style={{ marginTop: '2rem' }}>
-                    <h3>Scan this QR code to get your voucher</h3>
-                    <QRCodeSVG value={qrValue} size={180} bgColor="#fff" fgColor="#00C37A" includeMargin={true} />
-                    <div style={{ marginTop: '1.5rem' }}>
-                      <button className="shop-btn" style={{ background: '#F5B301', color: '#232323', fontWeight: 700 }} onClick={() => setShowScanner(true)}>Scan QR</button>
-                    </div>
+            <div className="reverse-page reverse-info" style={{gap: '2.5rem', maxWidth: 900, margin: '0 auto'}}>
+              {/* About Section */}
+              <section style={{marginBottom: 32}}>
+                <h2 style={{color: '#00C37A', fontWeight: 900, marginBottom: 8}}>About Reverse</h2>
+                <p className="reverse-lead" style={{marginBottom: 0}}>Reverse is an innovative recycling platform that rewards you for making a positive impact on the environment. Join the movement and turn your recycling actions into real benefits!</p>
+              </section>
+              {/* How it Works Section */}
+              <section style={{marginBottom: 32}}>
+                <h3 style={{color: '#232323', fontWeight: 800, marginBottom: 16}}>How it Works</h3>
+                <div style={{display: 'flex', gap: 24, flexWrap: 'wrap', justifyContent: 'center'}}>
+                  <div className="reverse-card" style={{minWidth: 180, maxWidth: 220, alignItems: 'center'}}>
+                    <img src="/assets/images/logo.png" alt="Reverse Logo" className="reverse-card-icon" />
+                    <h4 style={{color: '#00C37A', fontWeight: 700, margin: '12px 0 8px 0'}}>Find</h4>
+                    <span style={{fontSize: 15}}>Find a Reverse recycling point near you.</span>
                   </div>
-                )}
-                {showScanner && (
-                  <div style={{ marginTop: '2rem', background: '#232323', borderRadius: 12, padding: 20 }}>
-                    <h3>Scan QR Code</h3>
-                    <QrScanner
-                      delay={300}
-                      onError={(error) => {
-                        console.error(error);
-                      }}
-                      onScan={(result) => {
-                        if (result) {
-                          handleScanQR({ text: result.text });
-                        }
-                      }}
-                      style={{ width: '100%' }}
-                      constraints={{
-                        video: { facingMode: 'environment' }
-                      }}
-                    />
-                    <button className="shop-btn" style={{ marginTop: 16 }} onClick={() => setShowScanner(false)}>Close Scanner</button>
+                  <div className="reverse-card" style={{minWidth: 180, maxWidth: 220, alignItems: 'center'}}>
+                    <img src="/assets/images/recyclee.svg" alt="Scan" className="reverse-card-icon" />
+                    <h4 style={{color: '#00C37A', fontWeight: 700, margin: '12px 0 8px 0'}}>Scan</h4>
+                    <span style={{fontSize: 15}}>Scan the QR code with your phone.</span>
                   </div>
-                )}
-                {voucher && (
-                  <div style={{ marginTop: '2.5rem', display: 'flex', justifyContent: 'center' }}>
-                    <div id="voucher-card" style={{ background: '#fff', color: '#232323', borderRadius: 16, padding: 32, minWidth: 320, maxWidth: 400, boxShadow: '0 2px 12px rgba(0,0,0,0.12)', textAlign: 'center', position: 'relative' }}>
-                      <img src="/assets/images/logo.png" alt="Reverse Logo" style={{ height: 40, marginBottom: 8 }} />
-                      <img src="/assets/images/nike-swoosh.png" alt="Nike Logo" style={{ height: 32, marginBottom: 16, marginLeft: 12 }} />
-                      <h2 style={{ color: '#00C37A', margin: '1rem 0 0.5rem 0' }}>Discount Voucher</h2>
-                      <div style={{ fontSize: 32, fontWeight: 900, color: '#F5B301', margin: '1rem 0' }}>€{voucher.value}</div>
-                      <div style={{ fontSize: 18, fontWeight: 700, marginBottom: 8 }}>Code: <span style={{ color: '#00C37A' }}>{voucher.code}</span></div>
-                      <div style={{ fontSize: 14, color: '#666', marginBottom: 8 }}>Issued: {new Date(voucher.date).toLocaleString()}</div>
-                      {voucher.locationName && <div style={{ fontSize: 14, color: '#666', marginBottom: 8 }}>Location: {voucher.locationName}</div>}
-                      <div style={{ fontSize: 14, color: '#666', marginBottom: 8 }}>Valid at any Reverse x Nike location</div>
-                      <div style={{ fontSize: 12, color: '#bbb', marginTop: 12 }}>Show this voucher at checkout to redeem your discount.</div>
-                    </div>
-                    <button className="shop-btn" style={{ background: '#00C37A', color: '#232323', fontWeight: 700, marginLeft: 24, height: 56, alignSelf: 'center' }} onClick={() => handleDownloadVoucherById(voucher.code)}>Download Voucher</button>
+                  <div className="reverse-card" style={{minWidth: 180, maxWidth: 220, alignItems: 'center'}}>
+                    <img src="/assets/images/Untitled design (5) 2.png" alt="Drop" className="reverse-card-icon" />
+                    <h4 style={{color: '#00C37A', fontWeight: 700, margin: '12px 0 8px 0'}}>Drop</h4>
+                    <span style={{fontSize: 15}}>Drop your recyclable products.</span>
                   </div>
-                )}
-                {voucherHistory.length > 0 && (
-                  <div style={{ margin: '3rem 0 0 0' }}>
-                    <h3 style={{ color: '#F5B301', textAlign: 'center', marginBottom: 24 }}>Your Vouchers</h3>
-                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: 32, justifyContent: 'center' }}>
-                      {voucherHistory.map((v, idx) => (
-                        <div key={v.code} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                          <VoucherCard voucher={v} />
-                          <button className="shop-btn" style={{ background: '#00C37A', color: '#232323', fontWeight: 700, marginTop: 16 }} onClick={() => handleDownloadVoucherById(v.code)}>Download Voucher</button>
+                  <div className="reverse-card" style={{minWidth: 180, maxWidth: 220, alignItems: 'center'}}>
+                    <img src="/assets/images/reward card.png" alt="Earn" className="reverse-card-icon" />
+                    <h4 style={{color: '#00C37A', fontWeight: 700, margin: '12px 0 8px 0'}}>Earn</h4>
+                    <span style={{fontSize: 15}}>Earn points and unlock exclusive rewards.</span>
+                  </div>
+                </div>
+              </section>
+              {/* Video Demo Section */}
+              <section style={{marginBottom: 32, textAlign: 'center'}}>
+                <h3 style={{color: '#F5B301', fontWeight: 800, marginBottom: 16}}>See Reverse in Action</h3>
+                <video src="/assets/videos/videoad.mp4" controls style={{ width: '100%', borderRadius: '12px', background: '#232323', maxWidth: 600, margin: '0 auto' }} poster="/assets/images/logo.png" />
+              </section>
+              {/* QR Tools Section */}
+              <section className="reverse-qr-section" style={{background: '#f7f7f7', borderRadius: 18, boxShadow: '0 4px 24px rgba(0,0,0,0.08)', padding: '2.5rem 2rem', maxWidth: 700, margin: '0 auto', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2rem'}}>
+                <h2 style={{color: '#00C37A', fontWeight: 900, marginBottom: 8}}>QR Tools</h2>
+                <div style={{display: 'flex', flexWrap: 'wrap', gap: '2.5rem', width: '100%', justifyContent: 'center', alignItems: 'flex-start'}}>
+                  {/* Generate QR */}
+                  <div style={{flex: '1 1 220px', minWidth: 220, maxWidth: 320, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 16}}>
+                    <h4 style={{color: '#232323', fontWeight: 700, marginBottom: 8}}>Generate QR</h4>
+                    <span style={{fontSize: 15, marginBottom: 8, textAlign: 'center'}}>Generate your unique QR code to recycle and earn rewards.</span>
+                    <button className="shop-btn" style={{width: '100%', marginBottom: 12}} onClick={handleGenerateQR}>Generate QR</button>
+                    {showQR && (
+                      <div style={{marginTop: 12, textAlign: 'center'}}>
+                        <QRCodeSVG value={qrValue} size={180} bgColor="#fff" fgColor="#00C37A" includeMargin={true} />
+                        <div style={{marginTop: 16}}>
+                          <button className="shop-btn" style={{background: '#F5B301', color: '#232323', fontWeight: 700}} onClick={() => setShowScanner(true)}>Scan QR</button>
                         </div>
-                      ))}
-                    </div>
+                      </div>
+                    )}
                   </div>
-                )}
-              </div>
+                  {/* Scan QR & Voucher */}
+                  <div style={{flex: '1 1 220px', minWidth: 220, maxWidth: 320, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 16}}>
+                    <h4 style={{color: '#232323', fontWeight: 700, marginBottom: 8}}>Scan QR</h4>
+                    <span style={{fontSize: 15, marginBottom: 8, textAlign: 'center'}}>Scan a QR code to redeem your voucher instantly.</span>
+                    {showScanner && (
+                      <div style={{marginTop: 0, background: '#232323', borderRadius: 12, padding: 20, width: '100%'}}>
+                        <h4 style={{color: '#fff', marginBottom: 12}}>Scan QR Code</h4>
+                        <QrScanner
+                          delay={300}
+                          onError={(error) => { console.error(error); }}
+                          onScan={(result) => { if (result) { handleScanQR({ text: result.text }); } }}
+                          style={{ width: '100%' }}
+                          constraints={{ video: { facingMode: 'environment' } }}
+                        />
+                        <button className="shop-btn" style={{marginTop: 16}} onClick={() => setShowScanner(false)}>Close Scanner</button>
+                      </div>
+                    )}
+                    {voucher && (
+                      <div style={{marginTop: showScanner ? 24 : 0, display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+                        <div id="voucher-card" style={{ background: '#fff', color: '#232323', borderRadius: 16, padding: 32, minWidth: 320, maxWidth: 400, boxShadow: '0 2px 12px rgba(0,0,0,0.12)', textAlign: 'center', position: 'relative' }}>
+                          <img src="/assets/images/logo.png" alt="Reverse Logo" style={{ height: 40, marginBottom: 8 }} />
+                          <img src="/assets/images/nike-swoosh.png" alt="Nike Logo" style={{ height: 32, marginBottom: 16, marginLeft: 12 }} />
+                          <h2 style={{ color: '#00C37A', margin: '1rem 0 0.5rem 0' }}>Discount Voucher</h2>
+                          <div style={{ fontSize: 32, fontWeight: 900, color: '#F5B301', margin: '1rem 0' }}>€{voucher.value}</div>
+                          <div style={{ fontSize: 18, fontWeight: 700, marginBottom: 8 }}>Code: <span style={{ color: '#00C37A' }}>{voucher.code}</span></div>
+                          <div style={{ fontSize: 14, color: '#666', marginBottom: 8 }}>Issued: {new Date(voucher.date).toLocaleString()}</div>
+                          {voucher.locationName && <div style={{ fontSize: 14, color: '#666', marginBottom: 8 }}>Location: {voucher.locationName}</div>}
+                          <div style={{ fontSize: 14, color: '#666', marginBottom: 8 }}>Valid at any Reverse x Nike location</div>
+                          <div style={{ fontSize: 12, color: '#bbb', marginTop: 12 }}>Show this voucher at checkout to redeem your discount.</div>
+                        </div>
+                        <button className="shop-btn" style={{ background: '#00C37A', color: '#232323', fontWeight: 700, marginTop: 16, width: '100%' }} onClick={() => handleDownloadVoucherById(voucher.code)}>Download Voucher</button>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </section>
+              {/* Voucher History Section */}
+              {voucherHistory.length > 0 && (
+                <section style={{ margin: '3rem 0 0 0', width: '100%' }}>
+                  <h3 style={{ color: '#F5B301', textAlign: 'center', marginBottom: 24 }}>Your Vouchers</h3>
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: 32, justifyContent: 'center' }}>
+                    {voucherHistory.map((v, idx) => (
+                      <div key={v.code} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                        <VoucherCard voucher={v} />
+                        <button className="shop-btn" style={{ background: '#00C37A', color: '#232323', fontWeight: 700, marginTop: 16 }} onClick={() => handleDownloadVoucherById(v.code)}>Download Voucher</button>
+                      </div>
+                    ))}
+                  </div>
+                </section>
+              )}
             </div>
           )}
           {currentReversePage === 'rewards' && (
@@ -745,15 +770,16 @@ function App() {
                     loop
                     muted
                     playsInline
+                    poster={slide.poster}
                     style={{
                       width: '100%',
                       height: '100%',
                       objectFit: 'cover',
                       position: 'absolute',
                       top: 0,
-                      left: 0
+                      left: 0,
+                      zIndex: 1
                     }}
-                    poster="/assets/images/hero-bg.jpg"
                   />
                 ) : (
                   <img src={slide.src} className="hero-media" alt={slide.headline} />
@@ -909,4 +935,4 @@ function VoucherCard({ voucher, showLogos = true }) {
   );
 }
 
-export default App 
+export default App; 

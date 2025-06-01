@@ -1,87 +1,130 @@
 <?php
-// Get the request origin
-$origin = isset($_SERVER['HTTP_ORIGIN']) ? $_SERVER['HTTP_ORIGIN'] : '';
-
-// List of allowed origins (for development)
+// CORS configuration
+header('Content-Type: application/json');
 $allowed_origins = [
     'http://localhost:3000',
-    'http://localhost:3001',
-    'http://localhost:3002',
-    'http://localhost:3003',
-    'http://localhost:3004',
-    'http://localhost:3005',
-    'http://localhost:3006',
-    'http://localhost:3007',
-    'http://localhost:3008',
-    'http://localhost:3009',
-    'http://localhost:3010',
-    'http://127.0.0.1:3000',
-    'http://127.0.0.1:3001',
-    'http://127.0.0.1:3002',
-    'http://127.0.0.1:3003',
-    'http://127.0.0.1:3004',
-    'http://127.0.0.1:3005',
-    'http://127.0.0.1:3006',
-    'http://127.0.0.1:3007',
-    'http://127.0.0.1:3008',
-    'http://127.0.0.1:3009',
-    'http://127.0.0.1:3010'
+    'http://localhost:5173',
+    'https://reverse-weld.vercel.app',
+    'https://reverse-fe13svsup-lromerogs-projects.vercel.app'
 ];
 
-// If the origin is in the allowed list, accept it
+$origin = isset($_SERVER['HTTP_ORIGIN']) ? $_SERVER['HTTP_ORIGIN'] : '';
 if (in_array($origin, $allowed_origins)) {
-    header('Access-Control-Allow-Origin: ' . $origin);
+    header("Access-Control-Allow-Origin: $origin");
+    header('Access-Control-Allow-Methods: POST, GET, OPTIONS');
+    header('Access-Control-Allow-Headers: Content-Type');
+    header('Access-Control-Allow-Credentials: true');
 }
 
-header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
-header('Access-Control-Allow-Headers: Content-Type');
-header('Access-Control-Allow-Credentials: true');
-
-// If it's an OPTIONS request (preflight), end here
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
-    http_response_code(200);
-    exit();
+    exit(0);
 }
 
-header('Content-Type: application/json');
-require_once '../config/config.php';
+// Include database configuration
+require_once __DIR__ . '/../config/database.php';
 
-$data = json_decode(file_get_contents("php://input"), true);
+// Get the JSON content from the request body
+$json = file_get_contents('php://input');
+$data = json_decode($json, true);
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $username = isset($data['username']) ? mysqli_real_escape_string($conn, $data['username']) : '';
-    $password = isset($data['password']) ? mysqli_real_escape_string($conn, $data['password']) : '';
-    $email = isset($data['email']) ? mysqli_real_escape_string($conn, $data['email']) : '';
-    $action = isset($data['action']) ? $data['action'] : 'login';
+// Check that the action is valid
+if (!isset($data['action']) || !in_array($data['action'], ['login', 'register'])) {
+    http_response_code(400);
+    echo json_encode(['error' => 'Invalid action']);
+    exit;
+}
 
-    if ($username && $password) {
-        if ($action === 'register' && $email) {
-            // Registration
-            $hash = password_hash($password, PASSWORD_DEFAULT);
-            $query = "INSERT INTO users (username, password, email) VALUES ('$username', '$hash', '$email')";
-            if (mysqli_query($conn, $query)) {
-                echo json_encode(["status" => "ok", "message" => "Registration successful."]);
-            } else {
-                echo json_encode(["status" => "error", "message" => "Registration failed or user/email already exists."]);
+try {
+    switch ($data['action']) {
+        case 'login':
+            // Check required fields
+            if (!isset($data['email']) || !isset($data['password'])) {
+                throw new Exception('Email and password are required');
             }
-        } else {
-            // Login
-            $query = "SELECT * FROM users WHERE username = '$username'";
-            $result = mysqli_query($conn, $query);
-            if ($row = mysqli_fetch_assoc($result)) {
-                if (password_verify($password, $row['password'])) {
-                    echo json_encode(["status" => "ok", "message" => "Login successful.", "user" => $row['username']]);
-                } else {
-                    echo json_encode(["status" => "error", "message" => "Invalid password."]);
-                }
-            } else {
-                echo json_encode(["status" => "error", "message" => "User not found."]);
+
+            // Find user
+            $user = fetchOne(
+                "SELECT id, username, email, password, points, level FROM users WHERE email = ?",
+                [$data['email']]
+            );
+
+            if (!$user || !password_verify($data['password'], $user['password'])) {
+                throw new Exception('Invalid credentials');
             }
-        }
-    } else {
-        echo json_encode(["status" => "error", "message" => "Missing username or password."]);
+
+            // Remove password before sending response
+            unset($user['password']);
+
+            // Generate session token (use JWT in production)
+            session_start();
+            $_SESSION['user_id'] = $user['id'];
+            $_SESSION['username'] = $user['username'];
+
+            echo json_encode([
+                'success' => true,
+                'message' => 'Login successful',
+                'user' => $user
+            ]);
+            break;
+
+        case 'register':
+            // Check required fields
+            if (!isset($data['username']) || !isset($data['email']) || !isset($data['password'])) {
+                throw new Exception('All fields are required');
+            }
+
+            // Check if email already exists
+            $existingUser = fetchOne(
+                "SELECT id FROM users WHERE email = ?",
+                [$data['email']]
+            );
+
+            if ($existingUser) {
+                throw new Exception('Email is already registered');
+            }
+
+            // Check if username already exists
+            $existingUsername = fetchOne(
+                "SELECT id FROM users WHERE username = ?",
+                [$data['username']]
+            );
+
+            if ($existingUsername) {
+                throw new Exception('Username is already taken');
+            }
+
+            // Hash the password
+            $hashedPassword = password_hash($data['password'], PASSWORD_DEFAULT);
+
+            // Insert new user
+            $userId = insertAndGetId(
+                "INSERT INTO users (username, email, password) VALUES (?, ?, ?)",
+                [$data['username'], $data['email'], $hashedPassword]
+            );
+
+            // Get the created user
+            $newUser = fetchOne(
+                "SELECT id, username, email, points, level FROM users WHERE id = ?",
+                [$userId]
+            );
+
+            // Automatically start session
+            session_start();
+            $_SESSION['user_id'] = $newUser['id'];
+            $_SESSION['username'] = $newUser['username'];
+
+            echo json_encode([
+                'success' => true,
+                'message' => 'Registration successful',
+                'user' => $newUser
+            ]);
+            break;
     }
-} else {
-    echo json_encode(["status" => "error", "message" => "Invalid request method."]);
+} catch (Exception $e) {
+    http_response_code(400);
+    echo json_encode([
+        'success' => false,
+        'error' => $e->getMessage()
+    ]);
 }
 ?> 
