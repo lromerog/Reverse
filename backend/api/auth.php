@@ -1,14 +1,36 @@
 <?php
 // CORS configuration - MUST BE AT THE VERY BEGINNING
 $allowed_origins = [
+    // URLs de producción
     'https://reverse-backend.vercel.app',
     'https://reverse-weld.vercel.app',
+    
+    // URLs de preview de Vercel (patrón común)
+    'https://reverse-*-lromerogs-projects.vercel.app',
+    
+    // URLs específicas de Vercel
     'https://reverse-fe13svsup-lromerogs-projects.vercel.app',
     'https://reverse-4ngj2lrhe-lromerogs-projects.vercel.app',
     'https://reverse-p7r9y5kbm-lromerogs-projects.vercel.app',
     'https://reverse-hqqayhzwg-lromerogs-projects.vercel.app',
     'https://reverse-j3nz4600z-lromerogs-projects.vercel.app',
-    // Allow localhost ports 3000-3010 and 5173
+    'https://reverse-ctjeh5cab-lromerogs-projects.vercel.app',
+    'https://reverse-j9ti7onf9-lromerogs-projects.vercel.app',
+    'https://reverse-nwnmr5hq4-lromerogs-projects.vercel.app',
+    'https://reverse-n99c7bd69-lromerogs-projects.vercel.app',
+    'https://reverse-8pm39a7cs-lromerogs-projects.vercel.app',
+    'https://reverse-5nty7ro5v-lromerogs-projects.vercel.app',
+    'https://reverse-994nw7wco-lromerogs-projects.vercel.app',
+    'https://reverse-jzvvp5c0n-lromerogs-projects.vercel.app',
+    'https://reverse-6k8dfm99f-lromerogs-projects.vercel.app',
+    'https://reverse-89opcdj4r-lromerogs-projects.vercel.app',
+    'https://reverse-gkn1iqtqa-lromerogs-projects.vercel.app',
+    'https://reverse-5ncw3e1bi-lromerogs-projects.vercel.app',
+    'https://reverse-evqdi3ezs-lromerogs-projects.vercel.app',
+    'https://reverse-lj3mt2nd7-lromerogs-projects.vercel.app',
+    'https://reverse-8m8ywa5ur-lromerogs-projects.vercel.app',
+    
+    // URLs locales
     'http://localhost:3000',
     'http://localhost:3001',
     'http://localhost:3002',
@@ -20,14 +42,43 @@ $allowed_origins = [
     'http://localhost:3008',
     'http://localhost:3009',
     'http://localhost:3010',
-    'http://localhost:5173'
+    'http://localhost:5173',
+    'http://127.0.0.1:3000',
+    'http://127.0.0.1:3001',
+    'http://127.0.0.1:3002',
+    'http://127.0.0.1:3003',
+    'http://127.0.0.1:3004',
+    'http://127.0.0.1:3005',
+    'http://127.0.0.1:3006',
+    'http://127.0.0.1:3007',
+    'http://127.0.0.1:3008',
+    'http://127.0.0.1:3009',
+    'http://127.0.0.1:3010',
+    'http://127.0.0.1:5173'
 ];
 
 // Get the origin from the request
 $origin = isset($_SERVER['HTTP_ORIGIN']) ? $_SERVER['HTTP_ORIGIN'] : '';
 
+// Check if origin matches any of the allowed patterns
+$is_allowed = false;
+foreach ($allowed_origins as $allowed) {
+    if (strpos($allowed, '*') !== false) {
+        // Convert wildcard pattern to regex
+        $pattern = str_replace('*', '.*', $allowed);
+        $pattern = str_replace('.', '\.', $pattern);
+        if (preg_match('/^' . $pattern . '$/', $origin)) {
+            $is_allowed = true;
+            break;
+        }
+    } elseif ($origin === $allowed) {
+        $is_allowed = true;
+        break;
+    }
+}
+
 // Set CORS headers if origin is allowed
-if (in_array($origin, $allowed_origins)) {
+if ($is_allowed) {
     header("Access-Control-Allow-Origin: $origin");
     header('Access-Control-Allow-Methods: POST, GET, OPTIONS');
     header('Access-Control-Allow-Headers: Content-Type, Authorization');

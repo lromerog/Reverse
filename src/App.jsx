@@ -93,7 +93,13 @@ const trendingCollections = [
   },
 ]
 
-const API_URL = process.env.REACT_APP_API_URL || 'http://localhost/backend/api';
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost/backend/api';
+
+const sneakerBrands = [
+  'Nike', 'Adidas', 'Puma', 'Reebok', 'New Balance', 'Converse', 'Vans', 'Asics', 'Under Armour', 'Skechers'
+];
+const sneakerStates = ['New', 'Used', 'Very worn'];
+const sneakerMaterials = ['Leather', 'Synthetic', 'Canvas', 'Mesh', 'Other'];
 
 function ReverseMap({ voucherHistory, onDownloadVoucher }) {
   const mapContainerRef = useRef(null);
@@ -286,10 +292,27 @@ function App() {
     const saved = localStorage.getItem('reverseVouchers');
     return saved ? JSON.parse(saved) : [];
   });
+  const [showSneakerForm, setShowSneakerForm] = useState(false);
+  const [sneakerRecycles, setSneakerRecycles] = useState(() => {
+    const saved = localStorage.getItem('sneakerRecycles');
+    return saved ? JSON.parse(saved) : [];
+  });
+  const [sneakerForm, setSneakerForm] = useState({
+    brand: '',
+    quantity: 1,
+    state: '',
+    color: '',
+    material: '',
+    comments: ''
+  });
 
   useEffect(() => {
     localStorage.setItem('reverseVouchers', JSON.stringify(voucherHistory));
   }, [voucherHistory]);
+
+  useEffect(() => {
+    localStorage.setItem('sneakerRecycles', JSON.stringify(sneakerRecycles));
+  }, [sneakerRecycles]);
 
   function addVoucherToHistory(voucher) {
     setVoucherHistory(prev => [...prev, voucher]);
@@ -323,13 +346,13 @@ function App() {
       }
       
       const responseData = await response.json();
-      if (responseData.status === "ok") {
-        localStorage.setItem("user", responseData.user);
-        alert("Login successful. Welcome, " + responseData.user + "!");
+      if (responseData.success) {
+        localStorage.setItem("user", JSON.stringify(responseData.user));
+        alert("Login successful. Welcome, " + responseData.user.username + "!");
         setIsAuthenticated(true);
         setShowReverse(false);
       } else {
-        alert(responseData.message || "Login failed");
+        alert(responseData.error || responseData.message || "Login failed");
       }
     } catch (error) {
       console.error('Login error:', error);
@@ -363,11 +386,11 @@ function App() {
       }
       
       const responseData = await response.json();
-      if (responseData.status === "ok") {
+      if (responseData.success) {
         alert("Registration successful. Please log in.");
         setAuthMode("login");
       } else {
-        alert(responseData.message || "Registration failed");
+        alert(responseData.error || responseData.message || "Registration failed");
       }
     } catch (error) {
       console.error('Registration error:', error);
@@ -478,6 +501,21 @@ function App() {
     }
   }
 
+  function handleSneakerFormChange(e) {
+    const { name, value } = e.target;
+    setSneakerForm(prev => ({ ...prev, [name]: value }));
+  }
+
+  function handleSneakerRecycleSubmit(e) {
+    e.preventDefault();
+    setSneakerRecycles(prev => [
+      { ...sneakerForm, date: new Date().toISOString(), id: Date.now() },
+      ...prev
+    ]);
+    setSneakerForm({ brand: '', quantity: 1, state: '', color: '', material: '', comments: '' });
+    setShowSneakerForm(false);
+  }
+
   // Render Reverse Dashboard
   const renderReverseDashboard = () => {
     if (!isAuthenticated) return null
@@ -543,6 +581,76 @@ function App() {
                   <h3>4. Earn</h3>
                   <p>Earn points and rewards for every item you recycle.</p>
                 </div>
+              </div>
+              {/* Sneaker Recycling Section */}
+              <div style={{marginTop: 40, background: '#fff', borderRadius: 16, boxShadow: '0 2px 12px rgba(0,0,0,0.08)', padding: 24, maxWidth: 600, marginLeft: 'auto', marginRight: 'auto'}}>
+                <button className="shop-btn" style={{marginBottom: 18}} onClick={() => setShowSneakerForm(f => !f)}>
+                  {showSneakerForm ? 'Close Sneaker Recycling Form' : 'Register Sneaker Recycling'}
+                </button>
+                {showSneakerForm && (
+                  <form onSubmit={handleSneakerRecycleSubmit} style={{display: 'flex', flexDirection: 'column', gap: 16}}>
+                    <label>Brand
+                      <select name="brand" value={sneakerForm.brand} onChange={handleSneakerFormChange} required>
+                        <option value="">Select brand</option>
+                        {sneakerBrands.map(b => <option key={b} value={b}>{b}</option>)}
+                      </select>
+                    </label>
+                    <label>Quantity
+                      <input type="number" name="quantity" min="1" value={sneakerForm.quantity} onChange={handleSneakerFormChange} required />
+                    </label>
+                    <label>State
+                      <select name="state" value={sneakerForm.state} onChange={handleSneakerFormChange} required>
+                        <option value="">Select state</option>
+                        {sneakerStates.map(s => <option key={s} value={s}>{s}</option>)}
+                      </select>
+                    </label>
+                    <label>Main Color
+                      <input type="text" name="color" value={sneakerForm.color} onChange={handleSneakerFormChange} placeholder="e.g. White, Black, Red" required />
+                    </label>
+                    <label>Material
+                      <select name="material" value={sneakerForm.material} onChange={handleSneakerFormChange} required>
+                        <option value="">Select material</option>
+                        {sneakerMaterials.map(m => <option key={m} value={m}>{m}</option>)}
+                      </select>
+                    </label>
+                    <label>Comments
+                      <textarea name="comments" value={sneakerForm.comments} onChange={handleSneakerFormChange} placeholder="Any additional info..." rows={2} />
+                    </label>
+                    <button className="shop-btn" type="submit">Register Recycling</button>
+                  </form>
+                )}
+                {/* List of sneaker recycles */}
+                {sneakerRecycles.length > 0 && (
+                  <div style={{marginTop: 32}}>
+                    <h4 style={{marginBottom: 12, color: '#00C37A'}}>Your Sneaker Recycling Records</h4>
+                    <table style={{width: '100%', borderCollapse: 'collapse', fontSize: 15}}>
+                      <thead>
+                        <tr style={{background: '#f7f7f7'}}>
+                          <th style={{padding: 8, border: '1px solid #eee'}}>Date</th>
+                          <th style={{padding: 8, border: '1px solid #eee'}}>Brand</th>
+                          <th style={{padding: 8, border: '1px solid #eee'}}>Quantity</th>
+                          <th style={{padding: 8, border: '1px solid #eee'}}>State</th>
+                          <th style={{padding: 8, border: '1px solid #eee'}}>Color</th>
+                          <th style={{padding: 8, border: '1px solid #eee'}}>Material</th>
+                          <th style={{padding: 8, border: '1px solid #eee'}}>Comments</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {sneakerRecycles.map(r => (
+                          <tr key={r.id}>
+                            <td style={{padding: 8, border: '1px solid #eee'}}>{new Date(r.date).toLocaleString()}</td>
+                            <td style={{padding: 8, border: '1px solid #eee'}}>{r.brand}</td>
+                            <td style={{padding: 8, border: '1px solid #eee'}}>{r.quantity}</td>
+                            <td style={{padding: 8, border: '1px solid #eee'}}>{r.state}</td>
+                            <td style={{padding: 8, border: '1px solid #eee'}}>{r.color}</td>
+                            <td style={{padding: 8, border: '1px solid #eee'}}>{r.material}</td>
+                            <td style={{padding: 8, border: '1px solid #eee'}}>{r.comments}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                )}
               </div>
             </div>
           )}
