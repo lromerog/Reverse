@@ -3,8 +3,8 @@
 // TODO: Change these values to your real production server values
 
 define('DB_HOST', 'localhost');
-define('DB_USER', 'admin');
-define('DB_PASS', 'reverse');
+define('DB_USER', 'root');
+define('DB_PASS', '');
 define('DB_NAME', 'reverse');
 
 // Function to send JSON error and exit

@@ -23,7 +23,7 @@ function Redeem() {
             // Por ahora usamos un mock
             const mockVoucher = {
               code: decodedData.id,
-              value: Math.floor(Math.random() * 20) + 5,
+              value: decodedData.value,
               date: decodedData.date,
               type: decodedData.type,
               status: decodedData.status,

@@ -65,9 +65,9 @@ $is_allowed = false;
 foreach ($allowed_origins as $allowed) {
     if (strpos($allowed, '*') !== false) {
         // Convert wildcard pattern to regex
-        $pattern = str_replace('*', '.*', $allowed);
-        $pattern = str_replace('.', '\.', $pattern);
-        if (preg_match('/^' . $pattern . '$/', $origin)) {
+        $pattern = str_replace('.', '\.', $allowed);
+        $pattern = str_replace('*', '.*', $pattern);
+        if (preg_match('/^' . $pattern . '$/i', $origin)) {
             $is_allowed = true;
             break;
         }

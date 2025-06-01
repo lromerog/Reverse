@@ -93,7 +93,7 @@ const trendingCollections = [
   },
 ]
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost/backend/api';
+const API_URL = process.env.REACT_APP_API_URL || 'http://localhost/reverse-backend/api';
 
 const sneakerBrands = [
   'Nike', 'Adidas', 'Puma', 'Reebok', 'New Balance', 'Converse', 'Vans', 'Asics', 'Under Armour', 'Skechers'
@@ -229,7 +229,7 @@ function ReverseMap({ voucherHistory, onDownloadVoucher }) {
           <h3 style={{ fontSize: '1.1rem', marginBottom: 12 }}>Nearby Nike Stores</h3>
           <div>
             {sortedStores.map((store, idx) => (
-              <div key={idx} className="store-item" style={{ marginBottom: 10, padding: 10, background: 'white', borderRadius: 10, boxShadow: '0 2px 6px rgba(0,0,0,0.1)', cursor: 'pointer', transition: 'background 0.2s' }}
+              <div key={`store-${store.name}-${idx}`} className="store-item" style={{ marginBottom: 10, padding: 10, background: 'white', borderRadius: 10, boxShadow: '0 2px 6px rgba(0,0,0,0.1)', cursor: 'pointer', transition: 'background 0.2s' }}
                 onClick={() => {
                   if (map) map.flyTo({ center: [store.lng, store.lat], zoom: 14 });
                 }}
@@ -243,8 +243,8 @@ function ReverseMap({ voucherHistory, onDownloadVoucher }) {
           {voucherHistory && voucherHistory.length > 0 && (
             <div style={{ marginTop: 32 }}>
               <h4 style={{ color: '#00C37A', marginBottom: 12 }}>Your Vouchers on Map</h4>
-              {voucherHistory.filter(v => v.lat && v.lng).map(v => (
-                <div key={v.code} style={{ background: '#fff', color: '#232323', borderRadius: 8, padding: 12, marginBottom: 12, boxShadow: '0 2px 6px rgba(0,195,122,0.08)', cursor: 'pointer' }} onClick={() => {
+              {voucherHistory.filter(v => v.lat && v.lng).map((v, idx) => (
+                <div key={`voucher-map-${v.code}-${idx}`} style={{ background: '#fff', color: '#232323', borderRadius: 8, padding: 12, marginBottom: 12, boxShadow: '0 2px 6px rgba(0,195,122,0.08)', cursor: 'pointer' }} onClick={() => {
                   if (map) map.flyTo({ center: [v.lng, v.lat], zoom: 15 });
                   setSelectedVoucher(v);
                 }}>
@@ -417,14 +417,14 @@ function App() {
   function handleGenerateQR() {
     const id = generateUUID();
     const now = new Date();
-    // Crear objeto con toda la información del voucher
+    const value = getRandomVoucherValue();
     const voucherData = {
       id,
+      value,
       date: now.toISOString(),
       type: 'recycle',
       status: 'pending'
     };
-    // Generar URL de canje con los datos codificados
     const redeemUrl = `https://reverse-weld.vercel.app/redeem?voucher=${encodeURIComponent(JSON.stringify(voucherData))}`;
     setQRValue(redeemUrl);
     setShowQR(true);
@@ -583,40 +583,48 @@ function App() {
                 </div>
               </div>
               {/* Sneaker Recycling Section */}
-              <div style={{marginTop: 40, background: '#fff', borderRadius: 16, boxShadow: '0 2px 12px rgba(0,0,0,0.08)', padding: 24, maxWidth: 600, marginLeft: 'auto', marginRight: 'auto'}}>
-                <button className="shop-btn" style={{marginBottom: 18}} onClick={() => setShowSneakerForm(f => !f)}>
+              <div style={{marginTop: 40, background: '#fff', borderRadius: 24, boxShadow: '0 4px 24px rgba(0,0,0,0.10)', padding: 36, maxWidth: 480, marginLeft: 'auto', marginRight: 'auto', border: '1.5px solid #e0e0e0'}}>
+                <button className="shop-btn" style={{marginBottom: 24, fontSize: 18, padding: '14px 0', borderRadius: 18, background: 'linear-gradient(90deg, #00C37A 0%, #F5B301 100%)', color: '#fff', fontWeight: 700, boxShadow: '0 2px 8px rgba(0,195,122,0.08)'}} onClick={() => setShowSneakerForm(f => !f)}>
                   {showSneakerForm ? 'Close Sneaker Recycling Form' : 'Register Sneaker Recycling'}
                 </button>
                 {showSneakerForm && (
-                  <form onSubmit={handleSneakerRecycleSubmit} style={{display: 'flex', flexDirection: 'column', gap: 16}}>
-                    <label>Brand
-                      <select name="brand" value={sneakerForm.brand} onChange={handleSneakerFormChange} required>
-                        <option value="">Select brand</option>
-                        {sneakerBrands.map(b => <option key={b} value={b}>{b}</option>)}
-                      </select>
-                    </label>
-                    <label>Quantity
-                      <input type="number" name="quantity" min="1" value={sneakerForm.quantity} onChange={handleSneakerFormChange} required />
-                    </label>
-                    <label>State
-                      <select name="state" value={sneakerForm.state} onChange={handleSneakerFormChange} required>
-                        <option value="">Select state</option>
-                        {sneakerStates.map(s => <option key={s} value={s}>{s}</option>)}
-                      </select>
-                    </label>
-                    <label>Main Color
-                      <input type="text" name="color" value={sneakerForm.color} onChange={handleSneakerFormChange} placeholder="e.g. White, Black, Red" required />
-                    </label>
-                    <label>Material
-                      <select name="material" value={sneakerForm.material} onChange={handleSneakerFormChange} required>
-                        <option value="">Select material</option>
-                        {sneakerMaterials.map(m => <option key={m} value={m}>{m}</option>)}
-                      </select>
-                    </label>
-                    <label>Comments
-                      <textarea name="comments" value={sneakerForm.comments} onChange={handleSneakerFormChange} placeholder="Any additional info..." rows={2} />
-                    </label>
-                    <button className="shop-btn" type="submit">Register Recycling</button>
+                  <form onSubmit={handleSneakerRecycleSubmit} style={{display: 'flex', flexDirection: 'column', gap: 18}}>
+                    <div style={{display: 'flex', flexDirection: 'column', gap: 14}}>
+                      <div style={{display: 'flex', alignItems: 'center', gap: 12}}>
+                        <label htmlFor="brand" style={{flex: '0 0 110px', fontWeight: 600}}>Brand</label>
+                        <select id="brand" name="brand" value={sneakerForm.brand} onChange={handleSneakerFormChange} required style={{flex: 1, padding: '10px 14px', borderRadius: 10, border: '1.5px solid #ccc', fontSize: 16}}>
+                          <option value="">Select brand</option>
+                          {sneakerBrands.map((b, idx) => <option key={`brand-${b}-${idx}`} value={b}>{b}</option>)}
+                        </select>
+                      </div>
+                      <div style={{display: 'flex', alignItems: 'center', gap: 12}}>
+                        <label htmlFor="quantity" style={{flex: '0 0 110px', fontWeight: 600}}>Quantity</label>
+                        <input id="quantity" type="number" name="quantity" min="1" value={sneakerForm.quantity} onChange={handleSneakerFormChange} required style={{flex: 1, padding: '10px 14px', borderRadius: 10, border: '1.5px solid #ccc', fontSize: 16}} />
+                      </div>
+                      <div style={{display: 'flex', alignItems: 'center', gap: 12}}>
+                        <label htmlFor="state" style={{flex: '0 0 110px', fontWeight: 600}}>State</label>
+                        <select id="state" name="state" value={sneakerForm.state} onChange={handleSneakerFormChange} required style={{flex: 1, padding: '10px 14px', borderRadius: 10, border: '1.5px solid #ccc', fontSize: 16}}>
+                          <option value="">Select state</option>
+                          {sneakerStates.map((s, idx) => <option key={`state-${s}-${idx}`} value={s}>{s}</option>)}
+                        </select>
+                      </div>
+                      <div style={{display: 'flex', alignItems: 'center', gap: 12}}>
+                        <label htmlFor="color" style={{flex: '0 0 110px', fontWeight: 600}}>Main Color</label>
+                        <input id="color" type="text" name="color" value={sneakerForm.color} onChange={handleSneakerFormChange} placeholder="e.g. White, Black, Red" required style={{flex: 1, padding: '10px 14px', borderRadius: 10, border: '1.5px solid #ccc', fontSize: 16}} />
+                      </div>
+                      <div style={{display: 'flex', alignItems: 'center', gap: 12}}>
+                        <label htmlFor="material" style={{flex: '0 0 110px', fontWeight: 600}}>Material</label>
+                        <select id="material" name="material" value={sneakerForm.material} onChange={handleSneakerFormChange} required style={{flex: 1, padding: '10px 14px', borderRadius: 10, border: '1.5px solid #ccc', fontSize: 16}}>
+                          <option value="">Select material</option>
+                          {sneakerMaterials.map((m, idx) => <option key={`material-${m}-${idx}`} value={m}>{m}</option>)}
+                        </select>
+                      </div>
+                      <div style={{display: 'flex', alignItems: 'flex-start', gap: 12}}>
+                        <label htmlFor="comments" style={{flex: '0 0 110px', fontWeight: 600, marginTop: 6}}>Comments</label>
+                        <textarea id="comments" name="comments" value={sneakerForm.comments} onChange={handleSneakerFormChange} placeholder="Any additional info..." rows={2} style={{flex: 1, padding: '10px 14px', borderRadius: 10, border: '1.5px solid #ccc', fontSize: 16, resize: 'vertical'}} />
+                      </div>
+                    </div>
+                    <button className="shop-btn" type="submit" style={{marginTop: 10, fontSize: 18, padding: '14px 0', borderRadius: 18, background: 'linear-gradient(90deg, #00C37A 0%, #F5B301 100%)', color: '#fff', fontWeight: 700, boxShadow: '0 2px 8px rgba(0,195,122,0.08)'}}>Register Recycling</button>
                   </form>
                 )}
                 {/* List of sneaker recycles */}
@@ -636,8 +644,8 @@ function App() {
                         </tr>
                       </thead>
                       <tbody>
-                        {sneakerRecycles.map(r => (
-                          <tr key={r.id}>
+                        {sneakerRecycles.map((r, idx) => (
+                          <tr key={`recycle-${r.id}-${idx}`}>
                             <td style={{padding: 8, border: '1px solid #eee'}}>{new Date(r.date).toLocaleString()}</td>
                             <td style={{padding: 8, border: '1px solid #eee'}}>{r.brand}</td>
                             <td style={{padding: 8, border: '1px solid #eee'}}>{r.quantity}</td>
@@ -752,7 +760,7 @@ function App() {
                   <h3 style={{ color: '#F5B301', textAlign: 'center', marginBottom: 24 }}>Your Vouchers</h3>
                   <div style={{ display: 'flex', flexWrap: 'wrap', gap: 32, justifyContent: 'center' }}>
                     {voucherHistory.map((v, idx) => (
-                      <div key={v.code} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                      <div key={`voucher-history-${v.code}-${idx}`} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                         <VoucherCard voucher={v} />
                         <button className="shop-btn" style={{ background: '#00C37A', color: '#232323', fontWeight: 700, marginTop: 16 }} onClick={() => handleDownloadVoucherById(v.code)}>Download Voucher</button>
                       </div>
@@ -942,7 +950,7 @@ function App() {
         <h2>Trending Collections</h2>
         <div className="trending-grid large-images">
           {trendingCollections.map((col, idx) => (
-            <div className="trending-card large-card" key={idx}>
+            <div className="trending-card large-card" key={`trending-${col.name}-${idx}`}>
               <img src={col.img} alt={col.name} />
               <h3>{col.name}</h3>
               <a href={col.link} className="shop-btn">Explore</a>
