@@ -2,12 +2,13 @@
 // CORS configuration
 header('Content-Type: application/json');
 $allowed_origins = [
+    'https://reverse-backend.vercel.app',
     'https://reverse-weld.vercel.app',
     'https://reverse-fe13svsup-lromerogs-projects.vercel.app',
-    'https://reverse-backend.vercel.app',
     'https://reverse-4ngj2lrhe-lromerogs-projects.vercel.app',
     'https://reverse-p7r9y5kbm-lromerogs-projects.vercel.app',
     'https://reverse-hqqayhzwg-lromerogs-projects.vercel.app',
+    'https://reverse-j3nz4600z-lromerogs-projects.vercel.app',
     // Allow localhost ports 3000-3010 and 5173
     'http://localhost:3000',
     'http://localhost:3001',
