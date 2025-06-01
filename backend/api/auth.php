@@ -5,6 +5,7 @@ $allowed_origins = [
     'https://reverse-weld.vercel.app',
     'https://reverse-fe13svsup-lromerogs-projects.vercel.app',
     'https://reverse-backend.vercel.app',
+    'https://reverse-p7r9y5kbm-lromerogs-projects.vercel.app',
     // Allow localhost ports 3000-3010 and 5173
     'http://localhost:3000',
     'http://localhost:3001',
