@@ -1,11 +1,22 @@
 <?php
 // Database configuration
-// Change these values to your production server values
+// TODO: Change these values to your real production server values
 
-define('DB_HOST', 'mysql.tuservidor.com'); // Change to your real host
-define('DB_USER', 'admin');                // Change to your real user
-define('DB_PASS', 'SuperSecreta123');      // Change to your real password
-define('DB_NAME', 'reverse_prod');         // Change to your real database name
+define('DB_HOST', 'localhost');
+define('DB_USER', 'admin');
+define('DB_PASS', 'reverse');
+define('DB_NAME', 'reverse');
+
+// Function to send JSON error and exit
+function send_json_error($message, $code = 500) {
+    http_response_code($code);
+    header('Content-Type: application/json');
+    echo json_encode([
+        'success' => false,
+        'error' => $message
+    ]);
+    exit;
+}
 
 // Function to get the database connection
 function getDBConnection() {
@@ -22,9 +33,8 @@ function getDBConnection() {
         );
         return $conn;
     } catch (PDOException $e) {
-        // In production, do not display the error message directly
         error_log("Database connection error: " . $e->getMessage());
-        throw new Exception("Database connection error");
+        send_json_error("Database connection error. Please contact the administrator.", 500);
     }
 }
 
@@ -37,7 +47,7 @@ function executeQuery($sql, $params = []) {
         return $stmt;
     } catch (PDOException $e) {
         error_log("Query error: " . $e->getMessage());
-        throw new Exception("Database operation error");
+        send_json_error("Database operation error. Please try again later.", 500);
     }
 }
 
