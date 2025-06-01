@@ -5,7 +5,8 @@ $allowed_origins = [
     'http://localhost:3000',
     'http://localhost:5173',
     'https://reverse-weld.vercel.app',
-    'https://reverse-fe13svsup-lromerogs-projects.vercel.app'
+    'https://reverse-fe13svsup-lromerogs-projects.vercel.app',
+    'https://reverse-backend.vercel.app'
 ];
 
 $origin = isset($_SERVER['HTTP_ORIGIN']) ? $_SERVER['HTTP_ORIGIN'] : '';
